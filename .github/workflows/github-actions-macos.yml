@@ -25,6 +25,8 @@ jobs:
           aqtversion: '==2.0.5'
           modules: 'qt3d'
         #run: brew install qt
+      - name: Install libssh2
+        run: bew install libssh2
       - name: Install boost
         run: brew install boost
       - name: Install gtest
