@@ -26,7 +26,9 @@ jobs:
           modules: 'qt3d'
         #run: brew install qt
       - name: Install libssh2
-        run: brew install libssh2
+        run: |
+          brew install openssl #openssl@1.1
+          brew install libssh2
       - name: Install boost
         run: brew install boost
       - name: Install gtest
