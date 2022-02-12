@@ -61,7 +61,7 @@ jobs:
       - name: Build libssh2
         shell: powershell
         run: |
-          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles' -DCRYPTO_BACKEND=WinCNG
+          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
           cmake --build build_libssh2
           cmake --install build_libssh2
       - name: Download BLAS
