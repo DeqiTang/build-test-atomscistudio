@@ -1,0 +1,154 @@
+name: Build for Windows with MinGW
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master ]
+jobs:
+  build-for-windows:
+    runs-on: [windows-2019]  # [windows-2022, windows-latest] 
+    strategy:
+      matrix:
+        qt_version: [6.2.0]
+        qt_arch: [win64_mingw81]
+    env:
+      executable: atomscistudio
+    steps: 
+      - name: Install MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          version: ${{ matrix.qt_version }}
+          host: 'windows'
+          target: 'desktop'
+          arch: ${{ matrix.qt_arch }}
+          aqtversion: '==2.0.5' 
+          modules: 'qt3d'
+      - name: Install Boost
+        uses: MarkusJx/install-boost@v2.1.0
+        id: install-boost
+        with:
+          boost_version: 1.78.0
+          platform_version: 2019
+          toolset: mingw
+      - name: Download GoogleTest
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
+      - name: Extract GoogleTest
+        shell: bash
+        run: |
+          tar -xvf release-1.11.0.tar.gz
+      - name: Build GoogleTest
+        shell: powershell
+        run: |
+          cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
+          cmake --build build_gtest --config Release
+          cmake --install build_gtest
+      - name: Download BLAS
+        shell: powershell 
+        run: |
+          Invoke-WebRequest -Uri http://www.netlib.org/blas/blas-3.10.0.tgz -OutFile blas-3.10.0.tgz
+      - name: Extract BLAS
+        shell: bash
+        run: |
+          tar -xvf blas-3.10.0.tgz
+      - name: Install BLAS
+        run: |
+          cmake BLAS-3.10.0 -B build_blas -G "MinGW Makefiles"
+          cmake --build build_blas
+          cmake --install build_blas
+        shell: powershell
+      - name: Download LAPACK
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri http://www.netlib.org/lapack/lapack-3.8.0.tar.gz -OutFile lapack-3.8.0.tar.gz
+      - name: Install LAPACK
+        run: |
+          tar -xvf lapack-3.8.0.tar.gz
+          cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
+          cmake --build build_lapack
+          cmake --install build_lapack
+        shell: bash  
+      - name: Download OpenBLAS
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
+      - name: Install OpenBLAS
+        run: |
+          tar -xvf v0.3.19.tar.gz
+          #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
+          #cmake --build build_openblas
+          #cmake --install build_openblas
+        shell: bash  
+      - name: Download SuperLU
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://github.com/xiaoyeli/superlu/archive/refs/tags/v5.3.0.tar.gz -OutFile v5.3.0.tar.gz
+      - name: Install SuperLU
+        run: |
+          tar -xvf v5.3.0.tar.gz
+          cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
+          cmake --build build_superlu
+          cmake --install build_superlu
+        shell: bash 
+      - name: Download armadillo
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://iweb.dl.sourceforge.net/project/arma/armadillo-10.8.1.tar.xz -OutFile armadillo-10.8.1.tar.xz
+      - name: Install armadillo
+        run: |
+          tar -xvf armadillo-10.8.1.tar.xz
+          cmake armadillo-10.8.1 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo"
+          #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
+          #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
+          cmake --build build_armadillo
+          cmake --install build_armadillo
+        shell: bash
+      - name: Install atomsciflow
+        run: |
+          git clone https://github.com/deqitang/build-test-atomsciflow.git
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DCMAKE_GENERATOR="MinGW Makefiles" -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:Program Files (x86)/armadillo;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
+          cmake --build build_atomsciflow --config Release
+          cmake --install build_atomsciflow
+        env:
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
+        shell: powershell
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Build for Windows with MinGW
+        run: |
+          cmake -B build -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
+          cmake --build build 
+        shell: powershell
+      - name: packaging
+        id: packaging
+        shell: powershell
+        env:
+          archive_name: atomscistudio-${{ matrix.qt_version }}-${{ matrix.qt_arch }}
+        run: |
+          New-Item -ItemType Directory ${env:archive_name}
+          Copy-Item build\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
+          windeployqt ${env:archive_name}\${env:executable}'.exe'
+          Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
+          $name = ${env:archive_name}
+          echo "::set-output name=package_name::$name"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.packaging.outputs.package_name }}.zip
+          path: ${{ steps.packaging.outputs.package_name }}.zip
+      - name: Upload Release
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ steps.packaging.outputs.package_name }}.zip
+          asset_name: ${{ steps.packaging.outputs.package_name }}.zip
+          tag: ${{ github.ref }}
+          overwrite: true 

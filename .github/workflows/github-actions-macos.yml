@@ -1,0 +1,65 @@
+name: Build for MacOS
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master ]
+jobs:
+  build-for-macos:
+    runs-on: [macos-10.15] 
+    strategy:
+      matrix:
+        os: [macos-10.15]
+        qt_version: [6.2.0]
+    env:
+      executable: atomscistudio
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          version: ${{ matrix.qt_version }}
+          host: 'mac'
+          target: 'desktop'
+          aqtversion: '==2.0.5'
+          modules: 'qt3d'
+        #run: brew install qt
+      - name: Install boost
+        run: brew install boost
+      - name: Install gtest
+        uses: MarkusJx/googletest-installer@v1.1
+      - name: Install armadillo
+        run: brew install armadillo
+      - name: Install atomsciflow
+        run: |
+          git clone https://github.com/deqitang/build-test-atomsciflow.git
+          cmake build-test-atomsciflow -B build
+          cmake --build build
+          cmake --install build
+        shell: bash
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Build for MacOS
+        run: |
+          cmake -B build -DCMAKE_MACOSX_BUNDLE=True
+          cmake --build build
+          cmake --install build
+      - name: packaging
+        run: |
+          macdeployqt build/${executable}.app -verbose=1 -dmg
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.executable }}-${{ matrix.os }}-${{matrix.qt_version}}.app
+          path: build/${{ env.executable }}.app
+      - name: Upload Release
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/${{ env.executable }}.dmg
+          asset_name: ${{ env.executable }}-${{ matrix.os }}-${{ matrix.qt_version }}.dmg
+          tag: ${{ github.ref }}
+          overwrite: true          
+

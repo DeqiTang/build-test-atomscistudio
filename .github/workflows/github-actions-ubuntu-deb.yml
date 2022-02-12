@@ -1,0 +1,87 @@
+name: Build for Ubuntu deb
+on: 
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master ] 
+jobs:
+  build-for-ubuntu:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-latest]
+        qt_version: [6.2.0] # [6.2.0, 6.2.2]
+        exclude: 
+          - os: ubuntu-18.04
+            qt_version: 6.2.0
+          - os: ubuntu-18.04
+            qt_version: 6.2.2
+    env:
+      executable: atomscistudio
+    steps:
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_version }}
+          host: 'linux'
+          target: 'desktop'
+          aqtversion: '==2.0.5'
+          modules: 'qt3d'
+      - name: Install GL Library
+        run: sudo apt-get install -y libglew-dev libglfw3-dev
+      - name: Install Dependencies using apt
+        run: |
+          sudo apt install -y libboost-all-dev
+          sudo apt install -y liblapack-dev libblas-dev
+          sudo apt install -y libarmadillo-dev
+          sudo apt install -y dh-make 
+          sudo apt install -y dpkg-dev
+      - name: Install gtest
+        uses: MarkusJx/googletest-installer@v1.1
+      - name: Install atomsciflow
+        run: |
+          git clone https://github.com/deqitang/build-test-atomsciflow.git
+          cmake build-test-atomsciflow -B build
+          cmake --build build
+          sudo cmake --install build
+        shell: bash
+      - uses: actions/checkout@v2
+      - name: Build for Ubuntu
+        id: build-for-ubuntu
+        run: |
+          cmake -B build
+          cmake --build build
+          sudo cmake --install build
+          # prepare for the followed deb build
+          mkdir -p debian/usr/bin
+          mkdir -p debian/usr/lib
+          cp build/atomscistudio debian/usr/bin
+          deb_version=${{ github.ref }}
+          deb_version=${deb_version/refs\/tags\/v/} # remove refs/tags/v, keep digits
+          echo "::set-output name=deb_version::${deb_version}" 
+      - name: Build for Ubuntu deb
+        if: startsWith(github.event.ref, 'refs/tags/')
+        id: build-deb
+        uses: jiro4989/build-deb-action@v2
+        with:
+          package: atomscistudio
+          package_root: ./debian
+          maintainer: Deqi Tang
+          version: ${{ github.ref }} 
+          arch: 'amd64'
+          desc: 'GUI environment for scientific research involving atoms'
+      - name: Upload Release
+        if: startsWith(github.event.ref, 'refs/tags/')
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.executable }}_${{ steps.build-for-ubuntu.outputs.deb_version }}_amd64.deb
+          #file: ${{ steps.build-deb.outputs.file_name }} 
+          asset_name: ${{ env.executable }}-${{ matrix.os }}-${{ matrix.qt_version }}.deb
+          #asset_name: ${{ steps.build-deb.outputs.file_name }}
+          tag: ${{ github.ref }}
+          overwrite: true          
+
+
