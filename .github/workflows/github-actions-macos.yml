@@ -27,7 +27,8 @@ jobs:
         #run: brew install qt
       - name: Install libssh2
         run: |
-          brew install openssl #openssl@1.1
+          brew install openssl 
+          brew install openssl@1.1
           brew install libssh2
       - name: Install boost
         run: brew install boost
