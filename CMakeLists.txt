@@ -19,16 +19,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DR
 
 include_directories(${QT_QTOPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} )
 
-find_package(Armadillo REQUIRED)
-include_directories(${ARMADILLO_INCLUDE_DIRS})
-link_libraries(${ARMADILLO_LIBRARIES})
-
-include_directories("./src")
-
-find_package(atomsciflow REQUIRED)
-include_directories(${ATOMSCIFLOW_INCLUDE_DIR})
-link_libraries(${ATOMSCIFLOW_LIBRARIES})
-
 set(LIBSSH2_BUILD_TOOL "autotools" CACHE STRING "Specify the build tool used for the libssh2 installed in the system")
 if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
@@ -53,6 +43,19 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     link_libraries("-lssh2")
     #link_libraries(${LIBSSH2_LIBRARIES})
 endif()
+
+
+
+find_package(Armadillo REQUIRED)
+include_directories(${ARMADILLO_INCLUDE_DIRS})
+link_libraries(${ARMADILLO_LIBRARIES})
+
+include_directories("./src")
+
+find_package(atomsciflow REQUIRED)
+include_directories(${ATOMSCIFLOW_INCLUDE_DIR})
+link_libraries(${ATOMSCIFLOW_LIBRARIES})
+
 
 file(GLOB PROJECT_SOURCES
     ./src/main.cpp
