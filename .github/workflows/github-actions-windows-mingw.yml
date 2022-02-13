@@ -140,6 +140,8 @@ jobs:
         run: |
           cmake -B build -G 'MinGW Makefiles' -DLIBSSH2_BUILD_TOOL=cmake -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DLIBSSH2_ROOT="C:/Program FIles (x86)/libssh2"
           cmake --build build 
+        env:
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
         shell: powershell
       - name: packaging
         id: packaging
