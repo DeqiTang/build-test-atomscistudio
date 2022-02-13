@@ -1,3 +1,4 @@
+
 name: Build for Windows with MinGW
 on:
   push:
