@@ -129,7 +129,8 @@ jobs:
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
           cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DLIBSSH2_BUILD_TOOL=cmake -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DLIBSSH2_ROOT="C:/Program Files (x86)/libssh2"
-          #-DCMAKE_INCLUDE_PATH='C:/Program Files (x86)/libssh2/include' 
+
+         #-DCMAKE_INCLUDE_PATH='C:/Program Files (x86)/libssh2/include' 
           cmake --build build_atomsciflow
           cmake --install build_atomsciflow
         env:
