@@ -129,7 +129,6 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #-lssh2
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
-    message("nothing")
     target_link_libraries(atomscistudio
         PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
         PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL
@@ -141,6 +140,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
+        ${LIBSSH2_LIBRARIES}
         -lssh2
     )
 endif()
