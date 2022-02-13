@@ -59,7 +59,7 @@ jobs:
         run: |
           tar -xvf libssh2-1.10.0.tar.gz
       - name: Build libssh2
-        shell: powershell
+        shell: bash #powershell
         run: |
           #cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
           #cmake --build build_libssh2
