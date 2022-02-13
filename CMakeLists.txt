@@ -141,7 +141,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
         ${LIBSSH2_LIBRARIES}
-        -lssh2
+        #-lssh2
     )
 endif()
 
