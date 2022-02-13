@@ -122,10 +122,17 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
     PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
-    -lssh2
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
 )
+
+if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
+    target_link_libraries(atomscistudio
+        -lssh2
+    )
+elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
+    message("nothing")
+endif()
 
 # ------------------------------------------------
 #                   set install
