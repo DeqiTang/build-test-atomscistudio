@@ -127,8 +127,8 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DLIBSSH2_BUILD_TOOL=autotools -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DCMAKE_INCLUDE_PATH='C:/Program Files (x86)/libssh2/include' -DLIBSSH2_ROOT="C:/Program FIles (x86)/libssh2"
-          cmake --build build_atomsciflow --config Release ##
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DLIBSSH2_BUILD_TOOL=cmake -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DCMAKE_INCLUDE_PATH='C:/Program Files (x86)/libssh2/include' -DLIBSSH2_ROOT="C:/Program FIles (x86)/libssh2"
+          cmake --build build_atomsciflow 
           cmake --install build_atomsciflow
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
@@ -138,7 +138,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
+          cmake -B build -G 'MinGW Makefiles' -DLIBSSH2_BUILD_TOOL=cmake -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DLIBSSH2_ROOT="C:/Program FIles (x86)/libssh2"
           cmake --build build 
         shell: powershell
       - name: packaging
