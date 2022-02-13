@@ -17,7 +17,10 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DR
 #include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
 
-include_directories(${QT_QTOPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} )
+include_directories(
+    ${QT_QTOPENGL_INCLUDE_DIR} 
+    ${OPENGL_INCLUDE_DIR} 
+)
 
 find_package(Boost COMPONENTS program_options filesystem system  REQUIRED)
 include_directories( 
@@ -33,11 +36,14 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     include_directories(
         ${LIBSSH2_ROOT}/include
     )
-    include_directories(
-        ${Libssh2_INCLUDE_DIR}
-    )
+    #include_directories(
+    #    ${Libssh2_INCLUDE_DIR}
+    #)
     link_libraries(${Libssh2_LIBRARIES})
     message("${Libssh2_LIBRARIES}")
+    link_directories(
+        ${LIBSSH2_ROOT}/lib
+    )
     link_libraries("-lssh2")
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
