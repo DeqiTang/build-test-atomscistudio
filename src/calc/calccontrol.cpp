@@ -28,6 +28,8 @@
 #include "calc/leftzone.h"
 #include "calc/rightzone.h"
 
+#include <atomsciflow/remote/ssh.h>
+
 CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
 
     this->m_hlayout = new QHBoxLayout(this);
@@ -46,5 +48,7 @@ CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
     h_splitter->setFrameShape(QFrame::StyledPanel);
     h_splitter->setFrameShadow(QFrame::Plain);
     h_splitter->setStyleSheet("QSplitter::handle {background-color: gray}");
+
+    atomsciflow::Ssh ssh;
 
 }
