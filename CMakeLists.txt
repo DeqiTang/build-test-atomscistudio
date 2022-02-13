@@ -29,6 +29,30 @@ find_package(atomsciflow REQUIRED)
 include_directories(${ATOMSCIFLOW_INCLUDE_DIR})
 link_libraries(${ATOMSCIFLOW_LIBRARIES})
 
+set(LIBSSH2_BUILD_TOOL "autotools" CACHE STRING "Specify the build tool used for the libssh2 installed in the system")
+if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
+    message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
+    find_package(Libssh2 REQUIRED CONFIG)
+    message("${LIBSSH2_ROOT}")
+    include_directories(
+        ${LIBSSH2_ROOT}/include
+    )
+    include_directories(
+        ${Libssh2_INCLUDE_DIR}
+    )
+    link_libraries(${Libssh2_LIBRARIES})
+elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
+    message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
+    find_package(PkgConfig)
+    pkg_check_modules(LIBSSH2 libssh2)
+    link_directories(
+        ${LIBSSH2_LIBRARY_DIRS}
+    )
+    message("${LIBSSH2_LIBRARIES}")
+    #add_compile_options("-lssh2")
+    link_libraries("-lssh2")
+    #link_libraries(${LIBSSH2_LIBRARIES})
+endif()
 
 file(GLOB PROJECT_SOURCES
     ./src/main.cpp
