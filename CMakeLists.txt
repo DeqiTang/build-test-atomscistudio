@@ -46,7 +46,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     )
     message("${LIBSSH2_LIBRARIES}")
     #add_compile_options("-lssh2")
-    #link_libraries("-lssh2")
+    link_libraries("-lssh2")
     link_libraries(${LIBSSH2_LIBRARIES})
 endif()
 
