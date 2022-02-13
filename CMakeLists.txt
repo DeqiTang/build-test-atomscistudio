@@ -122,6 +122,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
     PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
+    -lssh2
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
 )
