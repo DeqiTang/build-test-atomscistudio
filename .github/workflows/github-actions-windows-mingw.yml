@@ -64,6 +64,7 @@ jobs:
           cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
           cmake --build build_libssh2
           cmake --install build_libssh2
+          cat 'C:/Program Files (x86)/libssh2/lib/cmake/libssh2/Libssh2Config.cmake'
       - name: Download BLAS
         shell: powershell 
         run: |
