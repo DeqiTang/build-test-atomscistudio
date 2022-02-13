@@ -128,10 +128,14 @@ target_link_libraries(atomscistudio
 
 if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     target_link_libraries(atomscistudio
-        -lssh2
+        Libssh2::libssh2
+        #-lssh2
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("nothing")
+    target_link_libraries(atomscistudio
+        -lssh2
+    )
 endif()
 
 # ------------------------------------------------
