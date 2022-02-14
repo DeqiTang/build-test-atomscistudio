@@ -67,6 +67,7 @@ jobs:
           #make
           #make install
           choco install openssl
+          #choco install openssl.light
       - name: Download libssh2
         shell: powershell
         run: |
