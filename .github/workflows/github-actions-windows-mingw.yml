@@ -40,6 +40,7 @@ jobs:
       - name: Download GoogleTest
         shell: powershell
         run: |
+          openssl
           Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
       - name: Extract GoogleTest
         shell: bash
