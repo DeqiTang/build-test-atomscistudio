@@ -36,7 +36,7 @@ jobs:
           tar -xvf openssl-3.0.1.tar.gz
           cd openssl-openssl-3.0.1
           ./Configure
-          make
+          make -s
           make install           
       - name: Install libssh2
         run: |
