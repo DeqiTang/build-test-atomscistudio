@@ -45,6 +45,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         ${LIBSSH2_ROOT}/lib
     )
     link_libraries("-lssh2")
+    link_libraries("-lssl")
+    link_libraries("-lcrypto")
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
