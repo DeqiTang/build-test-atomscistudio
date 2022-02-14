@@ -18,10 +18,9 @@ jobs:
     steps:
       - name: Install dependencies using brew
         run: |
-          ls /usr/local
-          ls /usr/local/ssl
           brew install openssl@3
           brew install openssl@1.1
+          ls /usr/local/ssl
           #brew install libssh2
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
