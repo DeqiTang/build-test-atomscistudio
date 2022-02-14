@@ -59,14 +59,14 @@ jobs:
         shell: bash
         run: |
           tar -xvf openssl-3.0.1.tar.gz
-      - uses: ilammy/setup-nasm@v1
+      #- uses: ilammy/setup-nasm@v1
       - name: Build openssl
         shell: powershell 
         run: |
           cd openssl-openssl-3.0.1
-          ./Configure
-          nmake
-          nmake install
+          #./Configure
+          #nmake
+          #nmake install
           #choco install openssl
           #choco install openssl.light
       - name: Download libssh2
