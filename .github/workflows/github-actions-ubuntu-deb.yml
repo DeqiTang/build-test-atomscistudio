@@ -78,8 +78,8 @@ jobs:
           desc: 'GUI environment for scientific research involving atoms'
       - uses: actions/upload-artifact@v2
         with:
-          name: atomsciflow-cmake-build.deb
-          path: atomsciflow-cmake-build.deb       
+          name: atomsciflow-cmake-build.tar.gz
+          path: atomsciflow-cmake-build.tar.gz    
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2
