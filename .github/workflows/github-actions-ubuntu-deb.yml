@@ -56,6 +56,8 @@ jobs:
           cmake -B build
           cmake --build build
           sudo cmake --install build
+          cp build atomsciflow-cmake-build -r
+          tar -czvf atomsciflow-cmake-build.tar.gz atomsciflow-cmake-build          
           # prepare for the followed deb build
           mkdir -p debian/usr/bin
           mkdir -p debian/usr/lib
@@ -76,8 +78,8 @@ jobs:
           desc: 'GUI environment for scientific research involving atoms'
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.executable }}-${{ matrix.os }}-${{ matrix.qt_version }}.deb
-          path: ${{ env.executable }}_${{ steps.build-for-ubuntu.outputs.deb_version }}_amd64.deb          
+          name: atomsciflow-cmake-build.deb
+          path: atomsciflow-cmake-build.deb       
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2

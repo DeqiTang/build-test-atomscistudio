@@ -70,7 +70,6 @@ jobs:
       - name: packaging
         run: |
           macdeployqt build/${executable}.app -verbose=2 -dmg
-          ls build/${executable}.app/Contents
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.executable }}-${{ matrix.os }}-${{matrix.qt_version}}.app
