@@ -69,7 +69,7 @@ jobs:
           cmake --install build
       - name: packaging
         run: |
-          macdeployqt build/${executable}.app -verbose=1 -dmg
+          macdeployqt build/${executable}.app -verbose=2 -dmg
           ls build/${executable}.app
       - uses: actions/upload-artifact@v2
         with:
