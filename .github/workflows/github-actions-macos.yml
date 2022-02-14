@@ -30,6 +30,14 @@ jobs:
           aqtversion: '==2.0.5'
           modules: 'qt3d'
         #run: brew install qt
+      - name: Install openssl
+        run: |
+          wget -c https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz
+          tar -xvf openssl-3.0.1.tar.gz
+          cd openssl-openssl-3.0.1
+          ./Configure
+          make
+          make install        
       - name: Install libssh2
         run: |
           wget -c https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz
