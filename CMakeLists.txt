@@ -29,9 +29,11 @@ include_directories(
 
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
-    message("${OPENSSL_INCLUDED_DIR}")
+    message("${OPENSSL_INCLUDE_DIR}")
     message("${OPENSSL_SSL_LIBRARY}")
+    message("${OPENSSL_SSL_LIBRARIES}")
     message("${OPENSSL_CRYPTO_LIBRARY}")
+    message("${OPENSSL_CRYPTO_LIBRARIES}")
 endif()
 
 # libssh2
