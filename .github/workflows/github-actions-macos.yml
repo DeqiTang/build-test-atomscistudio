@@ -18,9 +18,9 @@ jobs:
     steps:
       - name: Install dependencies using brew
         run: |
-          #brew install openssl@3
+          #brew install openssl
           #brew install openssl@1.1
-          #brew install libssh2    
+          #brew install libssh2
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
@@ -37,14 +37,14 @@ jobs:
           cd openssl-openssl-3.0.1
           #./Configure
           #make
-          #make install        
+          #make install           
       - name: Install libssh2
         run: |
           wget -c https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz
           tar -xvf libssh2-1.10.0.tar.gz
           cmake libssh2-1.10.0 -B build_libssh2
           cmake --build build_libssh2
-          cmake --install build_libssh2
+          cmake --install build_libssh2       
       - name: Install boost
         run: brew install boost
       - name: Install gtest
