@@ -35,7 +35,10 @@ jobs:
           wget -c https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz
           tar -xvf openssl-3.0.1.tar.gz
           cd openssl-openssl-3.0.1
-          ./Configure
+          #./Configure
+          #make -s
+          clang ./config --banner=Configured --no-shared -Wall -Werror enable-fips --strict-warnings
+          ./configdata.pm --dump
           make -s
           make install           
       - name: Install libssh2
