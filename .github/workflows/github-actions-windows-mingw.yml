@@ -62,9 +62,10 @@ jobs:
       - name: Build openssl
         shell: powershell 
         run: |
-          cmake openssl-openssl-3.0.1 -B build_openssl -G 'MinGW Makefiles'
-          cmake --build build_openssl
-          cmake --install build_openssl
+          cd openssl-openssl-3.0.1
+          perl Configure
+          nmake
+          namke install
       - name: Download libssh2
         shell: powershell
         run: |
