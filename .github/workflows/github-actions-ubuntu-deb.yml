@@ -74,6 +74,10 @@ jobs:
           version: ${{ github.ref }} 
           arch: 'amd64'
           desc: 'GUI environment for scientific research involving atoms'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.executable }}-${{ maatrix.os }}-${{ matrix.qt_version }}.deb
+          path: ${{ env.executable }}_${{ steps.build-for-ubuntu.outputs.deb_version }}_amd64.deb          
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2
