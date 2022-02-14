@@ -27,6 +27,8 @@ include_directories(
     ${Boost_INCLUDE_DIR}  
 )
 
+find_package(OpenSSL REQUIRED)
+
 # libssh2
 set(LIBSSH2_BUILD_TOOL "autotools" CACHE STRING "Specify the build tool used for the libssh2 installed in the system")
 if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
@@ -129,8 +131,9 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #${GLUT_LIBRARY}
         Libssh2::libssh2
         #-lssh2
-        -lssl
-        -lcrypto
+        OpenSSL::Crypto
+        #-lssl
+        #-lcrypto
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
@@ -146,6 +149,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         #${GLUT_LIBRARY}
         ${LIBSSH2_LIBRARIES}
         #-lssh2
+        OpenSSL::Crypto
     )
 endif()
 
