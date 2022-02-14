@@ -37,7 +37,7 @@ jobs:
           cd openssl-openssl-3.0.1
           #./Configure
           #make -s
-          clang ./config --banner=Configured --no-shared -Wall -Werror enable-fips --strict-warnings
+          CC=clang ./config --banner=Configured --no-shared -Wall -Werror enable-fips --strict-warnings
           ./configdata.pm --dump
           make -s
           make install           
