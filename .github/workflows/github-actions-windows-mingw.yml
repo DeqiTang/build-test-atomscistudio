@@ -64,8 +64,8 @@ jobs:
         run: |
           cd openssl-openssl-3.0.1
           #./Configure
-          #nmake
-          #nmake install
+          #make
+          #make install
           choco install openssl
           choco install openssl.light
       - name: Download libssh2
