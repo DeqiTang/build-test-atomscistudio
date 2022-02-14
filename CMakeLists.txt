@@ -28,6 +28,11 @@ include_directories(
 )
 
 find_package(OpenSSL REQUIRED)
+if (OPENSSL_FOUND)
+    message("${OPENSSL_INCLUDED_DIR}")
+    message("${OPENSSL_SSL_LIBRARY}")
+    message("${OPENSSL_CRYPTO_LIBRARY}")
+endif()
 
 # libssh2
 set(LIBSSH2_BUILD_TOOL "autotools" CACHE STRING "Specify the build tool used for the libssh2 installed in the system")
