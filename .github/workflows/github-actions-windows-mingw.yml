@@ -171,6 +171,7 @@ jobs:
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2
+          ldd ${env:archive_name}\${env:executable}'.exe' --verbose=2
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll
           Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/openssl-license.txt
