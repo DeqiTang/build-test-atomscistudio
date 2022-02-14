@@ -63,9 +63,9 @@ jobs:
         shell: bash #powershell 
         run: |
           cd openssl-openssl-3.0.1
-          ./Configure
-          make
-          make install
+          #./Configure
+          #make
+          #make install
       - name: Download libssh2
         shell: powershell
         run: |
