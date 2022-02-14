@@ -127,6 +127,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #${GLUT_LIBRARY}
         Libssh2::libssh2
         #-lssh2
+        -lssl
+        -lcrypto
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
