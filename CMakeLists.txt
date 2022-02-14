@@ -132,8 +132,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #-lssh2
         OpenSSL::SSL
         OpenSSL::Crypto
-        #-lssl
-        #-lcrypto
+        -lssl
+        -lcrypto
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
