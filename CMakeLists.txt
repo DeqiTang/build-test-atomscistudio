@@ -131,6 +131,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #${GLUT_LIBRARY}
         Libssh2::libssh2
         #-lssh2
+        OpenSSL::SSL
         OpenSSL::Crypto
         #-lssl
         #-lcrypto
@@ -149,6 +150,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         #${GLUT_LIBRARY}
         ${LIBSSH2_LIBRARIES}
         #-lssh2
+        OpenSSL::SSL
         OpenSSL::Crypto
     )
 endif()
