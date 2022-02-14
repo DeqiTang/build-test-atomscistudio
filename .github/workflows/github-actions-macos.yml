@@ -36,9 +36,9 @@ jobs:
           wget -c https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz
           tar -xvf openssl-3.0.1.tar.gz
           cd openssl-openssl-3.0.1
-          ./Configure
-          make -s
-          sudo make install           
+          #./Configure
+          #make -s
+          #sudo make install           
       - name: Install libssh2
         run: |
           wget -c https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz
@@ -64,7 +64,7 @@ jobs:
           fetch-depth: 1
       - name: Build for MacOS
         run: |
-          cmake -B build -DCMAKE_MACOSX_BUNDLE=True
+          cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1
           cmake --build build
           cmake --install build
       - name: packaging
