@@ -69,6 +69,8 @@ jobs:
           choco install openssl
           choco install openssl.light
           ls 'C:/Program Files/'
+          ls 'C:/Program Files/OpenSSL'
+          ls 'C:/Program Files/OpenSSL/lib'
           ls 'C:/Program Files/OpenSSL-Win64'
           ls 'C:/Program Files/OpenSSL-Win64/lib'
       - name: Download libssh2
