@@ -51,9 +51,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     link_directories(
         ${LIBSSH2_ROOT}/lib
     )
-    link_libraries("-lssh2")
-    #link_libraries("-lssl")
-    #link_libraries("-lcrypto")
+    #link_libraries("-lssh2")
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
@@ -61,8 +59,8 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     link_directories(
         ${LIBSSH2_LIBRARY_DIRS}
     )
-    message("${LIBSSH2_LIBRARIES}")
-    link_libraries("-lssh2")
+    message("LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
+    #link_libraries("-lssh2")
     link_libraries(${LIBSSH2_LIBRARIES})
 endif()
 
@@ -137,10 +135,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #-lssh2
         OpenSSL::SSL
         OpenSSL::Crypto
-        #-lssl
-        #-lcrypto
-        ${OPENSSL_SSL_LIBRARY}
-        ${OPENSSL_CRYPTO_LIBRARY}
+        #${OPENSSL_SSL_LIBRARY}
+        #${OPENSSL_CRYPTO_LIBRARY}
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
