@@ -51,17 +51,11 @@ jobs:
           cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
           cmake --build build_gtest --config Release
           cmake --install build_gtest
-      - name: Download openssl
+      - name: Build OpenSSL
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
-      - name: Extract openssl
-        shell: bash
-        run: |
           tar -xvf openssl-3.0.0.tar.gz
-      - name: Build openssl
-        shell: powershell 
-        run: |
           cd openssl-openssl-3.0.0
           #./Configure
           #make
