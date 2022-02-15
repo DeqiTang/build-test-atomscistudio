@@ -54,7 +54,7 @@ jobs:
         run: brew install armadillo
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/atomsciflow.git
+          git clone https://github.com/deqitang/build-test-atomsciflow.git
           cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
           cmake --build build
           cmake --install build

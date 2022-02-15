@@ -46,7 +46,7 @@ jobs:
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/atomsciflow.git
+          git clone https://github.com/deqitang/build-test-atomsciflow.git
           cmake build-test-atomsciflow -B build
           cmake --build build
           sudo cmake --install build
