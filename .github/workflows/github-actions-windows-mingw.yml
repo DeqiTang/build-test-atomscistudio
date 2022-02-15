@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies using package manager
         shell: powershell
         run: |
-          vcpkg install lapack-reference openblas blas
-          vcpkg install libssh2 openssl
+          #vcpkg install lapack-reference openblas blas
+          #vcpkg install libssh2 openssl
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
@@ -71,10 +71,11 @@ jobs:
           #./Configure
           #make
           #make install
+          ls 'C:/Windows/System32/'
           choco install openssl
-          choco install openssl.light
+          ls 'C:/Windows/System32/'
+          choco install openssl.light --version 1.1.1
           choco install openssl.light --version 3.0.0
-          choco upgrade openssl.light
           ls 'C:/Program Files/'
           ls 'C:/Program Files/OpenSSL'
           ls 'C:/Program Files/OpenSSL-Win64'
@@ -182,8 +183,8 @@ jobs:
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2
           ldd ${env:archive_name}\${env:executable}'.exe' 
-          #Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
-          #Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll
+          Copy-Item 'C:/Windows/System32/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
+          Copy-Item 'C:/Windows/System32/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll
           #Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/openssl-license.txt
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
