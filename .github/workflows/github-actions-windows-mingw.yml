@@ -53,6 +53,7 @@ jobs:
         run: |
           #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
           #tar -xvf openssl-3.0.0.tar.gz
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
       - name: Build OpenSSL
         shell: powershell
         run: |
