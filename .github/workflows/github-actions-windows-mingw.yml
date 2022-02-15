@@ -122,16 +122,16 @@ jobs:
       - name: Install SuperLU
         run: |
           cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
-          cmake --build build_superlu --parallel 4
+          cmake --build build_superlu
           cmake --install build_superlu
         shell: bash 
       - name: Download armadillo
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-          tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         run: |
+          tar -xvf armadillo-10.8.2.tar.xz
           cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo"
           #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
           #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
