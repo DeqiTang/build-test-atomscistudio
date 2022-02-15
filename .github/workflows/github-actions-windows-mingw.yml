@@ -53,7 +53,6 @@ jobs:
         run: |
           #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
           #tar -xvf openssl-3.0.0.tar.gz
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
       - name: Build OpenSSL
         shell: powershell
         run: |
@@ -130,9 +129,12 @@ jobs:
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-      - name: Install armadillo
+      - name: Extract armadillo
+        shell: bash
         run: |
           tar -xvf armadillo-10.8.2.tar.xz
+      - name: Install armadillo
+        run: |
           cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo"
           #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
           #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
