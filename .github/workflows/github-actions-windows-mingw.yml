@@ -68,6 +68,7 @@ jobs:
           #make install
           #choco install openssl
           choco install openssl.light
+          choco install openssl.light --version 3.0.0
           choco upgrade openssl.light
           ls 'C:/Program Files/'
           ls 'C:/Program Files/OpenSSL'
