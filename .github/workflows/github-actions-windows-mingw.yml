@@ -181,7 +181,7 @@ jobs:
         run: |
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
-          windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2
+          windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
           ldd ${env:archive_name}\${env:executable}'.exe' 
           Copy-Item 'C:/Windows/System32/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
           Copy-Item 'C:/Windows/System32/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll
