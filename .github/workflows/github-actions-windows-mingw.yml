@@ -68,6 +68,7 @@ jobs:
           #make install
           #choco install openssl
           choco install openssl.light
+          choco upgrade openssl.light
           ls 'C:/Program Files/'
           ls 'C:/Program Files/OpenSSL'
           #ls 'C:/Program Files/OpenSSL-Win64'
