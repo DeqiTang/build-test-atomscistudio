@@ -54,9 +54,9 @@ jobs:
       - name: Build OpenSSL
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
-          tar -xvf openssl-3.0.0.tar.gz
-          cd openssl-openssl-3.0.0
+          #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
+          #tar -xvf openssl-3.0.0.tar.gz
+          #cd openssl-openssl-3.0.0
           #./Configure
           #make
           #make install
@@ -70,17 +70,11 @@ jobs:
           ls 'C:/Program Files/OpenSSL'
           ls 'C:/Program Files/OpenSSL-Win64'
           ls 'C:/Program Files/OpenSSL-Win64/lib'          
-      - name: Download libssh2
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
-      - name: Extract libssh2
-        shell: bash
-        run: |
-          tar -xvf libssh2-1.10.0.tar.gz
-      - name: Build libssh2
+      - name: Install libssh2
         shell: powershell 
         run: |
+          Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
+          tar -xvf libssh2-1.10.0.tar.gz
           cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/openssl'
           cmake --build build_libssh2
           cmake --install build_libssh2
