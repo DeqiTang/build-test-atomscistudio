@@ -129,7 +129,7 @@ jobs:
       - name: Download armadillo
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://netcologne.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+          Invoke-WebRequest -Uri https://iweb.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         run: |
@@ -138,7 +138,7 @@ jobs:
           #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
           cmake --build build_armadillo
           cmake --install build_armadillo
-        shell: bash
+        shell: powershell #bash
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
