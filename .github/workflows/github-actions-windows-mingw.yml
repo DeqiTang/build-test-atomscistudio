@@ -129,7 +129,7 @@ jobs:
       - name: Download armadillo
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://iweb.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         run: |
