@@ -51,7 +51,6 @@ jobs:
       - name: Download OpenSSL
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
           #tar -xvf openssl-3.0.0.tar.gz
       - name: Build OpenSSL
@@ -107,15 +106,14 @@ jobs:
       - name: Download OpenBLAS
         shell: powershell
         run: |
-          #Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
-          #tar -xvf v0.3.19.tar.gz
+          Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
+          tar -xvf v0.3.19.tar.gz
       - name: Install OpenBLAS
         run: |
-          #tar -xvf v0.3.19.tar.gz
           #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
           #cmake --build build_openblas --parallel 4
           #cmake --install build_openblas
-        shell: bash  
+        shell: powershell
       - name: Download SuperLU
         shell: powershell
         run: |
@@ -139,7 +137,7 @@ jobs:
           #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
           cmake --build build_armadillo
           cmake --install build_armadillo
-        shell: powershell #bash
+        shell: powershell
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
