@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 jobs:
   build-for-windows:
-    runs-on: [windows-2019]  # [windows-2022, windows-latest] 
+    runs-on: [windows-latest, windows-2022, windows-2019]
     strategy:
       matrix:
         qt_version: [6.2.1]
