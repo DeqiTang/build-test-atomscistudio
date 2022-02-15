@@ -122,7 +122,7 @@ jobs:
       - name: Install SuperLU
         run: |
           cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
-          cmake --build build_superlu
+          cmake --build build_superlu --parallel 4
           cmake --install build_superlu
         shell: bash 
       - name: Download armadillo
@@ -131,6 +131,8 @@ jobs:
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
       - name: Extract armadillo
         shell: bash
+        # tar in powershell can deal with tar.gz
+        # but tar.xz need to be extracted in bash 
         run: |
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
