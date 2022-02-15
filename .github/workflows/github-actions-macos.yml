@@ -11,7 +11,7 @@ jobs:
     runs-on: [macos-10.15] 
     strategy:
       matrix:
-        os: [macos-10.15]
+        os: [macos-10.15, macos-11]
         qt_version: [6.2.2, 6.2.1]
     env:
       executable: atomscistudio
@@ -55,7 +55,7 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build #-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
+          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
           cmake --build build
           cmake --install build
         shell: bash
@@ -64,7 +64,7 @@ jobs:
           fetch-depth: 1
       - name: Build for MacOS
         run: |
-          cmake -B build -DCMAKE_MACOSX_BUNDLE=True #-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
+          cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
           cmake --build build --config Release
           cmake --install build
       - name: packaging
