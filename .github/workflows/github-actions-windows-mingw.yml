@@ -16,6 +16,10 @@ jobs:
     env:
       executable: atomscistudio
     steps: 
+      - name:Install dependencies using package manager
+        shell: powershell
+        run: |
+          vcpkg install lapack-reference openblas blas
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
