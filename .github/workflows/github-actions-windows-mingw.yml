@@ -51,11 +51,12 @@ jobs:
       - name: Download OpenSSL
         shell: powershell
         run: |
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
+          #tar -xvf openssl-3.0.0.tar.gz
       - name: Build OpenSSL
         shell: powershell
         run: |
-          #tar -xvf openssl-3.0.0.tar.gz
           #cd openssl-openssl-3.0.0
           #./Configure
           #make
