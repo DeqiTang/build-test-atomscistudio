@@ -46,7 +46,7 @@ jobs:
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
+          git clone https://github.com/deqitang/atomsciflow.git
           cmake build-test-atomsciflow -B build
           cmake --build build
           sudo cmake --install build
@@ -59,7 +59,7 @@ jobs:
           cmake --build build
           sudo cmake --install build
           cp build atomsciflow-cmake-build -r
-          tar -czvf atomsciflow-cmake-build.tar.gz atomsciflow-cmake-build          
+          tar -czvf atomsciflow-cmake-build.tar.gz atomsciflow-cmake-build
           ldd build/atomscistudio
           # prepare for the followed deb build
           mkdir -p debian/usr/bin
@@ -82,7 +82,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: atomsciflow-cmake-build.tar.gz
-          path: atomsciflow-cmake-build.tar.gz    
+          path: atomsciflow-cmake-build.tar.gz
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2

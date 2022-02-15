@@ -66,15 +66,16 @@ jobs:
           #./Configure
           #make
           #make install
-          ls 'C:/Windows/System32/'
+          ls 'C:/Windows/System32'
           choco install openssl
-          ls 'C:/Windows/System32/'
+          ls 'C:/Windows/System32'
           choco install openssl.light --version 1.1.1
           choco install openssl.light --version 3.0.0
+          choco upgrade openssl.light
           ls 'C:/Program Files/'
           ls 'C:/Program Files/OpenSSL'
           ls 'C:/Program Files/OpenSSL-Win64'
-          ls 'C:/Program Files/OpenSSL-Win64/lib'
+          ls 'C:/Program Files/OpenSSL-Win64/lib'          
       - name: Download libssh2
         shell: powershell
         run: |
@@ -151,7 +152,7 @@ jobs:
         shell: bash
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
+          git clone https://github.com/deqitang/atomsciflow.git
           cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DLIBSSH2_BUILD_TOOL=cmake -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DCMAKE_INCLUDE_PATH='C:/Program Files (x86)/libssh2/include' -DLIBSSH2_ROOT="C:/Program FIles (x86)/libssh2"
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
@@ -177,11 +178,11 @@ jobs:
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
-          ldd ${env:archive_name}\${env:executable}'.exe' 
-          Copy-Item 'C:/Windows/System32/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
-          Copy-Item 'C:/Windows/System32/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll
-          #Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/openssl-license.txt
-          Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
+          ldd ${env:archive_name}\${env:executable}'.exe'
+          #Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
+          #Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll          
+          #Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/license.txt
+          #Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
       - uses: actions/upload-artifact@v2
