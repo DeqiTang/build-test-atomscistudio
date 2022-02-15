@@ -16,7 +16,7 @@ jobs:
     env:
       executable: atomscistudio
     steps: 
-      - name:Install dependencies using package manager
+      - name: Install dependencies using package manager
         shell: powershell
         run: |
           vcpkg install lapack-reference openblas blas
