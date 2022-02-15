@@ -182,7 +182,7 @@ jobs:
           ldd ${env:archive_name}\${env:executable}'.exe'
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}/libcrypto-1_1-x64.dll
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}/libssl-1_1-x64.dll          
-          Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/license.txt
+          Copy-Item 'C:/Program Files/OpenSSL-Win64/license.txt' ${env:archive_name}/license-of-openssl.txt
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
