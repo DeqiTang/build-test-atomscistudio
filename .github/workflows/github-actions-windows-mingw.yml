@@ -41,9 +41,6 @@ jobs:
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
-      - name: Extract GoogleTest
-        shell: bash
-        run: |
           tar -xvf release-1.11.0.tar.gz
       - name: Build GoogleTest
         shell: powershell
@@ -51,10 +48,13 @@ jobs:
           cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
           cmake --build build_gtest --config Release
           cmake --install build_gtest
-      - name: Build OpenSSL
+      - name: Download OpenSSL
         shell: powershell
         run: |
           #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
+      - name: Build OpenSSL
+        shell: powershell
+        run: |
           #tar -xvf openssl-3.0.0.tar.gz
           #cd openssl-openssl-3.0.0
           #./Configure
@@ -70,11 +70,14 @@ jobs:
           ls 'C:/Program Files/OpenSSL'
           ls 'C:/Program Files/OpenSSL-Win64'
           ls 'C:/Program Files/OpenSSL-Win64/lib'          
-      - name: Install libssh2
+      - name: Download libssh2
         shell: powershell 
         run: |
           Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
           tar -xvf libssh2-1.10.0.tar.gz
+      - name: Install libssh2
+        shell: powershell 
+        run: |
           cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/openssl'
           cmake --build build_libssh2
           cmake --install build_libssh2
@@ -82,9 +85,6 @@ jobs:
         shell: powershell 
         run: |
           Invoke-WebRequest -Uri http://www.netlib.org/blas/blas-3.10.0.tgz -OutFile blas-3.10.0.tgz
-      - name: Extract BLAS
-        shell: bash
-        run: |
           tar -xvf blas-3.10.0.tgz
       - name: Install BLAS
         run: |
@@ -96,9 +96,9 @@ jobs:
         shell: powershell
         run: |
           Invoke-WebRequest -Uri http://www.netlib.org/lapack/lapack-3.8.0.tar.gz -OutFile lapack-3.8.0.tar.gz
+          tar -xvf lapack-3.8.0.tar.gz
       - name: Install LAPACK
         run: |
-          tar -xvf lapack-3.8.0.tar.gz
           cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
           cmake --build build_lapack --parallel 4
           cmake --install build_lapack
@@ -106,22 +106,22 @@ jobs:
       - name: Download OpenBLAS
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
-          tar -xvf v0.3.19.tar.gz
+          #Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
+          #tar -xvf v0.3.19.tar.gz
       - name: Install OpenBLAS
         run: |
           #tar -xvf v0.3.19.tar.gz
           #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
-          #cmake --build build_openblas
+          #cmake --build build_openblas --parallel 4
           #cmake --install build_openblas
         shell: bash  
       - name: Download SuperLU
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://github.com/xiaoyeli/superlu/archive/refs/tags/v5.3.0.tar.gz -OutFile v5.3.0.tar.gz
+          tar -xvf v5.3.0.tar.gz
       - name: Install SuperLU
         run: |
-          tar -xvf v5.3.0.tar.gz
           cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
           cmake --build build_superlu --parallel 4
           cmake --install build_superlu
@@ -130,9 +130,9 @@ jobs:
         shell: powershell
         run: |
           Invoke-WebRequest -Uri https://iweb.dl.sourceforge.net/project/arma/armadillo-10.8.1.tar.xz -OutFile armadillo-10.8.1.tar.xz
+          tar -xvf armadillo-10.8.1.tar.xz
       - name: Install armadillo
         run: |
-          tar -xvf armadillo-10.8.1.tar.xz
           cmake armadillo-10.8.1 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo"
           #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
           #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
