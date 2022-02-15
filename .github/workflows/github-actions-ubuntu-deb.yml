@@ -58,6 +58,7 @@ jobs:
           sudo cmake --install build
           cp build atomsciflow-cmake-build -r
           tar -czvf atomsciflow-cmake-build.tar.gz atomsciflow-cmake-build          
+          ldd build/atomscistudio
           # prepare for the followed deb build
           mkdir -p debian/usr/bin
           mkdir -p debian/usr/lib
