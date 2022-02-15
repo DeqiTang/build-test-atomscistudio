@@ -11,7 +11,7 @@ jobs:
     runs-on: [windows-2019]  # [windows-2022, windows-latest] 
     strategy:
       matrix:
-        qt_version: [6.2.2]
+        qt_version: [6.2.1]
         qt_arch: [win64_mingw81]
     env:
       executable: atomscistudio
