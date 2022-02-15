@@ -11,16 +11,11 @@ jobs:
     runs-on: [windows-2019]  # [windows-2022, windows-latest] 
     strategy:
       matrix:
-        qt_version: [6.2.0]
+        qt_version: [6.2.2]
         qt_arch: [win64_mingw81]
     env:
       executable: atomscistudio
     steps: 
-      - name: Install dependencies using package manager
-        shell: powershell
-        run: |
-          #vcpkg install lapack-reference openblas blas
-          #vcpkg install libssh2 openssl
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
