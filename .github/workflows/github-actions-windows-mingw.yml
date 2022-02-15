@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 jobs:
   build-for-windows:
-    runs-on: [windows-latest, windows-2019] # windows-latest
+    runs-on: [windows-latest] # windows-latest
     strategy:
       matrix:
         qt_version: [6.2.1]
@@ -101,7 +101,7 @@ jobs:
       - name: Install BLAS
         run: |
           cmake BLAS-3.10.0 -B build_blas -G "MinGW Makefiles"
-          cmake --build build_blas
+          cmake --build build_blas --parallel 4
           cmake --install build_blas
         shell: powershell
       - name: Download LAPACK
@@ -134,7 +134,7 @@ jobs:
         run: |
           tar -xvf v5.3.0.tar.gz
           cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
-          cmake --build build_superlu
+          cmake --build build_superlu --parallel 4
           cmake --install build_superlu
         shell: bash 
       - name: Download armadillo
