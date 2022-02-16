@@ -57,7 +57,6 @@ jobs:
         shell: powershell
         run: |
           choco install openssl
-          #choco install openssl.light --version 3.0.0
           choco upgrade openssl.light
       - name: Download libssh2
         shell: powershell 
@@ -99,9 +98,9 @@ jobs:
           tar -xvf v0.3.19.tar.gz
       - name: Install OpenBLAS
         run: |
-          #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
-          #cmake --build build_openblas --parallel 4
-          #cmake --install build_openblas
+          cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
+          cmake --build build_openblas --parallel 4
+          cmake --install build_openblas
         shell: powershell
       - name: Download SuperLU
         shell: powershell
