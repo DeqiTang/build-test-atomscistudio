@@ -8,7 +8,7 @@ on:
     branches: [ master ]
 jobs:
   build-for-windows:
-    runs-on: [windows-2019] # windows-latest
+    runs-on: [windows-2019]
     strategy:
       matrix:
         qt_version: [6.2.1]
@@ -51,25 +51,15 @@ jobs:
       - name: Download OpenSSL
         shell: powershell
         run: |
-          #Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz -OutFile openssl-3.0.0.tar.gz
-          #tar -xvf openssl-3.0.0.tar.gz
+          Invoke-WebRequest -Uri https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz -OutFile openssl-3.0.1.tar.gz
+          tar -xvf openssl-3.0.1.tar.gz
       - name: Build OpenSSL
         shell: powershell
         run: |
-          #cd openssl-openssl-3.0.0
-          #./Configure
-          #make
-          #make install
-          ls 'C:/Windows/System32'
           choco install openssl
-          ls 'C:/Windows/System32'
-          choco install openssl.light --version 1.1.1
-          choco install openssl.light --version 3.0.0
+          #choco install openssl.light --version 1.1.1
+          #choco install openssl.light --version 3.0.0
           choco upgrade openssl.light
-          ls 'C:/Program Files/'
-          ls 'C:/Program Files/OpenSSL'
-          ls 'C:/Program Files/OpenSSL-Win64'
-          ls 'C:/Program Files/OpenSSL-Win64/lib'          
       - name: Download libssh2
         shell: powershell 
         run: |
@@ -78,7 +68,7 @@ jobs:
       - name: Install libssh2
         shell: powershell 
         run: |
-          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/openssl'
+          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
           cmake --build build_libssh2
           cmake --install build_libssh2
       - name: Download BLAS
