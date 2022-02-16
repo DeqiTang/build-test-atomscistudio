@@ -100,7 +100,7 @@ jobs:
         run: |
           #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
           #cmake --build build_openblas --parallel 4
-          #cmake --install build_openblas
+          #cmake --install build_openblas 
         shell: powershell
       - name: Download SuperLU
         shell: powershell
