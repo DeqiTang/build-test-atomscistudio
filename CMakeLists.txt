@@ -39,13 +39,13 @@ set(LIBSSH2_BUILD_TOOL "autotools" CACHE STRING "Specify the build tool used for
 if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(Libssh2 REQUIRED CONFIG)
-    message("${LIBSSH2_ROOT}")
-    include_directories(
-        ${LIBSSH2_ROOT}/include
-    )
+    message("Found Libssh2: ${LIBSSH2_ROOT}")
     #include_directories(
-    #    ${Libssh2_INCLUDE_DIR}
+    #    ${LIBSSH2_ROOT}/include
     #)
+    include_directories(
+        ${Libssh2_INCLUDE_DIR}
+    )
     link_libraries(${Libssh2_LIBRARIES})
     message("${Libssh2_LIBRARIES}")
     link_directories(
