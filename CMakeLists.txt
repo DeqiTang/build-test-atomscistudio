@@ -49,9 +49,9 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     )
     link_libraries(${Libssh2_LIBRARIES})
     message("${Libssh2_LIBRARIES}")
-    link_directories(
-        ${LIBSSH2_ROOT}/lib
-    )
+    #link_directories(
+    #    ${LIBSSH2_ROOT}/lib
+    #)
     #link_libraries("-lssh2")
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
