@@ -57,9 +57,8 @@ jobs:
         shell: powershell
         run: |
           choco install openssl
-          #choco install openssl.light --version 1.1.1
-          #choco install openssl.light --version 3.0.0
-          choco upgrade openssl.light
+          choco install openssl.light --version 3.0.0
+          #choco upgrade openssl.light
       - name: Download libssh2
         shell: powershell 
         run: |
