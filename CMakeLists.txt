@@ -44,9 +44,9 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     #include_directories(
     #    ${LIBSSH2_ROOT}/include
     #)
-    include_directories(
-        ${Libssh2_INCLUDE_DIR}
-    )
+    #include_directories(
+    #    ${Libssh2_INCLUDE_DIR}
+    #)
     link_libraries(${Libssh2_LIBRARIES})
     message("${Libssh2_LIBRARIES}")
     #link_directories(
