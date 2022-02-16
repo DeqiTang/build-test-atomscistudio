@@ -98,9 +98,9 @@ jobs:
           tar -xvf v0.3.19.tar.gz
       - name: Install OpenBLAS
         run: |
-          cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
-          cmake --build build_openblas --parallel 4
-          cmake --install build_openblas
+          #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
+          #cmake --build build_openblas --parallel 4
+          #cmake --install build_openblas
         shell: powershell
       - name: Download SuperLU
         shell: powershell
@@ -125,9 +125,7 @@ jobs:
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         run: |
-          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo"
-          #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
-          #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
+          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' #-DCMAKE_LIBRARY_PATH='C:/Program Files (x86)/SuperLU/lib;C:/Program Files (x86)/OpenBLAS;C:/Program Files (x86)/LAPACK/lib;C:/Program Files (x86)/BLAS/lib' 
           cmake --build build_armadillo
           cmake --install build_armadillo
         shell: powershell
