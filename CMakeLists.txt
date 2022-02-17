@@ -42,16 +42,16 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     message("Found Libssh2 root: ${LIBSSH2_ROOT}")
     message("Found Libssh2 include: ${Libssh2_INCLUDE_DIR}")
     #link_libraries(${Libssh2_LIBRARIES})
-    message("${Libssh2_LIBRARIES}")
+    message("Found Libssh2 libraries: ${Libssh2_LIBRARIES}")
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
     pkg_check_modules(LIBSSH2 libssh2)
-    link_directories(
-        ${LIBSSH2_LIBRARY_DIRS}
-    )
-    message("LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
-    #link_libraries("-lssh2")
+    #link_directories(
+    #    ${LIBSSH2_LIBRARY_DIRS}
+    #)
+    message("Found LIBSSH2_LIBRARY_DIRS: ${LIBSSH2_LIBRARY_DIRS}")
+    message("Found LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
     #link_libraries(${LIBSSH2_LIBRARIES})
 endif()
 
