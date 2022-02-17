@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Install dependencies using brew
         run: |
-          brew install llvm # for openmp support
+          brew install llvm 
           brew install openssl@3
           #brew install openssl@1.1
           #brew install libssh2
