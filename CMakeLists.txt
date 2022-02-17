@@ -32,6 +32,8 @@ if (OPENSSL_FOUND)
     message("Found OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
     message("Found OpenSSL SSL library: ${OPENSSL_SSL_LIBRARY}")
     message("Found OpenSSL Crypto library: ${OPENSSL_CRYPTO_LIBRARY}")
+    link_libraries(OpenSSL::SSL)
+    link_libraries(OpenSSL::Crypto)
 endif()
 
 # libssh2
@@ -47,9 +49,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
     pkg_check_modules(LIBSSH2 libssh2)
-    #link_directories(
-    #    ${LIBSSH2_LIBRARY_DIRS}
-    #)
+    link_directories(${LIBSSH2_LIBRARY_DIRS})
     message("Found LIBSSH2_LIBRARY_DIRS: ${LIBSSH2_LIBRARY_DIRS}")
     message("Found LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
     #link_libraries(${LIBSSH2_LIBRARIES})
