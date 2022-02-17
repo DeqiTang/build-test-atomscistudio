@@ -140,7 +140,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        #${LIBSSH2_LIBRARIES}
+        ${LIBSSH2_LIBRARIES}
         #OpenSSL::SSL
         #OpenSSL::Crypto
     )
