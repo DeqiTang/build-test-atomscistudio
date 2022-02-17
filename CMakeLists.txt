@@ -123,8 +123,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
         Libssh2::libssh2
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        #OpenSSL::SSL
+        #OpenSSL::Crypto
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
@@ -139,8 +139,8 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
         ${LIBSSH2_LIBRARIES}
-        OpenSSL::SSL
-        OpenSSL::Crypto
+        #OpenSSL::SSL
+        #OpenSSL::Crypto
     )
 endif()
 
