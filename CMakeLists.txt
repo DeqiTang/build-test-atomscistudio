@@ -45,6 +45,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     message("Found Libssh2 include: ${Libssh2_INCLUDE_DIR}")
     #link_libraries(${Libssh2_LIBRARIES})
     message("Found Libssh2 libraries: ${Libssh2_LIBRARIES}")
+    link_libraries(Libssh2::libssh2)
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
@@ -53,6 +54,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("Found LIBSSH2_LIBRARY_DIRS: ${LIBSSH2_LIBRARY_DIRS}")
     message("Found LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
     #link_libraries(${LIBSSH2_LIBRARIES})
+    link_libraries(${LIBSSH2_LIBRARIES})
 endif()
 
 
@@ -122,7 +124,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        Libssh2::libssh2
+        #Libssh2::libssh2
         #OpenSSL::SSL
         #OpenSSL::Crypto
     )
@@ -138,7 +140,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        ${LIBSSH2_LIBRARIES}
+        #${LIBSSH2_LIBRARIES}
         #OpenSSL::SSL
         #OpenSSL::Crypto
     )
