@@ -124,7 +124,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        #Libssh2::libssh2
+        Libssh2::libssh2
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
