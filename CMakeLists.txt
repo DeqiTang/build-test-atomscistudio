@@ -87,7 +87,8 @@ file(GLOB PROJECT_SOURCES
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         set(MACOSX TRUE)
-        qt_add_executable(atomscistudio
+        add_executable(atomscistudio
+        #qt_add_executable(atomscistudio
             MACOSX_BUNDLE
             ${PROJECT_SOURCES}
         )
@@ -95,7 +96,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
             BUNDLE True
         )
     else()
-        qt_add_executable(atomscistudio
+        add_executable(atomscistudio
+        #qt_add_executable(atomscistudio
             ${PROJECT_SOURCES}
         )
     endif()        
