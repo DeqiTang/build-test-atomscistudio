@@ -44,6 +44,7 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
     message("Found Libssh2 root: ${LIBSSH2_ROOT}")
     message("Found Libssh2 include: ${Libssh2_INCLUDE_DIR}")
     message("Found Libssh2 libraries: ${Libssh2_LIBRARIES}")
+    set(LIBSSH2_LIBS Libssh2::libssh2)
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     message("The specified build tool for libssh2 is: " "${LIBSSH2_BUILD_TOOL}")
     find_package(PkgConfig)
@@ -51,6 +52,7 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     link_directories(${LIBSSH2_LIBRARY_DIRS})
     message("Found LIBSSH2_LIBRARY_DIRS: ${LIBSSH2_LIBRARY_DIRS}")
     message("Found LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
+    set(LIBSSH2_LIBS ${LIBSSH2_LIBRARIES})
 endif()
 
 
@@ -120,7 +122,8 @@ if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        Libssh2::libssh2
+        #Libssh2::libssh2
+        ${LIBSSH2_LIBS}
     )
 elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
     target_link_libraries(atomscistudio
@@ -134,7 +137,8 @@ elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
         PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
         #${OPENGL_LIBRARIES}
         #${GLUT_LIBRARY}
-        ${LIBSSH2_LIBRARIES}
+        #${LIBSSH2_LIBRARIES}
+        ${LIBSSH2_LIBS}
     )
 endif()
 
