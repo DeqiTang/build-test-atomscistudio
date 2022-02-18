@@ -29,6 +29,7 @@ include_directories(
 
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
+    message("Found OPENSSL_ROOT_DIR ${OPENSSL_ROOT_DIR}")
     message("Found OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
     message("Found OpenSSL SSL library: ${OPENSSL_SSL_LIBRARY}")
     message("Found OpenSSL Crypto library: ${OPENSSL_CRYPTO_LIBRARY}")
@@ -120,7 +121,6 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
-    #Libssh2::libssh2
     ${LIBSSH2_LIBS}
 )
 
