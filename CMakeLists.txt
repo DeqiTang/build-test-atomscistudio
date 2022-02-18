@@ -39,17 +39,17 @@ endif()
 # libssh2
 find_package(Libssh2 CONFIG)
 if (Libssh2_FOUND)
-    set(LIBSSH2_LIBS Libssh2::libssh2)
+    set(LIBSSH2_FOUND_LIBS Libssh2::libssh2)
 else ()
     find_package(PkgConfig)
     pkg_check_modules(LIBSSH2 libssh2)
     link_directories(${LIBSSH2_LIBRARY_DIRS})
     message("Found LIBSSH2_LIBRARY_DIRS: ${LIBSSH2_LIBRARY_DIRS}")
     message("Found LIBSSH2_LIBRARIES: ${LIBSSH2_LIBRARIES}")
-    set(LIBSSH2_LIBS ${LIBSSH2_LIBRARIES})
+    set(LIBSSH2_FOUND_LIBS ${LIBSSH2_LIBRARIES})
 endif()
 
-if (NOT DEFINED LIBSSH2_LIBS)
+if (NOT DEFINED LIBSSH2_FOUND_LIBS)
     message("libssh2 not found, neither with cmake, nor PkgConfig")
     message("Stop cmake")
     exit()
@@ -126,7 +126,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
-    ${LIBSSH2_LIBS}
+    ${LIBSSH2_FOUND_LIBS}
 )
 
 # ------------------------------------------------
