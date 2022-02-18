@@ -109,38 +109,20 @@ else()
     endif()
 endif()
 
-
-if (LIBSSH2_BUILD_TOOL STREQUAL "cmake")
-    target_link_libraries(atomscistudio
-        PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-        PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL
-        PRIVATE Qt${QT_VERSION_MAJOR}::Gui
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DCore
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DRender
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
-        PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
-        #${OPENGL_LIBRARIES}
-        #${GLUT_LIBRARY}
-        #Libssh2::libssh2
-        ${LIBSSH2_LIBS}
-    )
-elseif (LIBSSH2_BUILD_TOOL STREQUAL "autotools")
-    target_link_libraries(atomscistudio
-        PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-        PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL
-        PRIVATE Qt${QT_VERSION_MAJOR}::Gui
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DCore
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DRender
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
-        PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
-        PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
-        #${OPENGL_LIBRARIES}
-        #${GLUT_LIBRARY}
-        #${LIBSSH2_LIBRARIES}
-        ${LIBSSH2_LIBS}
-    )
-endif()
+target_link_libraries(atomscistudio
+    PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+    PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL
+    PRIVATE Qt${QT_VERSION_MAJOR}::Gui
+    PRIVATE Qt${QT_VERSION_MAJOR}::3DCore
+    PRIVATE Qt${QT_VERSION_MAJOR}::3DRender
+    PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
+    PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
+    PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
+    #${OPENGL_LIBRARIES}
+    #${GLUT_LIBRARY}
+    #Libssh2::libssh2
+    ${LIBSSH2_LIBS}
+)
 
 # ------------------------------------------------
 #                   set install
