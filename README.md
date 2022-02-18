@@ -22,9 +22,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
 ## Licenses and Acknowledges for third party softwares
-Atomscistudio makes use of lots of third party softwares. They have their own licenses, and here below is an incomplete but growing list of licenses and acknowledgements for them.
+Atomscistudio is itself licensed under the MIT license. However, Atomscistudio
+also makes use of lots of third party softwares. They have their own licenses, 
+and here below is an incomplete but growing list of licenses and acknowledgements for them.
 
-* Qt 6.0 is licensed under
+* Qt 6.0 is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.txt) and [GPL v3](https://www.gnu.org/licenses/gpl-3.0.txt).
 * Boost is licensed under [Boost Software License 1.0](https://www.boost.org/LICENSE_1_0.txt).
 * OpenSSL 1.1.1, 1.1.0, 1.0.2 are licensed under [the dual OpenSSL and SSLeay license](https://www.openssl.org/source/license-openssl-ssleay.txt).
 * OpenSSL 3.0 and later releases are licensed under [Apache License v2](https://www.openssl.org/source/apache-license-2.0.txt).
@@ -34,7 +36,7 @@ Atomscistudio makes use of lots of third party softwares. They have their own li
 * LAPACK is licensed under the [modified BSD license](http://www.netlib.org/lapack/LICENSE.txt).
 * atomsciflow is licensed under [MIT License](https://opensource.org/licenses/MIT)
 
-The binary distribution of atomscistudio may or may not contain 
+The binary distribution of Atomscistudio may or may not contain 
 the binary files of the used third party softwares, depending
 on the availability of them on the target system.
 
