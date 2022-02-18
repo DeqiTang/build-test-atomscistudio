@@ -35,6 +35,8 @@ and here below is an incomplete but growing list of licenses and acknowledgement
 * BLAS is a freely-available software package.
 * LAPACK is licensed under the [modified BSD license](http://www.netlib.org/lapack/LICENSE.txt).
 * atomsciflow is licensed under [MIT License](https://opensource.org/licenses/MIT)
+The text version of License for each of the used third party softwares
+is included in the `license/third_party` directory of this project.
 
 The binary distribution of Atomscistudio may or may not contain 
 the binary files of the used third party softwares, depending
