@@ -158,11 +158,10 @@ jobs:
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
           ldd ${env:archive_name}\${env:executable}'.exe'
-          New-Item -ItemType Directory ${env:archive_name}\third_party\license
-          ls
-          ls ..
           Copy-Item README.md ${env:archive_name}\README.md
+          Copy-Item LICENSE ${env:archive_name}\LICENSE
           Copy-Item NOTICE ${env:archive_name}\NOTICE
+          New-Item -ItemType Directory ${env:archive_name}\third_party\license
           Copy-Item third_party\license\* ${env:archive_name}\third_party\license\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
