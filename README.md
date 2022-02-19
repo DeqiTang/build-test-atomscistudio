@@ -32,14 +32,15 @@ of licenses and acknowledgements for them.
 * Boost is licensed under [Boost Software License 1.0](https://www.boost.org/LICENSE_1_0.txt).
 * OpenSSL 1.1.1, 1.1.0, 1.0.2 are licensed under [the dual OpenSSL and SSLeay license](https://www.openssl.org/source/license-openssl-ssleay.txt).
 * OpenSSL 3.0 and later releases are licensed under [Apache License v2](https://www.openssl.org/source/apache-license-2.0.txt).
-* Libssh2 is licensed under [BSD-3-Clause License](https://opensource.org/licenses/BSD-3-Clause).
+* Libssh2 is licensed under [BSD-3-Clause License](https://github.com/libssh2/libssh2/blob/master/COPYING).
 * Armadillo is licensed under [Apache License v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 * BLAS is a freely-available software package.
 * LAPACK is licensed under the [modified BSD license](http://www.netlib.org/lapack/LICENSE.txt).
-* Atomsciflow is licensed under [MIT License](https://opensource.org/licenses/MIT)
+* Atomsciflow is licensed under [MIT License](https://github.com/DeqiTang/atomsciflow/blob/master/LICENSE)
 
-The text version of Licenses for all the used third party softwares
+The text version of licenses for all the used third party softwares
 are included in the `third_party/license` directory of this project.
+Refer to the `NOTICE` file for more information.
 
 The binary distribution of Atomscistudio may or may not contain 
 the binary files of the used third party softwares, depending
