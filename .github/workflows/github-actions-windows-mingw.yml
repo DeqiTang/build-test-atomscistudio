@@ -139,8 +139,8 @@ jobs:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
         shell: powershell
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
+        #with:
+        #  fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
           cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
@@ -159,13 +159,11 @@ jobs:
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
           ldd ${env:archive_name}\${env:executable}'.exe'
           New-Item -ItemType Directory ${env:archive_name}\license\third_party
+          ls
           Copy-Item README.md ${env:archive_name}\README.md
           Copy-Item NOTICE ${env:archive_name}\NOTICE
-          Copy-Item LICENSE ${env:archive_name}\'LICENSE.txt'
+          Copy-Item license\license-of-Atomscistudio-gpl-3.0.txt ${env:archive_name}\'LICENSE.txt'
           Copy-Item license\third_party\* ${env:archive_name}\license\third_party\
-          ls
-          ls ${env:archive_name}\license\third_party\
-          ls
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
