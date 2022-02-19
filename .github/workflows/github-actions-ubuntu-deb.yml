@@ -68,8 +68,8 @@ jobs:
           cp README.md debian/
           cp LICENSE debian/
           cp NOTICE debian/
-          mkdir -p debian/license/third_party/
-          cp license/third_party/* debian/license/third_party/
+          mkdir -p debian/third_party/license/
+          cp third_party/license/* debian/third_party/license/
           deb_version=${{ github.ref }}
           deb_version=${deb_version/refs\/tags\/v/} # remove refs/tags/v, keep digits
           echo "::set-output name=deb_version::${deb_version}" 
