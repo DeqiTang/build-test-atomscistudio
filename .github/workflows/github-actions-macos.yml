@@ -57,12 +57,12 @@ jobs:
           cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
           cmake --build build --config Release
           cmake --install build
+          ls build/${executable}.app/Contents/
           cp README.md build/${executable}.app/Contents/
-          cp LICENSE build/${executable}.app/Contents/LICENSE
+          cp LICENSE build/${executable}.app/Contents/
           cp NOTICE build/${executable}.app/Contents/
           mkdir -p build/${executable}.app/Contents/license/third_party
           cp license/third_party/* build/${executable}.app/Contents/license/third_party
-          cp README.md build/${executable}.app/Contents/
       - name: packaging
         run: |
           macdeployqt build/${executable}.app -verbose=2 -dmg
