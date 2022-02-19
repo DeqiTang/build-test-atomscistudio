@@ -160,6 +160,7 @@ jobs:
           ldd ${env:archive_name}\${env:executable}'.exe'
           New-Item -ItemType Directory ${env:archive_name}\license\third_party
           ls
+          ls ..
           Copy-Item README.md ${env:archive_name}\README.md
           Copy-Item NOTICE ${env:archive_name}\NOTICE
           Copy-Item license\license-of-Atomscistudio-gpl-3.0.txt ${env:archive_name}\'LICENSE.txt'
