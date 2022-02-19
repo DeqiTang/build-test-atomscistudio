@@ -57,7 +57,9 @@ jobs:
           cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
           cmake --build build --config Release
           cmake --install build
-          ls build/${executable}.app/Contents/
+          ls
+          file LICENSE
+          ls LICENSE
           cp README.md build/${executable}.app/Contents/
           cp LICENSE build/${executable}.app/Contents/
           cp NOTICE build/${executable}.app/Contents/

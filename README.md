@@ -39,7 +39,7 @@ of licenses and acknowledgements for them.
 * Atomsciflow is licensed under [MIT License](https://opensource.org/licenses/MIT)
 
 The text version of Licenses for all the used third party softwares
-are included in the `license/third_party` directory of this project.
+are included in the `third_party/license` directory of this project.
 
 The binary distribution of Atomscistudio may or may not contain 
 the binary files of the used third party softwares, depending

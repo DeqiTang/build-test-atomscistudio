@@ -139,8 +139,8 @@ jobs:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
         shell: powershell
       - uses: actions/checkout@v2
-        #with:
-        #  fetch-depth: 1
+        with:
+          fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
           cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS'
