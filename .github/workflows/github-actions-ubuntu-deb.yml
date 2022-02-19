@@ -65,7 +65,7 @@ jobs:
           mkdir -p debian/usr/bin
           mkdir -p debian/usr/lib
           cp build/atomscistudio debian/usr/bin
-          cp README debian/
+          cp README.md debian/
           cp LICENSE debian/
           cp NOTICE debian/
           mkdir -p debian/license/third_party/
