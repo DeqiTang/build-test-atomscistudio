@@ -65,6 +65,11 @@ jobs:
           mkdir -p debian/usr/bin
           mkdir -p debian/usr/lib
           cp build/atomscistudio debian/usr/bin
+          cp README debian/
+          cp LICENSE debian/
+          cp NOTICE debian/
+          mkdir -p debian/license/third_party/
+          cp license/third_party/* debian/license/third_party/
           deb_version=${{ github.ref }}
           deb_version=${deb_version/refs\/tags\/v/} # remove refs/tags/v, keep digits
           echo "::set-output name=deb_version::${deb_version}" 
