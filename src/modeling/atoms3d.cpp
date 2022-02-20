@@ -37,7 +37,7 @@ Atoms3D::Atoms3D(QWidget* parent, Qt3DCore::QEntity* root_entity)
     action_delete_atom->setText(QObject::tr("Delete Atom"));
 
     auto action_change_atom = new QWidgetAction(this);
-    action_change_atom->setText(QObject::tr("Change Atom"));
+    action_change_atom->setText(tr("Change Atom"));
     this->m_rightpop_menu->addAction(action_delete_atom);
     this->m_rightpop_menu->addAction(action_change_atom);
 

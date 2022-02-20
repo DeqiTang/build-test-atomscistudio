@@ -44,6 +44,7 @@ public:
     };
 
     void export_to_image();
+    void popup_about();
 
     QWidget* m_central_widget;
 
