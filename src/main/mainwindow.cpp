@@ -43,53 +43,53 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     this->m_root_menubar->addMenu(menu_file);
     menu_file->setTitle("&File");
     menu_file->setObjectName(QObject::tr("File"));
-    auto action_new = new QAction(this->m_root_menubar);
-    menu_file->addAction(action_new);
-    action_new->setObjectName(tr("New"));
-    action_new->setText(tr("New"));
-    action_new->setToolTip(tr("New project"));
-    action_new->setStatusTip(tr("New project"));
-    action_new->setShortcuts(QKeySequence::New);
-    auto action_open = new QAction(this->m_root_menubar);
-    menu_file->addAction(action_open);
-    action_open->setObjectName("Open");
-    action_open->setText(tr("Open"));
-    action_open->setStatusTip("Open a project");
-    action_open->setShortcuts(QKeySequence::Open);
-    auto action_close = new QAction(this->m_root_menubar);
-    menu_file->addAction(action_close);
-    action_close->setObjectName(tr("Close"));
-    action_close->setText(tr("Close"));
+    auto action_file_new = new QAction(this->m_root_menubar);
+    menu_file->addAction(action_file_new);
+    action_file_new->setObjectName(tr("New"));
+    action_file_new->setText(tr("New"));
+    action_file_new->setToolTip(tr("New project"));
+    action_file_new->setStatusTip(tr("New project"));
+    action_file_new->setShortcuts(QKeySequence::New);
+    auto action_file_open = new QAction(this->m_root_menubar);
+    menu_file->addAction(action_file_open);
+    action_file_open->setObjectName("Open");
+    action_file_open->setText(tr("Open"));
+    action_file_open->setStatusTip("Open a project");
+    action_file_open->setShortcuts(QKeySequence::Open);
+    auto action_file_close = new QAction(this->m_root_menubar);
+    menu_file->addAction(action_file_close);
+    action_file_close->setObjectName(tr("Close"));
+    action_file_close->setText(tr("Close"));
     menu_file->addSeparator()->setText(tr("Project"));
     auto menu_file_export = new QMenu(this->m_root_menubar);
     menu_file->addMenu(menu_file_export);
-    auto action_export_image = new QAction(this->m_root_menubar);
-    menu_file_export->addAction(action_export_image);
+    auto action_file_export_image = new QAction(this->m_root_menubar);
+    menu_file_export->addAction(action_file_export_image);
     menu_file_export->setTitle(tr("Export"));
-    action_export_image->setObjectName(QObject::tr("Export Image"));
-    action_export_image->setText("Export Image");
-    QObject::connect(action_export_image, &QAction::triggered, this, &MainWindow::export_to_image);
+    action_file_export_image->setObjectName(QObject::tr("Export Image"));
+    action_file_export_image->setText("Export Image");
+    QObject::connect(action_file_export_image, &QAction::triggered, this, &MainWindow::export_to_image);
 
     auto menu_edit = new QMenu(m_root_menubar);
     this->m_root_menubar->addMenu(menu_edit);
     menu_edit->setTitle("&Edit");
     menu_edit->setObjectName(QObject::tr("Edit"));
-    auto action_undo = new QAction(this->m_root_menubar);
-    menu_edit->addAction(action_undo);
-    action_undo->setObjectName(tr("Undo"));
-    action_undo->setText(tr("Undo"));
-    action_undo->setShortcut(tr("Ctrl+Z"));
-    auto action_redo = new QAction(this->m_root_menubar);
-    menu_edit->addAction(action_redo);
-    action_redo->setObjectName(tr("Redo"));
-    action_redo->setText(tr("Redo"));
-    action_redo->setShortcut(tr("Ctrl+Shift+Z"));
+    auto action_edit_undo = new QAction(this->m_root_menubar);
+    menu_edit->addAction(action_edit_undo);
+    action_edit_undo->setObjectName(tr("Undo"));
+    action_edit_undo->setText(tr("Undo"));
+    action_edit_undo->setShortcut(tr("Ctrl+Z"));
+    auto action_edit_redo = new QAction(this->m_root_menubar);
+    menu_edit->addAction(action_edit_redo);
+    action_edit_redo->setObjectName(tr("Redo"));
+    action_edit_redo->setText(tr("Redo"));
+    action_edit_redo->setShortcut(tr("Ctrl+Shift+Z"));
     menu_edit->addSeparator();
-    auto action_copy = new QAction(this->m_root_menubar);
-    menu_edit->addAction(action_copy);
-    action_copy->setObjectName(tr("Copy"));
-    action_copy->setText(tr("Copy"));
-    action_copy->setShortcuts(QKeySequence::Copy);
+    auto action_edit_copy = new QAction(this->m_root_menubar);
+    menu_edit->addAction(action_edit_copy);
+    action_edit_copy->setObjectName(tr("Copy"));
+    action_edit_copy->setText(tr("Copy"));
+    action_edit_copy->setShortcuts(QKeySequence::Copy);
     menu_edit->addSeparator();
     auto action_edit_preference = new QAction(this->m_root_menubar);
     menu_edit->addAction(action_edit_preference);
@@ -122,19 +122,19 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     this->m_root_menubar->addMenu(menu_modeling);
     menu_modeling->setTitle("&Modeling");
     menu_modeling->setObjectName(QObject::tr("Modeling"));
-    auto action_insert = new QAction(this->m_root_menubar);
-    menu_modeling->addAction(action_insert);
-    action_insert->setObjectName(QObject::tr("Insert"));
-    action_insert->setText(tr("Insert"));
+    auto action_modeling_insert = new QAction(this->m_root_menubar);
+    menu_modeling->addAction(action_modeling_insert);
+    action_modeling_insert->setObjectName(QObject::tr("Insert"));
+    action_modeling_insert->setText(tr("Insert"));
     menu_modeling->addSeparator();
     menu_modeling->addSeparator()->setText(tr("Structure"));
     auto menu_modeling_structure = new QMenu(this->m_root_menubar);
     menu_modeling->addMenu(menu_modeling_structure);
     menu_modeling_structure->setTitle("&Structure");
-    auto action_build_supercell = new QAction(this->m_root_menubar);
-    menu_modeling_structure->addAction(action_build_supercell);
-    action_build_supercell->setObjectName(QObject::tr("Build Supercell"));
-    action_build_supercell->setText("Build Supercell");
+    auto action_modeling_build_supercell = new QAction(this->m_root_menubar);
+    menu_modeling_structure->addAction(action_modeling_build_supercell);
+    action_modeling_build_supercell->setObjectName(QObject::tr("Build Supercell"));
+    action_modeling_build_supercell->setText("Build Supercell");
     menu_modeling_structure->addSeparator()->setText(tr("Structure"));
 
     auto menu_analysis = new QMenu(m_root_menubar);
@@ -148,21 +148,25 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     auto menu_analysis_properties = new QMenu(this->m_root_menubar);
     menu_analysis->addMenu(menu_analysis_properties);
     menu_analysis_properties->setTitle(tr("&Properties"));
-    auto action_molecule = new QAction(this->m_root_menubar);
-    menu_analysis_properties->addAction(action_molecule);
-    action_molecule->setObjectName(tr("Molecule"));
-    action_molecule->setText(tr("Molecule"));
+    auto action_analysis_molecule = new QAction(this->m_root_menubar);
+    menu_analysis_properties->addAction(action_analysis_molecule);
+    action_analysis_molecule->setObjectName(tr("Molecule"));
+    action_analysis_molecule->setText(tr("Molecule"));
     menu_analysis_properties->addSeparator();
 
     auto menu_help = new QMenu(m_root_menubar);
     this->m_root_menubar->addMenu(menu_help);
-    menu_help->setTitle("Help");
+    menu_help->setTitle("&Help");
     menu_help->setObjectName(QObject::tr("Help"));
-    auto action_about = new QAction(this->m_root_menubar);
-    menu_help->addAction(action_about);
-    action_about->setObjectName(QObject::tr("Sub of Help"));
-    action_about->setText("About");
-    QObject::connect(action_about, &QAction::triggered, this, &MainWindow::popup_about);
+    auto action_help_manual = new QAction(this->m_root_menubar);
+    menu_help->addAction(action_help_manual);
+    action_help_manual->setObjectName(tr("Manual"));
+    action_help_manual->setText(tr("Manual"));
+    auto action_help_about = new QAction(this->m_root_menubar);
+    menu_help->addAction(action_help_about);
+    action_help_about->setObjectName(QObject::tr("Sub of Help"));
+    action_help_about->setText("About");
+    QObject::connect(action_help_about, &QAction::triggered, this, &MainWindow::popup_about);
 
 
     this->m_central_widget = new QWidget(this);
@@ -208,6 +212,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 }
 
+
 void MainWindow::export_to_image() {
     auto fd = new QFileDialog(this->m_central_widget);
     fd->setWindowTitle(QObject::tr("Output image path"));
@@ -220,7 +225,7 @@ void MainWindow::export_to_image() {
 
 void MainWindow::popup_about() {
     auto msg_box = new QMessageBox(this->m_central_widget);
-    msg_box->setText("About Atomscistudio");
+    msg_box->setText("About Atomscistudio (version 0.0.0)");
     msg_box->setInformativeText(QObject::tr(
 "Atom Science Studio will be a GUI application to provide modeling and workflow automation "
 "for simulations involving atoms."

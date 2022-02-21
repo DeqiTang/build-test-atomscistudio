@@ -56,14 +56,14 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     tab_1->setLayout(grid_layout);
     grid_layout->setObjectName(QString::fromUtf8("grid_layout"));
 
-    auto check_box = new QCheckBox(tab_1);
-    grid_layout->addWidget(check_box, 0, 0, 1, 1);
-    check_box->setObjectName(QString::fromUtf8("check_box"));
-    check_box->setSizePolicy(size_policy);
-    check_box->setText(QObject::tr("Show atoms"));
-    check_box->setChecked(true);
-    check_box->setText(QCoreApplication::translate("Atoms3DTools", "check_box", nullptr));
-    QObject::connect(check_box, &QCheckBox::stateChanged, this, &Tools::on_checkbox_state_changed);
+    auto checkbox_show_atoms = new QCheckBox(tab_1);
+    grid_layout->addWidget(checkbox_show_atoms, 0, 0, 1, 1);
+    checkbox_show_atoms->setObjectName(QString::fromUtf8("show_atoms"));
+    checkbox_show_atoms->setSizePolicy(size_policy);
+    checkbox_show_atoms->setText(QObject::tr("Show Atoms"));
+    checkbox_show_atoms->setChecked(true);
+    checkbox_show_atoms->setText(QCoreApplication::translate("Atoms3DTools", "Show Atoms", nullptr));
+    QObject::connect(checkbox_show_atoms, &QCheckBox::stateChanged, this, &Tools::on_checkbox_state_changed);
 
     auto horizontal_slider = new QSlider(tab_1);
     grid_layout->addWidget(horizontal_slider, 1, 0, 1, 1);

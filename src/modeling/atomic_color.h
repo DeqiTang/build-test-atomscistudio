@@ -22,8 +22,8 @@
 
 // Information of the atomic color:
 // http://jmol.sourceforge.net/jscolors/
-// Jmol is also an excellent open source viewer for chemical
-// structure, licensed under LGPL
+// Jmol is an excellent open source viewer for chemical
+// structure, licensed under LGPL.
 
 
 #ifndef MODELING_ATOMIC_COLOR_H_
