@@ -22,6 +22,8 @@
 #include "modeling/tools.h"
 
 #include <QSplitter>
+#include <QGroupBox>
+#include <QButtonGroup>
 
 Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     : QWidget(parent) {
@@ -31,8 +33,9 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     if (this->objectName().isEmpty()) {
         this->setObjectName(QString::fromUtf8("Tools"));
     }
-    QSizePolicy size_policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    this->setSizePolicy(size_policy);
+    QSizePolicy size_policy_expanding(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    QSizePolicy size_policy_preferred(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    this->setSizePolicy(size_policy_expanding);
     this->setMinimumSize(QSize(500, 800));
     this->setWindowTitle(QCoreApplication::translate("Atoms3DTools", "Form", nullptr));
 
@@ -55,13 +58,14 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     v_splitter->addWidget(tab_widget);
     tab_widget->setObjectName(QString::fromUtf8("tab_widget"));
     tab_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    tab_widget->setSizePolicy(size_policy);
+    tab_widget->setSizePolicy(size_policy_expanding);
     tab_widget->setCurrentIndex(0);
 
     auto tab_1 = new QWidget(this);
-    tab_widget->addTab(tab_1, QString());
-    tab_1->setObjectName(QString::fromUtf8("tab_1"));
-    tab_1->setSizePolicy(size_policy);
+    tab_widget->addTab(tab_1, tr("Atom"));
+    tab_widget->setTabText(tab_widget->indexOf(tab_1), QCoreApplication::translate("Tools", "Atom", nullptr));
+    tab_1->setObjectName(QString::fromUtf8("Atom"));
+    tab_1->setSizePolicy(size_policy_expanding);
 
     auto grid_layout = new QGridLayout(tab_1);
     tab_1->setLayout(grid_layout);
@@ -70,8 +74,7 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     auto checkbox_show_atoms = new QCheckBox(tab_1);
     grid_layout->addWidget(checkbox_show_atoms, 0, 0, 1, 1);
     checkbox_show_atoms->setObjectName(QString::fromUtf8("show_atoms"));
-    checkbox_show_atoms->setSizePolicy(size_policy);
-    checkbox_show_atoms->setText(QObject::tr("Show Atoms"));
+    checkbox_show_atoms->setSizePolicy(size_policy_preferred);
     checkbox_show_atoms->setChecked(true);
     checkbox_show_atoms->setText(QCoreApplication::translate("Atoms3DTools", "Show Atoms", nullptr));
     QObject::connect(checkbox_show_atoms, &QCheckBox::stateChanged, this, &Tools::on_checkbox_state_changed);
@@ -82,11 +85,45 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     horizontal_slider->setOrientation(Qt::Horizontal);
 
     auto tab_2 = new QWidget(this);
-    tab_widget->addTab(tab_2, QString());
-    tab_2->setObjectName(QString::fromUtf8("tab_2"));
+    tab_widget->addTab(tab_2, QObject::tr("Crystal"));
+    tab_widget->setTabText(tab_widget->indexOf(tab_2), QCoreApplication::translate("Tools", "Crystal", nullptr));
+    tab_2->setObjectName(QString::fromUtf8("Crystal"));
 
-    tab_widget->setTabText(tab_widget->indexOf(tab_1), QCoreApplication::translate("Tools", "Tab 1", nullptr));
-    tab_widget->setTabText(tab_widget->indexOf(tab_2), QCoreApplication::translate("Tools", "Tab 2", nullptr));
+    auto grid_layout_2 = new QGridLayout(tab_2);
+    tab_2->setLayout(grid_layout_2);
+    grid_layout_2->setObjectName(tr("grid_layout_2"));
+
+    auto group_box = new QGroupBox(tr("Display"));
+    grid_layout_2->addWidget(group_box);
+    group_box->setCheckable(false);
+    group_box->setChecked(false);
+    auto v_layout_tab_2_group_box = new QVBoxLayout(tab_2);
+    group_box->setLayout(v_layout_tab_2_group_box);
+    auto button_group = new QButtonGroup(tab_2);
+    button_group->setExclusive(true);
+
+    auto checkbox_ball_and_stick = new QCheckBox(tab_2);
+    v_layout_tab_2_group_box->addWidget(checkbox_ball_and_stick);
+    button_group->addButton(checkbox_ball_and_stick);
+    checkbox_ball_and_stick->setObjectName((tr("ball and stick")));
+    checkbox_ball_and_stick->setSizePolicy(size_policy_preferred);
+    checkbox_ball_and_stick->setText(QCoreApplication::translate("Atoms3DTools", "Ball and Stick", nullptr));
+    checkbox_ball_and_stick->setChecked(true);
+    auto checkbox_van_der_waals = new QCheckBox(tab_2);
+    v_layout_tab_2_group_box->addWidget(checkbox_van_der_waals);
+    button_group->addButton(checkbox_van_der_waals);
+    checkbox_van_der_waals->setObjectName(tr("Van der Waals"));
+    checkbox_van_der_waals->setSizePolicy(size_policy_preferred);
+    checkbox_van_der_waals->setText(QCoreApplication::translate("Atoms3DTools", "Van der Waals", nullptr));
+    checkbox_van_der_waals->setChecked(false);
+    auto checkbox_wireframe = new QCheckBox(tab_2);
+    v_layout_tab_2_group_box->addWidget(checkbox_wireframe);
+    button_group->addButton(checkbox_wireframe);
+    checkbox_wireframe->setObjectName(tr("WIreframe"));
+    checkbox_wireframe->setSizePolicy(size_policy_preferred);
+    checkbox_wireframe->setText(QCoreApplication::translate("Atoms3DTools", "Wireframe", nullptr));
+    checkbox_wireframe->setChecked(false);
+
 
     auto text_browser = new QTextBrowser(this);
     v_splitter->addWidget(text_browser);
