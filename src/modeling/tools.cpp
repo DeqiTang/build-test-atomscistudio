@@ -21,6 +21,8 @@
 
 #include "modeling/tools.h"
 
+#include <QSplitter>
+
 Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     : QWidget(parent) {
 
@@ -39,9 +41,18 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     this->setLayout(vertical_layout);
     vertical_layout->setObjectName(QString::fromUtf8("vertical_layout"));
 
+    auto v_splitter = new QSplitter(this);
+    vertical_layout->addWidget(v_splitter);
+    v_splitter->setOrientation(Qt::Orientation::Vertical);
+    v_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    v_splitter->setVisible(true);
+    v_splitter->setHandleWidth(5);
+    v_splitter->setFrameShape(QFrame::StyledPanel);
+    v_splitter->setFrameShadow(QFrame::Plain);
+    v_splitter->setStyleSheet("QSplitter::handle {background-color: gray}");
 
     auto tab_widget = new QTabWidget(this);
-    vertical_layout->addWidget(tab_widget);
+    v_splitter->addWidget(tab_widget);
     tab_widget->setObjectName(QString::fromUtf8("tab_widget"));
     tab_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     tab_widget->setSizePolicy(size_policy);
@@ -78,7 +89,7 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     tab_widget->setTabText(tab_widget->indexOf(tab_2), QCoreApplication::translate("Tools", "Tab 2", nullptr));
 
     auto text_browser = new QTextBrowser(this);
-    vertical_layout->addWidget(text_browser);
+    v_splitter->addWidget(text_browser);
     text_browser->setObjectName(QString::fromUtf8("m_text_browser"));
     text_browser->setText(QObject::tr(
 "Atom Science Studio will be a GUI application to provide modeling and workflow automation "

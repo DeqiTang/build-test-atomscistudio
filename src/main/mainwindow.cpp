@@ -183,21 +183,21 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     this->m_root_vlayout->addWidget(this->m_root_tabwidget);
     this->m_root_tabwidget->setTabPosition(QTabWidget::West);
 
-
     auto tab1 = new QWidget(this->m_central_widget);
     this->m_root_tabwidget->addTab(tab1, QObject::tr("Modeling"));
     auto tab1_hsplitter = new QSplitter(this->m_central_widget);
     auto tab1_hlayout= new QHBoxLayout(tab1);
+    tab1->setLayout(tab1_hlayout);
     tab1_hlayout->addWidget(tab1_hsplitter);
+    tab1_hsplitter->setOrientation(Qt::Orientation::Horizontal);
     tab1_hsplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     tab1_hsplitter->setVisible(true);
-    tab1_hsplitter->setHandleWidth(10);
+    tab1_hsplitter->setHandleWidth(7);
     tab1_hsplitter->setFrameShape(QFrame::StyledPanel);
     tab1_hsplitter->setFrameShadow(QFrame::Plain);
     tab1_hsplitter->setStyleSheet("QSplitter::handle {background-color: gray}");
+
     auto tab1_vlayout = new QVBoxLayout(tab1);
-    tab1->setLayout(tab1_hlayout);
-    
     auto qt3dwin = new Qt3DWindowCustom(tab1, tab1_vlayout, tab1_hlayout);
     QWidget* win_container = QWidget::createWindowContainer(qt3dwin);
     auto tools = new Tools(this->m_central_widget, qt3dwin);
