@@ -21,6 +21,7 @@
 
 #include "calccontrol.h"
 
+#include <iostream>
 #include <QTabWidget>
 #include <QCheckBox>
 #include <QSplitter>
@@ -29,6 +30,7 @@
 #include "calc/rightzone.h"
 
 #include <atomsciflow/remote/ssh.h>
+#include <yaml-cpp/yaml.h>
 
 CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
 
@@ -50,5 +52,10 @@ CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
     h_splitter->setStyleSheet("QSplitter::handle {background-color: gray}");
 
     atomsciflow::Ssh ssh;
+
+    YAML::Node yaml_node = YAML::Load("[1, 2, 3, 4, 5, 6]");
+    //for (int i = 0; i < yaml_node.size(); i++) {
+    //    std::cout << yaml_node[i].as<int>() << std::endl;
+    //}
 
 }
