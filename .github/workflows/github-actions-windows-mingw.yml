@@ -48,6 +48,17 @@ jobs:
           cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
           cmake --build build_gtest --config Release
           cmake --install build_gtest
+      - name: Download yaml-cpp
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
+          tar -xvf yaml-cpp-0.7.0.tar.gz
+      - name: Build yaml-cpp
+        shell: powershell
+        run: |
+          cmake yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles'
+          cmake --build build_yaml_cpp --config Release
+          cmake --install build_yaml_cpp
       - name: Download OpenSSL
         shell: powershell
         run: |
