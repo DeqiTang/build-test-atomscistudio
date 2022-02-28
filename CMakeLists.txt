@@ -27,6 +27,10 @@ include_directories(
     ${Boost_INCLUDE_DIR}  
 )
 
+find_package(yaml-cpp)
+include_directories(${YAML_CPP_INCLUDE_DIR})
+link_libraries(${YAML_CPP_LIBRARIES})
+
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
     message("Found OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")

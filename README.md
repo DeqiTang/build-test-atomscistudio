@@ -36,7 +36,8 @@ of licenses and acknowledgements for them.
 * Armadillo is licensed under [Apache License v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 * BLAS is a freely-available software package.
 * LAPACK is licensed under the [modified BSD license](http://www.netlib.org/lapack/LICENSE.txt).
-* Atomsciflow is licensed under [MIT License](https://github.com/DeqiTang/atomsciflow/blob/master/LICENSE)
+* Atomsciflow is licensed under [MIT License](https://github.com/DeqiTang/atomsciflow/blob/master/LICENSE).
+* yaml-cpp is licensed under the [MIT License](https://github.com/jbeder/yaml-cpp/blob/master/LICENSE).
 
 The text version of licenses for all the used third party softwares
 are included in the `third_party/license` directory of this project.
