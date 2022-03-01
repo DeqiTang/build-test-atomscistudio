@@ -28,8 +28,8 @@ include_directories(
 )
 
 find_package(yaml-cpp REQUIRED)
-find_package(PkgConfig)
-pkg_check_modules(YAML_CPP yaml-cpp)
+#find_package(PkgConfig)
+#pkg_check_modules(YAML_CPP yaml-cpp)
 include_directories(${YAML_CPP_INCLUDE_DIR})
 link_directories(${YAML_CPP_LIBRARY_DIRS})
 message("YAML_CPP_INCLUDE_DIR: ${YAML_CPP_INCLUDE_DIR}")
