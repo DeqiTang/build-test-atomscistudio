@@ -56,9 +56,9 @@ jobs:
       - name: Build yaml-cpp
         shell: bash #powershell
         run: |
-          git clone https://github.com/jbeder/yaml-cpp
-          #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
-          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
+          #git clone https://github.com/jbeder/yaml-cpp
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF
+          #cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp
           cmake --install build_yaml_cpp
       - name: Download OpenSSL
