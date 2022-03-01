@@ -48,7 +48,7 @@ jobs:
           #
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/opt/yaml-cpp
           cmake --build build_yaml_cpp --config Release
-          cmake --install build_yaml_cpp
+          sudo cmake --install build_yaml_cpp
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
