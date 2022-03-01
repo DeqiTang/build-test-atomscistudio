@@ -57,8 +57,8 @@ jobs:
         shell: bash #powershell
         run: |
           #git clone https://github.com/jbeder/yaml-cpp
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF
           #cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF
           cmake --build build_yaml_cpp
           cmake --install build_yaml_cpp
       - name: Download OpenSSL
@@ -101,7 +101,7 @@ jobs:
       - name: Install LAPACK
         run: |
           cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
-          cmake --build build_lapack --parallel 8
+          cmake --build build_lapack --parallel 4
           cmake --install build_lapack
         shell: bash  
       - name: Download OpenBLAS

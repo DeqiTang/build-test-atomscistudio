@@ -27,7 +27,7 @@ include_directories(
     ${Boost_INCLUDE_DIR}  
 )
 
-#find_package(yaml-cpp REQUIRED)
+find_package(yaml-cpp REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(YAML_CPP yaml-cpp)
 include_directories(${YAML_CPP_INCLUDE_DIR})
