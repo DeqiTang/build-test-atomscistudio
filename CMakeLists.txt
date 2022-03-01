@@ -28,10 +28,12 @@ include_directories(
 )
 
 find_package(yaml-cpp REQUIRED)
-include_directories(${YAML_CPP_INCLUDE_DIR})
-message("YAML_CPP_INCLUDE_DIR: ${YAML_CPP_INCLUDE_DIR}")
-link_libraries(${YAML_CPP_LIBRARIES})
-message("YAML_CPP_LIBRARIES: ${YAML_CPP_LIBRARIES}")
+if (yaml-cpp_FOUND)
+    include_directories(${YAML_CPP_INCLUDE_DIR})
+    message("YAML_CPP_INCLUDE_DIR: ${YAML_CPP_INCLUDE_DIR}")
+    link_libraries(${YAML_CPP_LIBRARIES})
+    message("YAML_CPP_LIBRARIES: ${YAML_CPP_LIBRARIES}")
+endif()    
 
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
