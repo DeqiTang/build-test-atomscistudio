@@ -27,9 +27,8 @@ include_directories(
     ${Boost_INCLUDE_DIR}  
 )
 
-find_package(yaml-cpp)
+find_package(yaml-cpp REQUIRED)
 include_directories(${YAML_CPP_INCLUDE_DIR})
-link_libraries(${YAML_CPP_LIBRARIES})
 
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
@@ -131,6 +130,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
+    ${YAML_CPP_LIBRARIES}
     ${LIBSSH2_FOUND_LIBS}
 )
 
