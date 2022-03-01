@@ -31,7 +31,7 @@ include_directories(
 find_package(PkgConfig)
 pkg_check_modules(YAML_CPP yaml-cpp)
 include_directories(${YAML_CPP_INCLUDE_DIR})
-link_directories(${YAML_CPP_LIBRARI_DIRS})
+link_directories(${YAML_CPP_LIBRARY_DIRS})
 message("YAML_CPP_INCLUDE_DIR: ${YAML_CPP_INCLUDE_DIR}")
 message("YAML_CPP_INCLUDE_DIRS: ${YAML_CPP_INCLUDE_DIRS}")
 link_libraries(${YAML_CPP_LIBRARIES})
