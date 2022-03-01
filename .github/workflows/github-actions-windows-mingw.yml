@@ -143,7 +143,7 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/YAML_CPP'
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/YAML_CPP' -DYAML-CPP_DIR='C/Program Files (x86)/YAML_CPP'
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
         env:
