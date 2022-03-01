@@ -46,15 +46,15 @@ jobs:
           wget -c https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz
           tar -xvf yaml-cpp-0.7.0.tar.gz
           #
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=ON
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=ON --CMAKE_INSTALL_PREFIX=/opt/yaml-cpp
           cmake --build build_yaml_cpp --config Release
-          sudo cmake --install build_yaml_cpp
+          cmake --install build_yaml_cpp
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
+          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -DCMAKE_PREFIX_PATH="/opt/yaml-cpp"
           cmake --build build
           cmake --install build
         shell: bash
@@ -63,7 +63,7 @@ jobs:
           fetch-depth: 1
       - name: Build for MacOS
         run: |
-          cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3
+          cmake -B build -DCMAKE_MACOSX_BUNDLE=True -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -DCMAKE_PREFIX_PATH="/opt/yaml-cpp"
           cmake --build build --config Release
           cmake --install build
           cp README.md build/${executable}.app/Contents/
