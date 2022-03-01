@@ -54,7 +54,7 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -DYaml-cpp_DIR="/opt/yaml-cpp/share/cmake/yaml-cpp"
+          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -Dyaml-cpp_DIR="/opt/yaml-cpp/share/cmake/yaml-cpp" -DYAML_CPP_DIR="/opt/yaml-cpp/share/cmake/yaml-cpp" -Dyaml-cpp_ROOT="/opt/yaml-cpp"
           cmake --build build
           cmake --install build
         shell: bash
