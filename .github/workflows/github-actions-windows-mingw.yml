@@ -47,7 +47,7 @@ jobs:
         run: |
           cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
           cmake --build build_gtest --config Release
-          cmake --install build_gtest --parallel 4
+          cmake --install build_gtest
       - name: Download yaml-cpp
         shell: powershell
         run: |
@@ -80,7 +80,7 @@ jobs:
         shell: powershell 
         run: |
           cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
-          cmake --build build_libssh2
+          cmake --build build_libssh2 --parallel 4
           cmake --install build_libssh2
       - name: Download BLAS
         shell: powershell 
