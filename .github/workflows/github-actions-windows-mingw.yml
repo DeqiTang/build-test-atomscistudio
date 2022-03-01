@@ -145,23 +145,23 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          export PKG_CONFIG_PATH="${PKG_CONFIG_PATH};C:/Program Files (x86)/YAML_CPP/share/pkgconfig"
           cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/YAML_CPP' -DPKG_CONFIG_PATH='C:/Program Files (x86)/YAML_CPP/share/pkgconfig'
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
         env:
-          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+          PKG_CONFIG_PATH: 'C:/Program Files (x86)/YAML_CPP/share/pkgconfig'
         shell: powershell
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          export PKG_CONFIG_PATH="${PKG_CONFIG_PATH};C:/Program Files (x86)/YAML_CPP/share/pkgconfig"
           cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/YAML_CPP' -DPKG_CONFIG_PATH='C:/Program Files (x86)/YAML_CPP/share/pkgconfig'
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
+          PKG_CONFIG_PATH: 'C:/Program Files (x86)/YAML_CPP/share/pkgconfig'
         shell: powershell
       - name: packaging
         id: packaging
