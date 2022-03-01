@@ -20,7 +20,7 @@ jobs:
         run: |
           brew install llvm 
           brew install openssl@3
-          brew install yaml-cpp 
+          #brew install yaml-cpp 
           #brew install qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
