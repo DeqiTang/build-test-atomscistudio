@@ -56,7 +56,7 @@ jobs:
       - name: Build yaml-cpp
         shell: powershell
         run: |
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp' #-DYAML_BUILD_SHARED_LIBS=ON
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release
           cmake --install build_yaml_cpp
       - name: Download OpenSSL

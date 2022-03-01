@@ -46,7 +46,7 @@ jobs:
           wget -c https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz
           tar -xvf yaml-cpp-0.7.0.tar.gz
           #
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX="/opt/yaml-cpp"
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=OFF
           cmake --build build_yaml_cpp --config Release
           sudo cmake --install build_yaml_cpp
       - name: Install armadillo
@@ -54,7 +54,7 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -Dyaml-cpp_DIR="/opt/yaml-cpp/share/cmake/yaml-cpp" -DYAML_CPP_DIR="/opt/yaml-cpp/share/cmake/yaml-cpp" -Dyaml-cpp_ROOT="/opt/yaml-cpp"
+          cmake build-test-atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 
           cmake --build build
           cmake --install build
         shell: bash
