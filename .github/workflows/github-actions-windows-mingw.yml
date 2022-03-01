@@ -54,7 +54,7 @@ jobs:
           Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
           tar -xvf yaml-cpp-0.7.0.tar.gz
       - name: Build yaml-cpp
-        shell: powershell
+        shell: bash #powershell
         run: |
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release
