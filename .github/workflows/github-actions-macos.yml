@@ -47,9 +47,8 @@ jobs:
           tar -xvf yaml-cpp-0.7.0.tar.gz
           #
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=ON
-          cmake --build build_yaml_cpp 
-          cmake --install build_yaml_cpp
-          #sudo cmake --install build_yaml_cpp
+          cmake --build build_yaml_cpp --config Release
+          sudo cmake --install build_yaml_cpp
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
