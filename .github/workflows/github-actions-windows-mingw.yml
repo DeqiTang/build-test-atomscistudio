@@ -101,7 +101,7 @@ jobs:
       - name: Install LAPACK
         run: |
           cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
-          cmake --build build_lapack --parallel 4
+          cmake --build build_lapack --parallel 8
           cmake --install build_lapack
         shell: bash  
       - name: Download OpenBLAS
