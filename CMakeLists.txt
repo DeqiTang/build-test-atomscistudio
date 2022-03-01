@@ -29,8 +29,9 @@ include_directories(
 
 find_package(yaml-cpp REQUIRED)
 include_directories(${YAML_CPP_INCLUDE_DIR})
-message("YAML_CPP_INCLUDE_DIR ${YAML_CPP_INCLUDE_DIR}")
-message("yaml-cpp libs: ${YAML_CPP_LIBRARIES}")
+message("YAML_CPP_INCLUDE_DIR: ${YAML_CPP_INCLUDE_DIR}")
+link_libraries(${YAML_CPP_LIBRARIES})
+message("YAML_CPP_LIBRARIES: ${YAML_CPP_LIBRARIES}")
 
 find_package(OpenSSL REQUIRED)
 if (OPENSSL_FOUND)
