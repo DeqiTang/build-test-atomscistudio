@@ -110,8 +110,8 @@ jobs:
       - name: Download OpenBLAS
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
-          tar -xvf v0.3.19.tar.gz
+          #Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
+          #tar -xvf v0.3.19.tar.gz
       - name: Install OpenBLAS
         run: |
           #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
