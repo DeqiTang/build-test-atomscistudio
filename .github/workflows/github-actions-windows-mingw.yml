@@ -56,7 +56,7 @@ jobs:
       - name: Build yaml-cpp
         shell: powershell
         run: |
-          #git clone https://github.com/jbeder/yaml-cpp
+          #git clone https://github.com/jbeder/yaml-cpp 
           #cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
           # in the case of yaml-cpp the install path should contain no space
