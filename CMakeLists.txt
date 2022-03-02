@@ -66,9 +66,8 @@ else ()
 endif()
 
 if (NOT DEFINED LIBSSH2_FOUND_LIBS)
-    message("libssh2 not found, neither with cmake, nor PkgConfig")
-    message("Stop cmake")
-    exit()
+    message(STATUS "libssh2 not found, neither with cmake, nor PkgConfig")
+    message(FATAL_ERROR "Stop cmake due to failure in finding libssh2") # FATAL_ERROR will stop cmake
 endif()
 
 find_package(OpenMP)
