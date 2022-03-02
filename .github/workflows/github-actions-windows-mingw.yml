@@ -56,11 +56,13 @@ jobs:
       - name: Build yaml-cpp
         shell: powershell #bash
         run: |
-          #git clone https://github.com/jbeder/yaml-cpp
-          #cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
+          git clone https://github.com/jbeder/yaml-cpp
+          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
+          #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
+          $yaml_install_prefix = 'C:/Program Files (x86)/yaml-cpp'
+          echo "::set-output name=YAML_INSTALL_PREFIX::$yaml_install_prefix"
       - name: Download OpenSSL
         shell: powershell
         run: |
@@ -145,11 +147,13 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='"C:/Program Files (x86)/armadillo";"C:/Program Files (x86)/libssh2";"C:/Program Files (x86)/SuperLU";"C:/Program Files (x86)/LAPACK";"C:/Program Files (x86)/BLAS";"C:/Program Files (x86)/yaml-cpp/share/pkgconfig"' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/yaml-cpp/share/pkgconfig' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON -DYaml-cpp_DIR=${{YAML_ROOT}}
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
+          echo ${{ steps.install-yaml.outputs.YAML_INSTALL_PREFIX }}
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+          YAML_ROOT: ${{ steps.install-yaml.outputs.YAML_INSTALL_PREFIX}}
         shell: powershell
       - uses: actions/checkout@v2
         with:
