@@ -29,6 +29,10 @@ include_directories(
 
 #find_package(yaml-cpp REQUIRED)
 find_package(PkgConfig)
+set(YAML_CPP_PKGCONFIG_DIR "UNSET" CACHE STRING "specify the dir path which contains the yaml-cpp.pc file")
+if (NOT ${YAML_CPP_PKGCONFIG_DIR} STREQUAL "UNSET")
+    set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${YAML_CPP_PKGCONFIG_DIR}")
+endif()    
 pkg_check_modules(YAML_CPP yaml-cpp)
 include_directories(${YAML_CPP_INCLUDE_DIR})
 link_directories(${YAML_CPP_LIBRARY_DIRS})
