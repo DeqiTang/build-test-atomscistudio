@@ -53,7 +53,7 @@ CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
 
     atomsciflow::Ssh ssh;
 
-    YAML::Node yaml_node = YAML::Load("[1, 2, 3, 4, 5, 6]");
+    YAML::Node yaml_node = YAML::Load("[1, 2, 3, 4, 5]");
     //for (int i = 0; i < yaml_node.size(); i++) {
     //    std::cout << yaml_node[i].as<int>() << std::endl;
     //}
