@@ -182,7 +182,7 @@ jobs:
           Copy-Item third_party\license\* ${env:archive_name}\third_party\license\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
-          Copy-Item 'C:/Softwares/yaml-cpp/lib/libyaml-cpp.dll' ${env:archive_name}\
+          Copy-Item 'C:/Softwares/yaml-cpp/bin/libyaml-cpp.dll' ${env:archive_name}\
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
