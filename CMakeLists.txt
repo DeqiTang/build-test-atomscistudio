@@ -28,13 +28,12 @@ include_directories(
 )
 
 find_package(PkgConfig)
-message(STATUS "PKG_CONFIG_ARGN: ${PKG_CONFIG_ARGN}")
 set(YAML_CPP_PKGCONFIG_DIR "UNSET" CACHE STRING "Specify the dir path which contains the yaml-cpp.pc file")
 if (NOT ${YAML_CPP_PKGCONFIG_DIR} STREQUAL "UNSET")
     if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-        set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${YAML_CPP_PKGCONFIG_DIR}")
+        set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${YAML_CPP_PKGCONFIG_DIR}") # separated by semicolon
     else()
-        set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${YAML_CPP_PKGCONFIG_DIR}")
+        set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${YAML_CPP_PKGCONFIG_DIR}") # separated by colon
     endif()
     message(STATUS "PKG_CONFIG_PATH: $ENV{PKG_CONFIG_PATH}")
 endif()    
