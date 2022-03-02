@@ -105,7 +105,8 @@ file(GLOB PROJECT_SOURCES
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    #if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Darwin")
         set(MACOSX TRUE)
         qt_add_executable(atomscistudio
             MACOSX_BUNDLE
