@@ -149,7 +149,7 @@ jobs:
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
           #$Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Softwares/yaml-cpp;C:/Softwares/yaml-cpp/share/pkgconfig;C:/Softwares/yaml-cpp/share/cmake/yaml-cpp' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=TRUE  -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Softwares/yaml-cpp;C:/Softwares/yaml-cpp/share/pkgconfig;C:/Softwares/yaml-cpp/share/cmake/yaml-cpp' #-DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=TRUE  -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
         env:
