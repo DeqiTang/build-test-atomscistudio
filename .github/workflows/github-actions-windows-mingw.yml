@@ -61,6 +61,9 @@ jobs:
           #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
+          pkg-config --libs yaml-cpp
+          pkg-config --cflags yaml-cpp
+          pkg-config --variable pc_path pkg-config
       - name: Download OpenSSL
         shell: powershell
         run: |
@@ -146,6 +149,7 @@ jobs:
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
           $Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
+          pkg-config --variable pc_path pkg-config
           cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/yaml-cpp;C:/Program Files (x86)/yaml-cpp/share/pkgconfig;C:/Program Files (x86)/yaml-cpp/share/cmake/yaml-cpp' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=TRUE  -DYAML_CPP_PKGCONFIG_DIR='C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
