@@ -61,8 +61,6 @@ jobs:
           #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
-          $yaml_install_prefix = 'C:/Program Files (x86)/yaml-cpp'
-          echo "::set-output name=YAML_INSTALL_PREFIX::$yaml_install_prefix"
       - name: Download OpenSSL
         shell: powershell
         run: |
@@ -153,7 +151,6 @@ jobs:
           echo ${{ steps.install-yaml.outputs.YAML_INSTALL_PREFIX }}
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
-          YAML_ROOT: ${{ steps.install-yaml.outputs.YAML_INSTALL_PREFIX}}
         shell: powershell
       - uses: actions/checkout@v2
         with:
