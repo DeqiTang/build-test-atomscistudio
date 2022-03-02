@@ -20,7 +20,7 @@ jobs:
         run: |
           brew install llvm 
           brew install openssl@3
-          #brew install yaml-cpp 
+          brew install yaml-cpp 
           #brew install qt
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
@@ -43,12 +43,11 @@ jobs:
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install yaml-cpp
         run: |
-          wget -c https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz
-          tar -xvf yaml-cpp-0.7.0.tar.gz
-          #
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=OFF
-          cmake --build build_yaml_cpp --config Release
-          sudo cmake --install build_yaml_cpp
+          #wget -c https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz
+          #tar -xvf yaml-cpp-0.7.0.tar.gz
+          #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -DYAML_BUILD_SHARED_LIBS=OFF
+          #cmake --build build_yaml_cpp --config Release
+          #sudo cmake --install build_yaml_cpp
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
