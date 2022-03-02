@@ -160,7 +160,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/yaml-cpp/share/pkgconfig' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig'
+          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/yaml-cpp/share/pkgconfig' -DPKG_CONFIG_USE_CMAKE_PREFIX_PATH=ON -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' -DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
