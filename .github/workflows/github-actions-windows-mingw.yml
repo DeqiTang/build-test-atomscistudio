@@ -61,8 +61,8 @@ jobs:
           #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX='C:/Program Files (x86)/yaml-cpp'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
-          $Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
-          pkg-config --libs yaml-cpp
+          #$Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
+          pkg-config --libs yaml-cpp --with-path='C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
           pkg-config --cflags yaml-cpp
       - name: Download OpenSSL
         shell: powershell
