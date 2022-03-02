@@ -64,7 +64,6 @@ jobs:
           $Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
           pkg-config --libs yaml-cpp
           pkg-config --cflags yaml-cpp
-          pkg-config --variable pc_path pkg-config
       - name: Download OpenSSL
         shell: powershell
         run: |
