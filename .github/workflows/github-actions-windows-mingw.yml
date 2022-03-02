@@ -92,7 +92,7 @@ jobs:
           tar -xvf blas-3.10.0.tgz
       - name: Install BLAS
         run: |
-          cmake BLAS-3.10.0 -B build_blas -G "MinGW Makefiles"
+          cmake BLAS-3.10.0 -B build_blas -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX='C:/Softwares/BLAS'
           cmake --build build_blas --parallel 4
           cmake --install build_blas
         shell: powershell
@@ -103,7 +103,7 @@ jobs:
           tar -xvf lapack-3.8.0.tar.gz
       - name: Install LAPACK
         run: |
-          cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
+          cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX='C:/Softwares/LAPACK'
           cmake --build build_lapack --parallel 4
           cmake --install build_lapack
         shell: bash  
@@ -125,7 +125,7 @@ jobs:
           tar -xvf v5.3.0.tar.gz
       - name: Install SuperLU
         run: |
-          cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
+          cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX='C:/Softwares/SuperLU' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
           cmake --build build_superlu --parallel 4
           cmake --install build_superlu
         shell: bash 
@@ -141,7 +141,7 @@ jobs:
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         run: |
-          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo" #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/SuperLU' 
+          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo" -DCMAKE_PREFIX_PATH='C:/Softwares/LAPACK;C:/Softwares/BLAS;C:/Softwares/SuperLU' 
           cmake --build build_armadillo
           cmake --install build_armadillo
         shell: powershell
@@ -149,7 +149,7 @@ jobs:
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
           #$Env:PKG_CONFIG_PATH += 'C:/Program Files (x86)/yaml-cpp/share/pkgconfig'
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Softwares/armadillo;C:/Program Files (x86)/libssh2;C:/Softwares/SuperLU;C:/Softwares/LAPACK;C:/Softwares/BLAS' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
         env:
@@ -160,7 +160,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/yaml-cpp' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
+          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Softwares/LAPACK;C:/Softwares/BLAS;C:/Softwaress/yaml-cpp' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig' #-DPKG_CONFIG_ARGN="--with-path=C:/Softwares/yaml-cpp/share/pkgconfig"
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
