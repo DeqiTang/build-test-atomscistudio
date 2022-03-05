@@ -103,6 +103,9 @@ file(GLOB PROJECT_SOURCES
 
     ./src/calc/*.h
     ./src/calc/*.cpp
+
+    ./src/config/*.h
+    ./src/config/*.cpp
 )
 
 
