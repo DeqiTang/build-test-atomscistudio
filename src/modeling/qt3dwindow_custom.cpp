@@ -45,7 +45,6 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     this->m_right_pop_menu->addAction(actionDeleteAtom);
     this->m_right_pop_menu->addAction(actionChangeAtom);
 
-
     this->m_atoms3d = new Atoms3D(this->m_root_widget, m_root_entity);
 
     this->m_camera_entity = this->camera();
@@ -53,7 +52,6 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     this->m_camera_entity->setFieldOfView(10);
     this->m_camera_entity->setNearPlane(0.01);
     this->m_camera_entity->setFarPlane(1000);
-
 
     int n = 0;
     float mean_x = 0, mean_y = 0, mean_z = 0;
@@ -76,7 +74,6 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
               << std::endl;
     this->m_camera_entity->setPosition(QVector3D(0, 0, mean_z * 5));
     this->m_camera_entity->setUpVector(QVector3D(0, 1, 0));
-
 
     auto light_entity_1 = new Qt3DCore::QEntity(m_root_entity);
     auto light_1 = new Qt3DRender::QPointLight(light_entity_1);
