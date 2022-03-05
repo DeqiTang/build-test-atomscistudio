@@ -32,4 +32,5 @@ std::string ConfigManager::get_home_dir() {
     home_dir = std::string(home_path);
 #endif
     return home_dir;
+
 }
