@@ -24,12 +24,13 @@ ConfigManager::ConfigManager() {
 
 std::string ConfigManager::get_home_dir() {
     std::string home_dir;
-#ifdef _WIN32
-    char* home_path = std::get_env("HOMEPATH");
-    home_dir = std::string(home_path);
-#elif defined(__linux__) || defined(__APPLE__)
+
+#if defined(__linux__) || defined(__APPLE__)
     char* home = std::getenv("HOME");
     home_dir = std::string(home);
+#elif defined(_WIN32)
+    char* home_path = std::get_env("HOMEPATH");
+    home_dir = std::string(home_path);
 #endif
     return home_dir;
 }
