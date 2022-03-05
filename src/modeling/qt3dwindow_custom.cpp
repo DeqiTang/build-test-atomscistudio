@@ -124,6 +124,7 @@ void Qt3DWindowCustom::handle_picker_click(const Qt3DRender::QPickEvent* pick) {
     std::cout << "Clicked " << "object name: " 
               << pick->entity()->objectName().toStdString() 
               << std::endl;
+
     std::cout << "Pick Position"
               << " ->x " << pick->position().x()
               << " ->y " << pick->position().y() 
