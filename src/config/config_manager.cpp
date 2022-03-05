@@ -21,7 +21,6 @@ ConfigManager::ConfigManager() {
 
 }
 
-
 std::string ConfigManager::get_home_dir() {
     std::string home_dir;
 
