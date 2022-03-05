@@ -4,6 +4,7 @@
 
 ConfigManager::ConfigManager() {
 
+    this->home_dir = get_home_dir();
 }
 
 
@@ -16,4 +17,5 @@ std::string ConfigManager::get_home_dir() {
     char* home = std::getenv("HOME");
     home_dir = std::string(home);
 #endif
+    return home_dir;
 }

@@ -8,6 +8,8 @@ public:
     ConfigManager();
 
     std::string get_home_dir();
+
+    std::string home_dir;
 };
 
 #endif // CONFIGMANAGER_H
