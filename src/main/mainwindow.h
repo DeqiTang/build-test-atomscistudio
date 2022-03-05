@@ -32,6 +32,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QMenuBar>
 
+#include "config/config_manager.h"
 #include "modeling/qt3dwindow_custom.h"
 
 
@@ -56,7 +57,7 @@ public:
 
     QTabWidget* m_root_tabwidget;
 
-
+    ConfigManager m_config_manager;
 private slots:
 
 private:

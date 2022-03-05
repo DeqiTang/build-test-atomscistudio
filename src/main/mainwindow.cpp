@@ -215,7 +215,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     auto tab2 = new CalcControl(this->m_central_widget);
     this->m_root_tabwidget->addTab(tab2, QObject::tr("Calculation"));
-
 }
 
 
@@ -243,13 +242,11 @@ void MainWindow::popup_about() {
 }
 
 void MainWindow::popup_config() {
-    auto config = new ConfigManager();
-
     auto msg_box = new QMessageBox(this->m_central_widget);
     msg_box->setText("About Atomscistudio (version 0.0.0)");
     std::string info_text = "";
     info_text += "The home dir: ";
-    info_text += config->get_home_dir();
+    info_text += m_config_manager.get_home_dir();
     msg_box->setInformativeText(QObject::tr(info_text.c_str()));
     msg_box->setStandardButtons(QMessageBox::Ok | QMessageBox::Close | QMessageBox::Abort);
     msg_box->setDefaultButton(QMessageBox::Ok);

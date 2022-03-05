@@ -1,10 +1,24 @@
 #include "config_manager.h"
 
 #include <cstdlib>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 ConfigManager::ConfigManager() {
-
     this->home_dir = get_home_dir();
+
+    // if config files do not exist, generate them
+#if defined(__linux__) || defined(__APPLE__)
+    if (false == fs::exists(fs::path(this->home_dir) / ".atomscistudio")) {
+        fs::create_directory(fs::path(this->home_dir) / ".atomscistudio");
+    }
+#elif defined(_WIN32)
+    if (false == fs::exists(fs::path(this->home_dir) / "atomscistudio")) {
+        fs::create_directory(fs::path(this->home_dir) / "atomscistudio");
+    }
+#endif
+
 }
 
 
