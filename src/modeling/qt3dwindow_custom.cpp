@@ -40,10 +40,10 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     this->setRootEntity(m_root_entity);
 
     this->m_right_pop_menu = new QMenu(this->m_root_widget);
-    auto actionDeleteAtom = new QAction(QObject::tr("Delete Atom"), this->m_root_widget);
-    auto actionChangeAtom = new QAction(QObject::tr("Change Atom"), this->m_root_widget);
-    this->m_right_pop_menu->addAction(actionDeleteAtom);
-    this->m_right_pop_menu->addAction(actionChangeAtom);
+    auto action_delete_atom = new QAction(QObject::tr("Delete Atom"), this->m_root_widget);
+    auto action_change_atom = new QAction(QObject::tr("Change Atom"), this->m_root_widget);
+    this->m_right_pop_menu->addAction(action_delete_atom);
+    this->m_right_pop_menu->addAction(action_change_atom);
 
     this->m_atoms3d = new Atoms3D(this->m_root_widget, m_root_entity);
 
