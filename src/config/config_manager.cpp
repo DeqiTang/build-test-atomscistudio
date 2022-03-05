@@ -29,7 +29,7 @@ std::string ConfigManager::get_home_dir() {
     char* home = std::getenv("HOME");
     home_dir = std::string(home);
 #elif defined(_WIN32)
-    char* home_path = std::get_env("HOMEPATH");
+    char* home_path = std::getenv("HOMEPATH");
     home_dir = std::string(home_path);
 #endif
     return home_dir;
