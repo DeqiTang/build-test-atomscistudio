@@ -32,6 +32,7 @@
 #include "modeling/qt3dwindow_custom.h"
 #include "modeling/tools.h"
 #include "calc/calccontrol.h"
+#include "config/config_manager.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
@@ -164,9 +165,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     action_help_manual->setText(tr("Manual"));
     auto action_help_about = new QAction(this->m_root_menubar);
     menu_help->addAction(action_help_about);
-    action_help_about->setObjectName(QObject::tr("Sub of Help"));
+    action_help_about->setObjectName(QObject::tr("About"));
     action_help_about->setText("About");
     QObject::connect(action_help_about, &QAction::triggered, this, &MainWindow::popup_about);
+    auto action_help_config = new QAction(this->m_root_menubar);
+    menu_help->addAction(action_help_config);
+    action_help_config->setObjectName(tr("Config"));
+    action_help_config->setText(tr("Config"));
+    QObject::connect(action_help_config, &QAction::triggered, this, &MainWindow::popup_config);
 
 
     this->m_central_widget = new QWidget(this);
@@ -230,6 +236,21 @@ void MainWindow::popup_about() {
 "Atom Science Studio will be a GUI application to provide modeling and workflow automation "
 "for simulations involving atoms."
     ));
+    msg_box->setStandardButtons(QMessageBox::Ok | QMessageBox::Close | QMessageBox::Abort);
+    msg_box->setDefaultButton(QMessageBox::Ok);
+    msg_box->exec();
+    delete msg_box;
+}
+
+void MainWindow::popup_config() {
+    auto config = new ConfigManager();
+
+    auto msg_box = new QMessageBox(this->m_central_widget);
+    msg_box->setText("About Atomscistudio (version 0.0.0)");
+    std::string info_text = "";
+    info_text += "The home dir: ";
+    info_text += config->get_home_dir();
+    msg_box->setInformativeText(QObject::tr(info_text.c_str()));
     msg_box->setStandardButtons(QMessageBox::Ok | QMessageBox::Close | QMessageBox::Abort);
     msg_box->setDefaultButton(QMessageBox::Ok);
     msg_box->exec();

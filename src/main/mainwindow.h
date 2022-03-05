@@ -45,6 +45,7 @@ public:
 
     void export_to_image();
     void popup_about();
+    void popup_config();
 
     QWidget* m_central_widget;
 
