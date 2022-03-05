@@ -148,6 +148,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
+
     ${Boost_LIBRARIES}
     ${YAML_CPP_LIBRARIES}
     ${LIBSSH2_FOUND_LIBS}
