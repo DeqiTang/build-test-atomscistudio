@@ -26,6 +26,7 @@ find_package(Boost COMPONENTS program_options filesystem system  REQUIRED)
 include_directories( 
     ${Boost_INCLUDE_DIR}  
 )
+link_libraries(${Boost_LIBRARIES})
 
 find_package(PkgConfig)
 set(YAML_CPP_PKGCONFIG_DIR "UNSET" CACHE STRING "Specify the dir path which contains the yaml-cpp.pc file")
@@ -148,7 +149,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
-    ${Boost_LIBRARIES}
+    #${Boost_LIBRARIES}
     ${YAML_CPP_LIBRARIES}
 
     ${LIBSSH2_FOUND_LIBS}
