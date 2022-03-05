@@ -59,7 +59,9 @@ jobs:
           # In the case of yaml-cpp the install path should contain no space
           # So, deafult C:/Program Files (x86)/YAML_CPP is not working for later
           # finding of yaml-cpp using cmake PkgConfig
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
+          #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
+          git clone https://github.com/jbeder/yaml-cpp
+          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
       - name: Download OpenSSL
