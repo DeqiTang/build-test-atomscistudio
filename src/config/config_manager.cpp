@@ -29,8 +29,9 @@ std::string ConfigManager::get_home_dir() {
     char* home = std::getenv("HOME");
     home_dir = std::string(home);
 #elif defined(_WIN32)
+    char* home_drive = std::getenv("HOMEDRIVE");
     char* home_path = std::getenv("HOMEPATH");
-    home_dir = std::string(home_path);
+    home_dir = (fs::path(std::string(home_drive)) / std::string(home_path)).string();
 #endif
     return home_dir;
 
