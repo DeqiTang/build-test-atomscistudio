@@ -59,7 +59,9 @@ Atoms3D::Atoms3D(QWidget* parent, Qt3DCore::QEntity* root_entity)
         this->m_atoms_entity.push_back(sphere_entity);
         this->m_atoms_status.push_back(AtomStatus::Normal);
     }
+
     this->draw_atoms();
+
 }
 
 
