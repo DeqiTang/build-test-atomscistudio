@@ -23,6 +23,7 @@ ConfigManager::ConfigManager() {
 
 
 std::string ConfigManager::get_home_dir() {
+
     std::string home_dir;
 
 #if defined(__linux__) || defined(__APPLE__)
