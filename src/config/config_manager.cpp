@@ -43,7 +43,7 @@ std::string ConfigManager::get_home_dir() {
 void ConfigManager::init_json() {
     if (false == fs::exists(fs::path(this->home_dir) / "config.json")) {
         config_ptree.add("version", "0.0.0");
-        pt::write_json((fs::path(this->home_dir) / "config.json").string(), this->config_ptree);
+        pt::write_json((fs::path(this->home_dir) / ".atomscistudio/config.json").string(), this->config_ptree);
     } else {
         pt::read_json((fs::path(this->home_dir) / "config.json").string(), this->config_ptree);
     }
