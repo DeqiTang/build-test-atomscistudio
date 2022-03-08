@@ -247,6 +247,16 @@ void MainWindow::popup_config() {
     std::string info_text = "";
     info_text += "The home dir: ";
     info_text += m_config_manager.get_home_dir();
+    info_text += "\n";
+
+#if defined(__linux__) || defined(__APPLE__)
+    info_text += "The config dir: ";
+    info_text += (fs::path(m_config_manager.home_dir) / ".atomscistudio").string();
+#elif defined(_WIN32)
+    info_text += "The config dir: ";
+    info_text += (fs::path(m_config_manager.home_dir) / "atomscistudio").string();
+#endif
+
     msg_box->setInformativeText(QObject::tr(info_text.c_str()));
     msg_box->setStandardButtons(QMessageBox::Ok | QMessageBox::Close | QMessageBox::Abort);
     msg_box->setDefaultButton(QMessageBox::Ok);

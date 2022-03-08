@@ -8,6 +8,7 @@ namespace pt = boost::property_tree;
 
 ConfigManager::ConfigManager() {
     this->home_dir = get_home_dir();
+    this->config_dir = get_config_dir();
 
     // if config files do not exist, generate them
 #if defined(__linux__) || defined(__APPLE__)
@@ -39,6 +40,21 @@ std::string ConfigManager::get_home_dir() {
     return home_dir;
 
 }
+
+
+std::string ConfigManager::get_config_dir() {
+
+    std::string config_dir;
+
+#if defined(__linux__) || defined(__APPLE__)
+    config_dir = (fs::path(this->home_dir) / ".atomscistudio").string();
+#elif defined(_WIN32)
+    config_dir = (fs::path(this->home_dir) / "atomscistudio").string();
+#endif
+
+    return config_dir;
+}
+
 
 void ConfigManager::init_json() {
     if (false == fs::exists(fs::path(this->home_dir) / "config.json")) {

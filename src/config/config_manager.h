@@ -33,10 +33,12 @@ public:
     ConfigManager();
 
     std::string get_home_dir();
+    std::string get_config_dir();
 
     void init_json();
 
     std::string home_dir;
+    std::string config_dir;
     pt::ptree config_ptree;
 };
 
