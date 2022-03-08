@@ -23,6 +23,10 @@
 #define CONFIGMANAGER_H
 
 #include <string>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+namespace pt = boost::property_tree;
 
 class ConfigManager {
 public:
@@ -30,7 +34,10 @@ public:
 
     std::string get_home_dir();
 
+    void init_json();
+
     std::string home_dir;
+    pt::ptree config_ptree;
 };
 
 #endif // CONFIGMANAGER_H
