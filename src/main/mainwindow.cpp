@@ -243,7 +243,11 @@ void MainWindow::popup_about() {
 
 void MainWindow::popup_config() {
     auto msg_box = new QMessageBox(this->m_central_widget);
-    msg_box->setText("About Atomscistudio (version 0.0.0)");
+    std::string text;
+    text += "About Atomscistudio (version ";
+    text += this->m_config_manager.config_ptree.get<std::string>("version");
+    text += ")";
+    msg_box->setText(tr(text.c_str()));
     std::string info_text = "";
     info_text += "The home dir: ";
     info_text += m_config_manager.get_home_dir();
