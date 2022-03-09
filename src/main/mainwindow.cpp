@@ -259,4 +259,5 @@ void MainWindow::popup_config() {
     msg_box->setDefaultButton(QMessageBox::Ok);
     msg_box->exec();
     delete msg_box;
+
 }
