@@ -22,15 +22,15 @@
 #include "calccontrol.h"
 
 #include <iostream>
+#include <yaml-cpp/yaml.h>
+
 #include <QTabWidget>
 #include <QCheckBox>
 #include <QSplitter>
 
 #include "calc/leftzone.h"
 #include "calc/rightzone.h"
-
-#include <atomsciflow/remote/ssh.h>
-#include <yaml-cpp/yaml.h>
+#include "atomsciflow/remote/ssh.h"
 
 CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
 
@@ -60,3 +60,4 @@ CalcControl::CalcControl(QWidget *parent) : QWidget{parent} {
     }
 
 }
+

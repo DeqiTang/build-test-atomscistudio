@@ -19,12 +19,10 @@
  ***********************************************************************/
 
 
-
 // Information of the atomic color:
 // http://jmol.sourceforge.net/jscolors/
 // Jmol is an excellent open source viewer for chemical
 // structure, licensed under LGPL.
-
 
 #ifndef MODELING_ATOMIC_COLOR_H_
 #define MODELING_ATOMIC_COLOR_H_
@@ -47,6 +45,7 @@ private:
   void _initialize();
 
 };
+
 
 inline void AtomicColor::_initialize() {
 this->jmol["H"] = std::vector<int>{255, 255, 255};
