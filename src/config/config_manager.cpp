@@ -22,6 +22,7 @@ ConfigManager::ConfigManager() {
 #endif
 
     init_json();
+
 }
 
 
