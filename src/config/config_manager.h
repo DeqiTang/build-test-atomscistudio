@@ -42,4 +42,5 @@ public:
     pt::ptree config_ptree;
 };
 
+
 #endif // CONFIGMANAGER_H
