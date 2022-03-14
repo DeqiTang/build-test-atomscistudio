@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #ifndef MODELING_QT3DWINDOWCUSTOM_H
 #define MODELING_QT3DWINDOWCUSTOM_H
 
@@ -61,7 +60,6 @@ public:
 public slots:
     void handle_picker_press(const Qt3DRender::QPickEvent* pick);
     void handle_picker_click(const Qt3DRender::QPickEvent* pick);
-
 
 };
 

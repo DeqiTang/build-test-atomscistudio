@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #ifndef MODELING_TOOLS_H
 #define MODELING_TOOLS_H
 
@@ -32,7 +31,6 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-
 
 #include "modeling/qt3dwindow_custom.h"
 

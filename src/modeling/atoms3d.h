@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #ifndef MODELING_ATOMS3D_H
 #define MODELING_ATOMS3D_H
 
@@ -93,6 +92,5 @@ class AtomStatusComponent : public Qt3DCore::QComponent {
 public:
     Atoms3D::AtomStatus status;
 };
-
 
 #endif // MODELING_ATOMS3D_H
