@@ -40,21 +40,15 @@
 
 #include "modeling/atoms3d.h"
 
-class Qt3DWindowCustom : public Qt3DExtras::Qt3DWindow
-{
+class Qt3DWindowCustom: public Qt3DExtras::Qt3DWindow {
 public:
     Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayout* hlayout);
 
     QWidget* m_root_widget;
-
     Qt3DCore::QEntity* m_root_entity;
-
     Qt3DRender::QCamera* m_camera_entity;
-
     Qt3DExtras::QOrbitCameraController* m_orbit_cam_controller;
-
     Atoms3D* m_atoms3d;
-
     QMenu* m_right_pop_menu;
 
 public slots:

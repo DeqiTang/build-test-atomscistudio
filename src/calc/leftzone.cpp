@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #include "leftzone.h"
 
 LeftZone::LeftZone(QWidget *parent) : QWidget{parent} {
@@ -72,5 +71,4 @@ LeftZone::LeftZone(QWidget *parent) : QWidget{parent} {
     text_browser->setText(QObject::tr(
 "provide really powerful controlling of the calculation workflow"
     ));
-
 }

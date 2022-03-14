@@ -18,12 +18,10 @@
  *
  ***********************************************************************/
 
-
 // TODO:
 // Currently we use QTabWidget to separate the different space
 // with different functionality, which might be replaced by
 // more flexible QStackWidget + QComboBox in the future.
-
 
 #ifndef MAIN_MAINWINDOW_H
 #define MAIN_MAINWINDOW_H
@@ -37,13 +35,10 @@
 #include "config/config_manager.h"
 #include "modeling/qt3dwindow_custom.h"
 
-
 namespace fs = boost::filesystem;
-
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
-
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow() {
@@ -54,14 +49,10 @@ public:
     void popup_config();
 
     QWidget* m_central_widget;
-
     QMenuBar* m_root_menubar;
-
     QHBoxLayout* m_root_hlayout;
     QVBoxLayout* m_root_vlayout;
-
     QTabWidget* m_root_tabwidget;
-
     ConfigManager m_config_manager;
 private slots:
 

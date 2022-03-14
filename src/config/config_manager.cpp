@@ -22,9 +22,7 @@ ConfigManager::ConfigManager() {
 #endif
 
     init_json();
-
 }
-
 
 std::string ConfigManager::get_home_dir() {
 
@@ -39,9 +37,7 @@ std::string ConfigManager::get_home_dir() {
     home_dir = (fs::path(std::string(home_drive)) / std::string(home_path)).string();
 #endif
     return home_dir;
-
 }
-
 
 std::string ConfigManager::get_config_dir() {
 
@@ -56,7 +52,6 @@ std::string ConfigManager::get_config_dir() {
     return config_dir;
 }
 
-
 void ConfigManager::init_json() {
 
     if (false == fs::exists(fs::path(this->home_dir) / "config.json")) {
@@ -67,4 +62,3 @@ void ConfigManager::init_json() {
     }
 
 }
-

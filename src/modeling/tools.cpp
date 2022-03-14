@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #include "modeling/tools.h"
 
 #include <QSplitter>
@@ -124,7 +123,6 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     checkbox_wireframe->setText(QCoreApplication::translate("Atoms3DTools", "Wireframe", nullptr));
     checkbox_wireframe->setChecked(false);
 
-
     auto text_browser = new QTextBrowser(this);
     v_splitter->addWidget(text_browser);
     text_browser->setObjectName(QString::fromUtf8("m_text_browser"));
@@ -135,11 +133,7 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
 
 }
 
-
-
 void Tools::on_checkbox_state_changed(int arg1) {
 
     this->m_qt3dwindow_custom->m_atoms3d->enable_atoms_entity(arg1);
 }
-
-

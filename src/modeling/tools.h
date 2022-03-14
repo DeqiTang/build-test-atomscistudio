@@ -45,7 +45,6 @@ public:
 
     Qt3DWindowCustom* m_qt3dwindow_custom; // never destory this resource in this class
 
-
 signals:
 
 private slots:
@@ -53,6 +52,4 @@ private slots:
     void on_checkbox_state_changed(int arg1);
 };
 
-
 #endif // MODELING_TOOLS_H
-

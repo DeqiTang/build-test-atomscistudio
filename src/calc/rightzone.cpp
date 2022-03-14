@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #include "rightzone.h"
 
 RightZone::RightZone(QWidget *parent) : QWidget{parent} {
@@ -72,5 +71,4 @@ RightZone::RightZone(QWidget *parent) : QWidget{parent} {
     text_browser->setText(QObject::tr(
 "provide really powerful controlling of the calculation workflow"
     ));
-
 }
