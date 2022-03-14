@@ -32,15 +32,15 @@
 
 class AtomicColor {
 public:
-  AtomicColor() {
-    this->_initialize();
-  };
-  ~AtomicColor() {};
+    AtomicColor() {
+        this->_initialize();
+    };
+    ~AtomicColor() {};
 
-  std::map<std::string, std::vector<int>> jmol;
+    std::map<std::string, std::vector<int>> jmol;
 
 private:
-  void _initialize();
+    void _initialize();
 
 };
 

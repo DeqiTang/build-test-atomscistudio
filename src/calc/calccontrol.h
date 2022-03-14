@@ -18,7 +18,6 @@
  *
  ***********************************************************************/
 
-
 #ifndef CALCCONTROL_H
 #define CALCCONTROL_H
 
@@ -30,7 +29,7 @@ class CalcControl : public QWidget {
 public:
     explicit CalcControl(QWidget *parent = nullptr);
 
-        QHBoxLayout* m_hlayout;
+    QHBoxLayout* m_hlayout;
 signals:
 
 };

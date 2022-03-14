@@ -38,7 +38,6 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
     this->setMinimumSize(QSize(500, 800));
     this->setWindowTitle(QCoreApplication::translate("Atoms3DTools", "Form", nullptr));
 
-
     auto vertical_layout = new QVBoxLayout(this);
     this->setLayout(vertical_layout);
     vertical_layout->setObjectName(QString::fromUtf8("vertical_layout"));
@@ -130,7 +129,6 @@ Tools::Tools(QWidget* parent, Qt3DWindowCustom* qt3dwindow_custom)
 "Atom Science Studio will be a GUI application to provide modeling and workflow automation "
 "for simulations involving atoms."
     ));
-
 }
 
 void Tools::on_checkbox_state_changed(int arg1) {

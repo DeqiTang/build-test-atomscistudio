@@ -100,7 +100,6 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
 
     QObject::connect(picker, &Qt3DRender::QObjectPicker::pressed, this, &Qt3DWindowCustom::handle_picker_press);
     QObject::connect(picker, &Qt3DRender::QObjectPicker::clicked, this, &Qt3DWindowCustom::handle_picker_click);
-
 }
 
 void Qt3DWindowCustom::handle_picker_press(const Qt3DRender::QPickEvent* pick) {
@@ -119,7 +118,6 @@ void Qt3DWindowCustom::handle_picker_click(const Qt3DRender::QPickEvent* pick) {
     std::cout << "Clicked " << "object name: " 
               << pick->entity()->objectName().toStdString() 
               << std::endl;
-
     std::cout << "Pick Position"
               << " ->x " << pick->position().x()
               << " ->y " << pick->position().y() 

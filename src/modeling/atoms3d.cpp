@@ -64,7 +64,7 @@ void Atoms3D::draw_atoms() {
     this->clean_draw();
 
     int i = -1;
-    for (auto& atom : this->m_crystal->atoms) {
+    for (const auto& atom : this->m_crystal->atoms) {
         i++;
         if (this->m_atoms_status[i] != AtomStatus::Normal || this->m_atoms_status[i] == AtomStatus::Drawn) {
             continue;
@@ -110,8 +110,8 @@ void Atoms3D::draw_atoms() {
 
 void Atoms3D::enable_atoms_entity(bool enabled)
 {
-    for (auto& entity : this->m_atoms_entity) {
-        if (entity == nullptr) {
+    for (const auto& entity : this->m_atoms_entity) {
+        if (nullptr == entity) {
             continue;
         }
         entity->setEnabled(enabled);
@@ -128,7 +128,6 @@ void Atoms3D::clean_draw() {
     }
 }
 
-
 void Atoms3D::handle_picker_press(const Qt3DRender::QPickEvent* pick) {
     std::cout << "Pressed " << "object name: "
               << pick->entity()->objectName().toStdString()
@@ -141,7 +140,6 @@ void Atoms3D::handle_picker_press(const Qt3DRender::QPickEvent* pick) {
               << std::endl;
     std::cout << pick->entity()->components()[4]->objectName().toStdString()
               << std::endl;
-
     this->set_atom_status_by_id(pick->entity()->id().id(), AtomStatus::Removed);
     if (pick->button() == Qt3DRender::QPickEvent::Buttons::RightButton) {
         this->m_rightpop_menu->popup(QCursor::pos());
@@ -162,7 +160,6 @@ void Atoms3D::handle_delete_atom() {
     std::cout << "Delete atom" << std::endl;
     this->draw_atoms();
 }
-
 
 void Atoms3D::set_atom_status_by_id(int id, AtomStatus status) {
     int natom = this->m_crystal->natom();
