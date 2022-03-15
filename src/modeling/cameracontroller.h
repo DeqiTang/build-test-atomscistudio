@@ -18,17 +18,15 @@
  *
  ***********************************************************************/
 
-#ifndef ATOMS3DCAMERACONTROLLER_H
-#define ATOMS3DCAMERACONTROLLER_H
-
-/// ***************************************************************
+/// Atoms3DCameraController is a customized Qt3D camera controlelr
+/// it's actually a Trackball or Arcball camera controller
+///
 /// For more knowledge about Object Mouse Trackball,
 /// see https://www.khronos.org/opengl/wiki/Object_Mouse_Trackball
 ///
 /// For information about implementation of an CUstom Camera Controller, refer to:
 /// https://code.qt.io/cgit/qt/qt3d.git/tree/src/extras/defaults/qabstractcameracontroller.cpp
 /// https://code.qt.io/cgit/qt/qt3d.git/tree/src/extras/defaults/qorbitcameracontroller.cpp
-/// ***************************************************************
 
 #ifndef ATOMS3D_CAMERACONTROLLER_H
 #define ATOMS3D_CAMERACONTROLLER_H
@@ -115,8 +113,5 @@ private:
     float m_trackball_size;
 
 };
-
-#endif // CAMERACONTROLLER_H
-
 
 #endif // CAMERACONTROLLER_H
