@@ -97,7 +97,7 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     auto cam_controller = new Atoms3DCameraController(m_root_entity);
     cam_controller->setCamera(m_camera_entity);
     cam_controller->set_window_size(this->size());
-    cam_controller->set_rotation_speed(1);
+    cam_controller->set_rotation_speed(2);
     cam_controller->setLinearSpeed(3000.0); // affect middle mouse zoom speed
     cam_controller->setLookSpeed(1000.0);
     cam_controller->setAcceleration(10.0);
