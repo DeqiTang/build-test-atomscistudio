@@ -27,6 +27,7 @@
 #include <QSplitter>
 
 #include "modeling/tools.h"
+#include "modeling/cameracontroller.h"
 
 Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayout* hlayout) {
 
@@ -91,8 +92,15 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     light_transform_2->setTranslation(QVector3D(0, 0, 0));
     light_entity_2->addComponent(light_transform_2);
 
-    auto orbit_cam_controller = new Qt3DExtras::QOrbitCameraController(m_root_entity);
-    orbit_cam_controller->setCamera(m_camera_entity);
+//    auto orbit_cam_controller = new Qt3DExtras::QOrbitCameraController(m_root_entity);
+//    orbit_cam_controller->setCamera(m_camera_entity);
+    auto cam_controller = new Atoms3DCameraController(m_root_entity);
+    cam_controller->setCamera(m_camera_entity);
+    cam_controller->set_window_size(this->size());
+    cam_controller->set_rotation_speed(1);
+    cam_controller->setLinearSpeed(3000.0); // affect middle mouse zoom speed
+    cam_controller->setLookSpeed(1000.0);
+    cam_controller->setAcceleration(10.0);
 
     Qt3DRender::QObjectPicker* picker = new Qt3DRender::QObjectPicker(this->m_root_entity);
     picker->setHoverEnabled(true);
