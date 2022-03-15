@@ -75,11 +75,9 @@ QVector3D Atoms3DCameraController::project_to_trackball(const QPoint& screen_coo
     return point_3d;
 }
 
-
 float clamp(float x) {
     return x > 1? 1 : (x < -1? -1 : x);
 }
-
 
 void Atoms3DCameraController::create_rotation(const QPoint& first_point, const QPoint& next_point,
     QVector3D& dir, float& angle) {
@@ -94,7 +92,6 @@ void Atoms3DCameraController::create_rotation(const QPoint& first_point, const Q
     angle = acos(clamp(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
 
 }
-
 
 void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraController::InputState& state, float dt) {
     auto camera_obj = this->camera();

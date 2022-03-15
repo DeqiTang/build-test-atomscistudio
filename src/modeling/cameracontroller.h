@@ -65,8 +65,7 @@ protected:
 
 public slots:
 
-    inline void set_window_size(QSize window_size)
-    {
+    inline void set_window_size(QSize window_size) {
         if (m_window_size == window_size)
             return;
 
@@ -74,8 +73,7 @@ public slots:
         emit window_size_changed(m_window_size);
     }
 
-    inline void set_trackball_size(float trackball_size)
-    {
+    inline void set_trackball_size(float trackball_size) {
         if (qFuzzyCompare(m_trackball_size, trackball_size))
             return;
 
@@ -83,8 +81,7 @@ public slots:
         emit trackball_size_changed(m_trackball_size);
     }
 
-    inline void set_rotation_speed(float rotation_speed)
-    {
+    inline void set_rotation_speed(float rotation_speed) {
         if (qFuzzyCompare(m_rotation_speed, rotation_speed))
             return;
 
@@ -111,7 +108,6 @@ private:
     float m_trackball_radius;
     float m_rotation_speed;
     float m_trackball_size;
-
 };
 
 #endif // CAMERACONTROLLER_H
