@@ -40,7 +40,7 @@
 #include "modeling/atomic_color.h"
 
 class Atoms3D : public QWidget {
-    Q_OBJECT
+Q_OBJECT
 public:
     enum class AtomStatus {
         Normal,
