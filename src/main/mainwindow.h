@@ -18,10 +18,10 @@
  *
  ***********************************************************************/
 
-// TODO:
-// Currently we use QTabWidget to separate the different space
-// with different functionality, which might be replaced by
-// more flexible QStackWidget + QComboBox in the future.
+/// TODO:
+/// Currently we use QTabWidget to separate the different space
+/// with different functionality, which might be replaced by
+/// more flexible QStackWidget + QComboBox in the future.
 
 #ifndef MAIN_MAINWINDOW_H
 #define MAIN_MAINWINDOW_H
