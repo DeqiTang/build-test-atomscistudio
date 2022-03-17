@@ -100,7 +100,6 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
 
     auto linear_speed = this->linearSpeed();
 
-
     if (state.leftMouseButtonActive) {
         QVector3D dir;
         float angle;
