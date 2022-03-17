@@ -52,17 +52,22 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     this->m_camera_entity->setNearPlane(0.01);
     this->m_camera_entity->setFarPlane(1000);
 
+    double mean_x = 0;
+    double mean_y = 0;
+    double mean_z = 0;
+    arma::mat atoms_coords;
+    atoms_coords.set_size(this->m_atoms3d->m_crystal->atoms.size(), 3);
     int n = 0;
-    float mean_x = 0, mean_y = 0, mean_z = 0;
-    for (auto& atom : this->m_atoms3d->m_crystal->atoms) {
-        mean_x += atom.x;
-        mean_y += atom.y;
-        mean_z += atom.z;
+    for (const auto& atom : this->m_atoms3d->m_crystal->atoms) {
+        atoms_coords.at(n, 0) = atom.x;
+        atoms_coords.at(n, 1) = atom.y;
+        atoms_coords.at(n, 2) = atom.z;
         n += 1;
     }
-    mean_x /= n;
-    mean_y /= n;
-    mean_z /= n;
+    arma::rowvec sum_each_xyz = arma::sum(atoms_coords, 0);
+    mean_x = sum_each_xyz.at(0) / n;
+    mean_y = sum_each_xyz.at(1) / n;
+    mean_z = sum_each_xyz.at(2) / n;
     std::cout << "Mean->XYZ: " << mean_x << " " << mean_y << " " << mean_z << std::endl;
 
     this->m_camera_entity->setViewCenter(QVector3D(mean_x, mean_y, mean_z));
@@ -74,23 +79,41 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     this->m_camera_entity->setPosition(QVector3D(0, 0, mean_z * 5));
     this->m_camera_entity->setUpVector(QVector3D(0, 1, 0));
 
-    auto light_entity_1 = new Qt3DCore::QEntity(m_root_entity);
-    auto light_1 = new Qt3DRender::QPointLight(light_entity_1);
-    light_1->setColor("white");
-    light_1->setIntensity(1);
-    light_entity_1->addComponent(light_1);
-    auto light_transform_1 = new Qt3DCore::QTransform(light_entity_1);
-    light_transform_1->setTranslation(m_camera_entity->position());
-    light_entity_1->addComponent(light_transform_1);
+    std::vector<QVector3D> light_coords;
+    //light_coords.push_back(m_camera_entity->position());
+    //light_coords.push_back(QVector3D{mean_x, mean_y, mean_z});
 
-    auto light_entity_2 = new Qt3DCore::QEntity(m_root_entity);
-    auto light_2 = new Qt3DRender::QPointLight(light_entity_2);
-    light_2->setColor("white");
-    light_2->setIntensity(1);
-    light_entity_2->addComponent(light_2);
-    auto light_transform_2 = new Qt3DCore::QTransform(light_entity_2);
-    light_transform_2->setTranslation(QVector3D(0, 0, 0));
-    light_entity_2->addComponent(light_transform_2);
+    light_coords.push_back(QVector3D{
+        float(atoms_coords.col(0).max()),
+        float(atoms_coords.col(1).max()),
+        float(atoms_coords.col(2).max())
+    });
+    light_coords.push_back(QVector3D{
+        float(-atoms_coords.col(0).max()),
+        float(-atoms_coords.col(1).max()),
+        float(-atoms_coords.col(2).max())
+    });
+
+    light_coords.push_back(QVector3D{10, 0, 0});
+    light_coords.push_back(QVector3D{-10, 0, 0});
+    light_coords.push_back(QVector3D{0, 10, 0});
+    light_coords.push_back(QVector3D{0, -10, 0});
+    light_coords.push_back(QVector3D{10, 10, 10});
+    light_coords.push_back(QVector3D{-10, -10, -10});
+    light_coords.push_back(QVector3D{10, 10, 0});
+    light_coords.push_back(QVector3D{10, 0, 10});
+    light_coords.push_back(QVector3D{0, 10, 10});
+
+    for (const auto& item : light_coords) {
+        auto light_entity = new Qt3DCore::QEntity(m_root_entity);
+        auto light = new Qt3DRender::QPointLight(light_entity);
+        light->setColor("white");
+        light->setIntensity(0.5);
+        light_entity->addComponent(light);
+        auto light_transform = new Qt3DCore::QTransform(light_entity);
+        light_transform->setTranslation(item);
+        light_entity->addComponent(light_transform);
+    }
 
 //    auto orbit_cam_controller = new Qt3DExtras::QOrbitCameraController(m_root_entity);
 //    orbit_cam_controller->setCamera(m_camera_entity);
