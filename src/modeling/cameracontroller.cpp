@@ -88,7 +88,6 @@ void Atoms3DCameraController::create_rotation(const QPoint& first_point, const Q
     dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
     // Approximate rotation angle:
     angle = acos(clamp(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
-
 }
 
 void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraController::InputState& state, float dt) {
@@ -113,7 +112,6 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
 
     } else if(state.middleMouseButtonActive) {
         auto offset = m_mouse_current_position - m_mouse_last_position;
-
         camera_obj->translate(
             QVector3D(
                 -offset.x() / m_window_size.width() * 0.5 * linear_speed,
