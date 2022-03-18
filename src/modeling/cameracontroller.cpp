@@ -84,10 +84,8 @@ void Atoms3DCameraController::create_rotation(const QPoint& first_point, const Q
 
     auto last_pos_3d = project_to_trackball(first_point).normalized();
     auto current_pos_3d = project_to_trackball(next_point).normalized();
-
     // Compute axis of rotation:
     dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
-
     // Approximate rotation angle:
     angle = acos(clamp(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
 
