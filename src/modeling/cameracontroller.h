@@ -39,24 +39,17 @@
 
 class Atoms3DCameraController : public Qt3DExtras::QAbstractCameraController {
 Q_OBJECT
-
 Q_PROPERTY(QSize window_size READ window_size WRITE set_window_size NOTIFY window_size_changed)
 Q_PROPERTY(float trackball_size READ trackball_size WRITE set_trackball_size NOTIFY trackball_size_changed)
 Q_PROPERTY(float rotation_speed READ rotation_speed WRITE set_rotation_speed NOTIFY rotation_speed_changed)
-
 public:
-
     explicit Atoms3DCameraController(Qt3DCore::QNode* parent = nullptr);
     ~Atoms3DCameraController() = default;
 
     QSize window_size() const;
     float trackball_size() const;
     float rotation_speed() const;
-
-protected:
-
 public slots:
-
     void set_window_size(QSize window_size);
     void set_trackball_size(float trackball_size);
     void set_rotation_speed(float rotation_speed);
@@ -67,13 +60,11 @@ signals:
     void rotation_speed_changed(float rotation_speed);
 
 protected:
-
     void moveCamera(const Qt3DExtras::QAbstractCameraController::InputState& state, float dt) override;
     QVector3D project_to_trackball(const QPoint& screenCoords) const;
     void create_rotation(const QPoint& firstPoint, const QPoint& nextPoint, QVector3D& dir, float& angle);
 
 private:
-
     QPoint m_mouse_last_position;
     QPoint m_mouse_current_position;
     QSize m_window_size;
@@ -103,7 +94,7 @@ inline void Atoms3DCameraController::set_window_size(QSize window_size) {
 }
 
 inline void Atoms3DCameraController::set_trackball_size(float trackball_size) {
-    if (qFuzzyCompare(m_trackball_size, trackball_size)) {
+    if (std::abs(m_trackball_size - trackball_size) < 1.0E-6) {
         return;
     }
     m_trackball_size = trackball_size;
