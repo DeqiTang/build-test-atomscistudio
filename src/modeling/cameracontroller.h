@@ -35,6 +35,7 @@
 #include <Qt3DCore/QTransform>
 #include <QPoint>
 #include <QSize>
+#include <cmath>
 
 class Atoms3DCameraController : public Qt3DExtras::QAbstractCameraController {
 Q_OBJECT
@@ -110,7 +111,7 @@ inline void Atoms3DCameraController::set_trackball_size(float trackball_size) {
 }
 
 inline void Atoms3DCameraController::set_rotation_speed(float rotation_speed) {
-    if (qFuzzyCompare(m_rotation_speed, rotation_speed)) {
+    if (std::abs(m_rotation_speed - rotation_speed) < 1.0E-6) {
         return;
     }
     m_rotation_speed = rotation_speed;
