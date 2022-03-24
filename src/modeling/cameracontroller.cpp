@@ -47,7 +47,6 @@ Atoms3DCameraController::Atoms3DCameraController(Qt3DCore::QNode* parent)
             m_mouse_current_position = m_mouse_last_position;
         }
     );
-
     QObject::connect(mouse_handler, &Qt3DInput::QMouseHandler::positionChanged,
         [this](Qt3DInput::QMouseEvent *position_changed_event) {
             position_changed_event->setAccepted(true);
