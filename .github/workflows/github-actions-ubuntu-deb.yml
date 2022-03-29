@@ -48,9 +48,9 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build
-          cmake --build build
-          sudo cmake --install build
+          cmake build-test-atomsciflow -B build_atomsciflow
+          cmake --build build_atomsciflow
+          sudo cmake --install build_atomsciflow
         shell: bash
       - uses: actions/checkout@v2
       - name: Build for Ubuntu
@@ -59,8 +59,8 @@ jobs:
           cmake -B build
           cmake --build build
           sudo cmake --install build
-          cp build atomsciflow-cmake-build -r
-          tar -czvf atomsciflow-cmake-build.tar.gz atomsciflow-cmake-build
+          cp build atomscistudio-cmake-build -r
+          tar -czvf atomscistudio-cmake-build.tar.gz atomscistudio-cmake-build
           ldd build/atomscistudio
           # prepare for the followed deb build
           mkdir -p debian/usr/bin
@@ -87,8 +87,8 @@ jobs:
           desc: 'GUI environment for scientific research involving atoms'
       - uses: actions/upload-artifact@v2
         with:
-          name: atomsciflow-cmake-build.tar.gz
-          path: atomsciflow-cmake-build.tar.gz
+          name: atomscistudio-cmake-build.tar.gz
+          path: atomscistudio-cmake-build.tar.gz
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
         uses: svenstaro/upload-release-action@v2
