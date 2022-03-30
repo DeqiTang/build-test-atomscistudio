@@ -28,7 +28,7 @@ They have their own licenses, and here below is an incomplete but growing list
 of licenses and acknowledgements for them.
 
 
-* Qt 6 is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.txt) and [GPL v3](https://www.gnu.org/licenses/gpl-3.0.txt). Not all of Qt 6 moduels are under LGPL v3, but the majority of Qt moduels are available under GPL v3, which is the license Atomscistudio is under.
+* Qt 6 is licensed under [LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.txt) and [GPL v3](https://www.gnu.org/licenses/gpl-3.0.txt). Not all Qt modules are under LGPL v3, but the majority of Qt modules are available under GPL v3, which is the license Atomscistudio is under.
 * Boost is licensed under [Boost Software License 1.0](https://www.boost.org/LICENSE_1_0.txt).
 * OpenSSL 1.1.1, 1.1.0, 1.0.2 are licensed under [the dual OpenSSL and SSLeay license](https://www.openssl.org/source/license-openssl-ssleay.txt).
 * OpenSSL 3.0 and later releases are licensed under [Apache License v2](https://www.openssl.org/source/apache-license-2.0.txt).
