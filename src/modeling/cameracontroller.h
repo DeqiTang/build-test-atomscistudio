@@ -61,7 +61,6 @@ signals:
 
 protected:
     void moveCamera(const Qt3DExtras::QAbstractCameraController::InputState& state, float dt) override;
-    QVector3D project_to_trackball(const QPoint& screenCoords) const;
     void create_rotation(const QPoint& firstPoint, const QPoint& nextPoint, QVector3D& dir, float& angle);
 
 private:
