@@ -61,7 +61,6 @@ signals:
 
 protected:
     void moveCamera(const Qt3DExtras::QAbstractCameraController::InputState& state, float dt) override;
-    void create_rotation(const QPoint& firstPoint, const QPoint& nextPoint, QVector3D& dir, float& angle);
 
 private:
     QPoint m_mouse_last_position;
