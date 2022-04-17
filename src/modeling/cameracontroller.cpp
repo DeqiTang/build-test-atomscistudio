@@ -24,11 +24,7 @@
 #include <Qt3DInput/QMouseHandler>
 #include <Qt3DInput/QMouseDevice>
 #include <Qt3DCore/QTransform>
-//#include <QtMath>
 #include <armadillo>
-#include <QVector2D>
-#include <Qt3DInput/QAction>
-#include <Qt3DInput/QActionInput>
 
 Atoms3DCameraController::Atoms3DCameraController(Qt3DCore::QNode* parent)
     : Qt3DExtras::QAbstractCameraController(parent) {
@@ -37,7 +33,7 @@ Atoms3DCameraController::Atoms3DCameraController(Qt3DCore::QNode* parent)
     m_rotation_speed = 2.0;
     m_trackball_size = 1.0;
 
-    Qt3DInput::QMouseHandler *mouse_handler = new Qt3DInput::QMouseHandler(this);
+    Qt3DInput::QMouseHandler* mouse_handler = new Qt3DInput::QMouseHandler(this);
     mouse_handler->setSourceDevice(this->mouseDevice());
     this->mouseDevice()->setSensitivity(0.001);
 
@@ -72,13 +68,13 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
     };
 
     const auto project_to_trackball = [&](const QPoint& screen_point) {
-        float screen_x = screen_point.x();
-        float screen_y = m_window_size.height() - screen_point.y();
+        double screen_x = screen_point.x();
+        double screen_y = m_window_size.height() - screen_point.y();
 
         QVector2D point_2d(screen_x / m_window_size.width() - 0.5, screen_y / m_window_size.height() - 0.5);
 
-        float z = 0.0;
-        float r2 = std::pow(m_trackball_size, 2);
+        double z = 0.0;
+        double r2 = std::pow(m_trackball_size, 2);
         if (point_2d.lengthSquared() <= r2 * 0.5) {
             z = sqrt(r2 - point_2d.lengthSquared());
         } else {
@@ -89,18 +85,18 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
     };
 
     auto create_rotation = [&](const QPoint& first_point, const QPoint& next_point,
-        QVector3D& dir, float& angle) {
+        QVector3D& dir, double& angle) {
         auto last_pos_3d = project_to_trackball(first_point).normalized();
         auto current_pos_3d = project_to_trackball(next_point).normalized();
         // Compute axis of rotation:
         dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
         // Approximate rotation angle:
-        angle = acos(clamp(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
+        angle = std::acos(clamp(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
     };
 
     if (true == state.leftMouseButtonActive) {
         QVector3D dir;
-        float angle;
+        double angle;
         create_rotation(m_mouse_last_position, m_mouse_current_position, dir, angle);
 
         auto current_rotation = camera_obj->transform()->rotation();
