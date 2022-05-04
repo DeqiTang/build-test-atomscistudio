@@ -39,16 +39,16 @@
 
 class Atoms3DCameraController : public Qt3DExtras::QAbstractCameraController {
 Q_OBJECT
-Q_PROPERTY(QSize window_size READ window_size WRITE set_window_size NOTIFY window_size_changed)
-Q_PROPERTY(double trackball_size READ trackball_size WRITE set_trackball_size NOTIFY trackball_size_changed)
-Q_PROPERTY(double rotation_speed READ rotation_speed WRITE set_rotation_speed NOTIFY rotation_speed_changed)
+Q_PROPERTY(QSize window_size MEMBER m_window_size READ get_window_size WRITE set_window_size NOTIFY window_size_changed)
+Q_PROPERTY(double trackball_size MEMBER m_trackball_size READ get_trackball_size WRITE set_trackball_size NOTIFY trackball_size_changed)
+Q_PROPERTY(double rotation_speed MEMBER m_rotation_speed READ get_rotation_speed WRITE set_rotation_speed NOTIFY rotation_speed_changed)
 public:
     explicit Atoms3DCameraController(Qt3DCore::QNode* parent = nullptr);
     ~Atoms3DCameraController() = default;
 
-    QSize window_size() const;
-    double trackball_size() const;
-    double rotation_speed() const;
+    QSize get_window_size() const;
+    double get_trackball_size() const;
+    double get_rotation_speed() const;
 
 public slots:
     void set_window_size(QSize window_size);
@@ -67,44 +67,47 @@ private:
     QPoint m_mouse_last_position;
     QPoint m_mouse_current_position;
     QSize m_window_size;
-    float m_trackball_radius;
-    float m_rotation_speed;
-    float m_trackball_size;
+    double m_trackball_radius;
+    double m_rotation_speed;
+    double m_trackball_size;
 };
 
-inline QSize Atoms3DCameraController::window_size() const {
+inline QSize Atoms3DCameraController::get_window_size() const {
     return m_window_size;
 }
 
-inline double Atoms3DCameraController::trackball_size() const {
+inline double Atoms3DCameraController::get_trackball_size() const {
     return m_trackball_size;
 }
 
-inline double Atoms3DCameraController::rotation_speed() const {
+inline double Atoms3DCameraController::get_rotation_speed() const {
     return m_rotation_speed;
 }
 
 inline void Atoms3DCameraController::set_window_size(QSize window_size) {
     if (m_window_size == window_size) {
         return;
+    } else {
+        m_window_size = window_size;
     }
-    m_window_size = window_size;
     emit window_size_changed(m_window_size);
 }
 
 inline void Atoms3DCameraController::set_trackball_size(double trackball_size) {
     if (std::abs(m_trackball_size - trackball_size) < 1.0E-6) {
         return;
+    } else {
+        m_trackball_size = trackball_size;
     }
-    m_trackball_size = trackball_size;
     emit trackball_size_changed(m_trackball_size);
 }
 
 inline void Atoms3DCameraController::set_rotation_speed(double rotation_speed) {
     if (std::abs(m_rotation_speed - rotation_speed) < 1.0E-6) {
         return;
+    } else {
+        m_rotation_speed = rotation_speed;
     }
-    m_rotation_speed = rotation_speed;
     emit rotation_speed_changed(m_rotation_speed);
 }
 
