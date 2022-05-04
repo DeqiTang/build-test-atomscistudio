@@ -38,10 +38,12 @@
 #include <cmath>
 
 class Atoms3DCameraController : public Qt3DExtras::QAbstractCameraController {
+
 Q_OBJECT
 Q_PROPERTY(QSize window_size MEMBER m_window_size READ get_window_size WRITE set_window_size NOTIFY window_size_changed)
 Q_PROPERTY(double trackball_size MEMBER m_trackball_size READ get_trackball_size WRITE set_trackball_size NOTIFY trackball_size_changed)
 Q_PROPERTY(double rotation_speed MEMBER m_rotation_speed READ get_rotation_speed WRITE set_rotation_speed NOTIFY rotation_speed_changed)
+
 public:
     explicit Atoms3DCameraController(Qt3DCore::QNode* parent = nullptr);
     ~Atoms3DCameraController() = default;

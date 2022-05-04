@@ -63,10 +63,6 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
         return;
     }
 
-    auto clamp_fun = [](double x) {
-        return x > 1 ? 1 : (x < -1 ? -1 : x);
-    };
-
     const auto project_to_trackball = [&](const QPoint& screen_point) {
         double screen_x = screen_point.x();
         double screen_y = m_window_size.height() - screen_point.y();
@@ -74,51 +70,57 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
         QVector2D point_2d(screen_x / m_window_size.width() - 0.5, screen_y / m_window_size.height() - 0.5);
 
         double z = 0.0;
-        double r2 = std::pow(m_trackball_size, 2);
+        double radius_pow_2 = std::pow(m_trackball_size, 2);
         auto point_2d_length = point_2d.length();
         auto point_2d_length_squared = point_2d.lengthSquared();
-        if (point_2d_length_squared <= r2 * 0.5) {
-            z = sqrt(r2 - point_2d_length_squared);
+        if (point_2d_length_squared <= radius_pow_2 * 0.5) {
+            z = std::sqrt(radius_pow_2 - point_2d_length_squared);
         } else {
-            z = r2 * 0.5 / point_2d_length;
+            z = radius_pow_2 * 0.5 / point_2d_length;
         }
         QVector3D point_3d(point_2d, z);
         return point_3d;
     };
 
-    auto create_rotation = [&](const QPoint& first_point, const QPoint& next_point,
-        QVector3D& rot_dir, double& rot_angle) {
-        auto last_pos_3d = project_to_trackball(first_point).normalized();
-        auto current_pos_3d = project_to_trackball(next_point).normalized();
-        // compute axis of rotation:
-        rot_dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
-        // approximate rotation angle:
-        rot_angle = std::acos(clamp_fun(QVector3D::dotProduct(current_pos_3d, last_pos_3d)));
-    };
-
     if (true == state.leftMouseButtonActive) {
         QVector3D rot_dir;
         double rot_angle;
-        create_rotation(m_mouse_last_position, m_mouse_current_position, rot_dir, rot_angle);
+
+        auto last_pos_3d = project_to_trackball(m_mouse_last_position).normalized();
+        auto current_pos_3d = project_to_trackball(m_mouse_current_position).normalized();
+        // compute axis of rotation:
+        rot_dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
+        // approximate rotation angle:
+        double dot_of_pos = QVector3D::dotProduct(current_pos_3d, last_pos_3d);
+        rot_angle = std::acos(
+            dot_of_pos > 1 ? 1 : (dot_of_pos < -1 ? -1 : dot_of_pos)
+        );
 
         auto current_rotation = camera_obj->transform()->rotation();
 
         auto rotated_axis = current_rotation.rotatedVector(rot_dir);
         rot_angle *= m_rotation_speed;
 
-        auto rotation_matrix = QQuaternion::fromAxisAndAngle(rotated_axis, rot_angle * 1 / arma::datum::pi * 180);
+        auto rotation_matrix = QQuaternion::fromAxisAndAngle(
+            rotated_axis,
+            rot_angle * 1 / arma::datum::pi * 180
+        );
         camera_obj->rotateAboutViewCenter(rotation_matrix);
 
-    } else if(true == state.middleMouseButtonActive) {
-        auto offset = m_mouse_current_position - m_mouse_last_position;
+    } else if (true == state.middleMouseButtonActive) {
+        auto position_change = m_mouse_current_position - m_mouse_last_position;
         camera_obj->translate(
             QVector3D(
-                -offset.x() / m_window_size.width() * 0.5 * linear_speed,
-                offset.y() / m_window_size.height() * 0.5 * linear_speed,
+                -position_change.x() / m_window_size.width() * 0.5 * linear_speed,
+                position_change.y() / m_window_size.height() * 0.5 * linear_speed,
                 0
             )
         );
-    } else if(std::abs(dt - 0.0) > 1.0e-5) {
+    } else if (true == state.rightMouseButtonActive) {
+
+    }
+    //
+    if(std::abs(dt - 0.0) > 1.0e-5) {
         camera_obj->translate(
             QVector3D(
                 state.txAxisValue * linear_speed,
