@@ -92,7 +92,6 @@ find_package(atomsciflow REQUIRED)
 include_directories(${ATOMSCIFLOW_INCLUDE_DIR})
 link_libraries(${ATOMSCIFLOW_LIBRARIES})
 
-
 file(GLOB PROJECT_SOURCES
     ./src/main.cpp
 

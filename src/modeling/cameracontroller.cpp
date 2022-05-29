@@ -29,9 +29,10 @@
 Atoms3DCameraController::Atoms3DCameraController(Qt3DCore::QNode* parent)
     : Qt3DExtras::QAbstractCameraController(parent) {
 
+    m_trackball_center[0] = 0.5;
+    m_trackball_center[1] = 0.5;
     m_trackball_radius = 1.0;
     m_rotation_speed = 2.0;
-    m_trackball_size = 1.0;
 
     Qt3DInput::QMouseHandler* mouse_handler = new Qt3DInput::QMouseHandler(this);
     mouse_handler->setSourceDevice(this->mouseDevice());
@@ -63,14 +64,23 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
         return;
     }
 
-    const auto project_to_trackball = [&](const QPoint& screen_point) {
+    /**
+     * map from the 2d screen coordination system to the
+     * virtual 3D trackball system.
+     */
+    const auto map_to_trackball = [&](const QPoint& screen_point) {
         double screen_x = screen_point.x();
+        // The y axis of Qt screen set the upper left corner as origin.
         double screen_y = m_window_size.height() - screen_point.y();
 
-        QVector2D point_2d(screen_x / m_window_size.width() - 0.5, screen_y / m_window_size.height() - 0.5);
+        // with the center of the 3d window as the center of coordinate system
+        QVector2D point_2d(
+            screen_x / m_window_size.width() - m_trackball_center[0],
+            screen_y / m_window_size.height() - m_trackball_center[1]
+        );
 
         double z = 0.0;
-        double radius_pow_2 = std::pow(m_trackball_size, 2);
+        double radius_pow_2 = std::pow(m_trackball_radius, 2);
         auto point_2d_length = point_2d.length();
         auto point_2d_length_squared = point_2d.lengthSquared();
         if (point_2d_length_squared <= radius_pow_2 * 0.5) {
@@ -86,8 +96,8 @@ void Atoms3DCameraController::moveCamera(const Qt3DExtras::QAbstractCameraContro
         QVector3D rot_dir;
         double rot_angle;
 
-        auto last_pos_3d = project_to_trackball(m_mouse_last_position).normalized();
-        auto current_pos_3d = project_to_trackball(m_mouse_current_position).normalized();
+        auto last_pos_3d = map_to_trackball(m_mouse_last_position).normalized();
+        auto current_pos_3d = map_to_trackball(m_mouse_current_position).normalized();
         // compute axis of rotation:
         rot_dir = QVector3D::crossProduct(current_pos_3d, last_pos_3d);
         // approximate rotation angle:
