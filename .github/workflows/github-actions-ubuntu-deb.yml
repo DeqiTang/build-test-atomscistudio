@@ -43,12 +43,13 @@ jobs:
           sudo apt install openssl libssl-dev
           sudo apt install -y libssh2-1 libssh2-1-dev
           sudo apt install -y libyaml-cpp-dev
+          sudo apt install -y opencascade
       - name: Install gtest
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF
           cmake --build build_atomsciflow
           sudo cmake --install build_atomsciflow
         shell: bash
