@@ -32,6 +32,15 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
           destination: "C:/Softwares/ninja"          
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          version: ${{ matrix.qt_version }}
+          host: 'windows'
+          target: 'desktop'
+          arch: win64_msvc2019_64 
+          aqtversion: '==2.0.6'
+          modules: 'qt3d'
       - name: Install Boost
         id: install-boost
         uses: MarkusJx/install-boost@v2.2.0
@@ -109,7 +118,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'Visual Studio 16 2019' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig'
+          cmake -B build_atomscistudio -G 'Visual Studio 16 2019' -DCMAKE_PREFIX_PATH=${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }} -DYAML_CPP_PKGCONFIG_DIR=${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig 
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
