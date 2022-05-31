@@ -43,6 +43,7 @@ jobs:
           sudo apt install openssl libssl-dev
           sudo apt install -y libssh2-1 libssh2-1-dev
           sudo apt install -y libyaml-cpp-dev
+          sudo apt search libocct
           sudo apt search opencascade
           sudo apt install -y opencascade
       - name: Install gtest
