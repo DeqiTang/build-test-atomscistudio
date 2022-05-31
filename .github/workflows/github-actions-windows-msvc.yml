@@ -107,7 +107,7 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G "Visual Studio 16 2019" -DCMAKE_PREFIX_PATH=${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }} -DYAML_CPP_PKGCONFIG_DIR=${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig 
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G "Visual Studio 16 2019" -DCMAKE_PREFIX_PATH=${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }} -DYAML_CPP_PKGCONFIG_DIR=${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig 
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
         env:
