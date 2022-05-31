@@ -11,15 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04]
-        qt_version: [6.2.2, 6.2.1] 
-        exclude: 
-          - os: ubuntu-18.04
-            qt_version: 6.2.0
-          - os: ubuntu-18.04
-            qt_version: 6.2.1
-          - os: ubuntu-18.04
-            qt_version: 6.2.2
+        os: [ubuntu-22.04, ubuntu-20.04]
+        qt_version: [6.2.2] 
     env:
       executable: atomscistudio
     steps:
