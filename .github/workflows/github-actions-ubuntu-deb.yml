@@ -38,6 +38,7 @@ jobs:
           sudo apt install -y libyaml-cpp-dev
           sudo apt install -y libocct-foundation-dev
           sudo apt install -y libocct-visualization-dev
+          sudo apt install -y libocct-draw-dev
       - name: Install gtest
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install atomsciflow
