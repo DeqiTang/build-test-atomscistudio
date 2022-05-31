@@ -93,15 +93,15 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
         float(-atoms_coords.col(2).max())
     });
 
-    light_coords.push_back(QVector3D{10, 0, 0});
-    light_coords.push_back(QVector3D{-10, 0, 0});
-    light_coords.push_back(QVector3D{0, 10, 0});
-    light_coords.push_back(QVector3D{0, -10, 0});
-    light_coords.push_back(QVector3D{10, 10, 10});
-    light_coords.push_back(QVector3D{-10, -10, -10});
-    light_coords.push_back(QVector3D{10, 10, 0});
-    light_coords.push_back(QVector3D{10, 0, 10});
-    light_coords.push_back(QVector3D{0, 10, 10});
+    light_coords.push_back(QVector3D{15, 0, 0});
+    light_coords.push_back(QVector3D{-15, 0, 0});
+    light_coords.push_back(QVector3D{0, 15, 0});
+    light_coords.push_back(QVector3D{0, -15, 0});
+    light_coords.push_back(QVector3D{15, 15, 15});
+    light_coords.push_back(QVector3D{-15, -15, -15});
+    light_coords.push_back(QVector3D{15, 15, 0});
+    light_coords.push_back(QVector3D{15, 0, 15});
+    light_coords.push_back(QVector3D{0, 15, 15});
 
     for (const auto& item : light_coords) {
         auto light_entity = new Qt3DCore::QEntity(m_root_entity);
@@ -117,9 +117,9 @@ Qt3DWindowCustom::Qt3DWindowCustom(QWidget* parent, QLayout* vlayout, QHBoxLayou
     auto orbit_cam_controller = new Qt3DExtras::QOrbitCameraController(m_root_entity);
     orbit_cam_controller->setCamera(m_camera_entity);
     orbit_cam_controller->setCamera(m_camera_entity);
-    orbit_cam_controller->setLinearSpeed(3000.0);
-    orbit_cam_controller->setLookSpeed(1000.0);
-    orbit_cam_controller->setAcceleration(10.0);
+    orbit_cam_controller->setLinearSpeed(3200.0);
+    orbit_cam_controller->setLookSpeed(1200.0);
+    orbit_cam_controller->setAcceleration(15.0);
 
     Qt3DRender::QObjectPicker* picker = new Qt3DRender::QObjectPicker(this->m_root_entity);
     picker->setHoverEnabled(true);
