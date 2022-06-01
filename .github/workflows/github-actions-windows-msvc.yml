@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-test-vcpkg-2022.06-try-2
       - name: Test vcpkg gtest
         run: |
-          vcpkg install gtest:x64-windows --binarysource=nuget
+          vcpkg install gtest:x64-windows --binarysource=default,rw
       - name: Setup opencascade
         run: |
           #vcpkg install opencascade:x64-windows
