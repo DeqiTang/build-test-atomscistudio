@@ -19,6 +19,12 @@ jobs:
       matrix:
         os: [windows-2019]
     steps:
+      - name: Cache test
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-test-vcpkg-2022.06-try-1
       - name: Test vcpkg gtest
         run: |
           vcpkg install gtest:x64-windows
