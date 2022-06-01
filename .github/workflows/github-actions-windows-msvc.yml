@@ -30,7 +30,7 @@ jobs:
           vcpkg install gtest:x64-windows --binarysource=default,readwrite    
       - name: Setup opencascade
         run: |
-          #vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           pwd
           ls
         shell: powershell
