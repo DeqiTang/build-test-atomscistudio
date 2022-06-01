@@ -21,8 +21,9 @@ jobs:
     steps:
       - name: Setup opencascade
         run: |
-          #Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
-          #./opencascade-7.6.0-vc14-64.exe
+          Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
+          ./opencascade-7.6.0-vc14-64.exe
+        shell: powershell  
       - name: Set up Visual Studio 2019 community version
         run: |
           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
