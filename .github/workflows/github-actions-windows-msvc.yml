@@ -162,7 +162,7 @@ jobs:
           archive_name: atomscistudio-${{ matrix.qt_version }}-${{ matrix.qt_arch }}
         run: |
           New-Item -ItemType Directory ${env:archive_name}
-          Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
+          Copy-Item build_atomscistudio\Release\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
           ldd ${env:archive_name}\${env:executable}'.exe'
           Copy-Item README.md ${env:archive_name}\README.md
