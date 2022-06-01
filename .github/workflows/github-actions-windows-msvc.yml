@@ -25,6 +25,6 @@ jobs:
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
           key: ${{ runner.os }}-test-vcpkg-2022.06-try-1
-      - name: Test vcpkg gtest
+      - name: Test vcpkg gtest cache
         run: |
           vcpkg install gtest:x64-windows
