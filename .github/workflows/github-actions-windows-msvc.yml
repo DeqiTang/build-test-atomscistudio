@@ -19,10 +19,11 @@ jobs:
       matrix:
         os: [windows-2019]
     steps:
+      - name: Test vcpkg armaidllo
+        run: |
+          vcpkg install armadillo:x64-windows
       - name: Setup opencascade
         run: |
-          #Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
-          #./opencascade-7.6.0-vc14-64.exe
           vcpkg install opencascade:x64-windows
         shell: powershell  
       - name: Set up Visual Studio 2019 community version
