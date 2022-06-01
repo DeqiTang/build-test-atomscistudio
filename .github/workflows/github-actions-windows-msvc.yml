@@ -88,7 +88,7 @@ jobs:
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/yaml-cpp"
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release --parallel 4 
           cmake --install build_yaml_cpp
           echo "::set-output name=prefix::${prefix_}"
