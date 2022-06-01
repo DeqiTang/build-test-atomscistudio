@@ -31,10 +31,16 @@ jobs:
       - name: Setup opencascade
         id: install-opencascade
         run: |
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          pwd
-          ls
+          #vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
+
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          $prefix_ = "C:/Softwares/opencascade"
+          Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+          #tar -xvf OCCT.tar.gz
+          #cmake OCCT-7_6_2 -B build_opencascade
+          #cmake --build build_opencascade --config Release -DCMAKE_INSTALL_PREFIX="$prefix_" 
+          #cmake --install build_opencascade
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Cache msvc-community
