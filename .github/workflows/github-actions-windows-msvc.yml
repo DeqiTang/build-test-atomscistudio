@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-try-0
+          key: ${{ runner.os }}-cache-vcpkg-try-5
       - name: Test vcpkg gtest cache
         run: |
           vcpkg install gtest:x64-windows --binarysource=default,readwrite    
