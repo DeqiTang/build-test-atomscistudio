@@ -40,6 +40,7 @@ jobs:
           sudo apt install -y libocct-visualization-dev
           sudo apt install -y libocct-draw-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev libocct-ocaf-dev libocct-data-exchange-dev
           sudo apt install -y occt-draw occt-misc
+          sudo apt install -y libtbb-dev
       - name: Install gtest
         uses: MarkusJx/googletest-installer@v1.1
       - name: Install atomsciflow

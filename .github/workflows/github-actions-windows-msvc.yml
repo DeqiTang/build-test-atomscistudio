@@ -4,7 +4,7 @@
 # Even the Official CPython package for Windows is built using Visual Studio.
 # So here, Visual Studio Community version is used to build and test atomscistudio.
 # =======================================================================================
-name: Build and test wheels for Windows using MSVC community version
+name: Build for Windows using MSVC community version
 on:
   push:
     branches: [ master ]
@@ -21,8 +21,9 @@ jobs:
     steps:
       - name: Setup opencascade
         run: |
-          Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
-          ./opencascade-7.6.0-vc14-64.exe
+          #Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
+          #./opencascade-7.6.0-vc14-64.exe
+          vcpkg install opencascade
         shell: powershell  
       - name: Set up Visual Studio 2019 community version
         run: |
