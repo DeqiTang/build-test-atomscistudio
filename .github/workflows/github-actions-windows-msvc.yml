@@ -31,7 +31,7 @@ jobs:
       - name: Setup opencascade
         id: install-opencascade
         run: |
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          #vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           pwd
           ls
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
