@@ -36,12 +36,12 @@ jobs:
         shell: powershell
       - name: Cache msvc-community
         id: cache-msvc-community
-        uses: actions/cache@3
+        uses: actions/cache@v3  
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
           key: ${{ runner.os }}-cache-msvc-community-try-1 
       - name: Set up Visual Studio 2019 community version
-        if: ${{ steps.cache-msvc-community.outputs.cache-hit == false }}
+        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
