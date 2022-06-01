@@ -26,6 +26,7 @@ jobs:
         run: |
           #vcpkg install opencascade:x64-windows
           pwd
+          ls
         shell: powershell  
       - name: Set up Visual Studio 2019 community version
         run: |
