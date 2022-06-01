@@ -39,7 +39,7 @@ jobs:
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           $prefix_ = "C:/Softwares/opencascade"
           Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-          #tar -xvf OCCT.tar.gz
+          tar -xvf OCCT.tar.gz
           #cmake OCCT-7_6_2 -B build_opencascade
           #cmake --build build_opencascade --config Release -DCMAKE_INSTALL_PREFIX="$prefix_" 
           #cmake --install build_opencascade
