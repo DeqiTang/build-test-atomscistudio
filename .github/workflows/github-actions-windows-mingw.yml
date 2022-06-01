@@ -29,6 +29,12 @@ jobs:
           arch: ${{ matrix.qt_arch }}
           aqtversion: '==2.0.6'
           modules: 'qt3d'
+      - name: Setup opencascade
+        run: |
+          #Invoke-WebRequest -Uri https://dev.opencascade.org/system/files/occt/OCC_7.6.0_release/opencascade-7.6.0-vc14-64.exe -OutFile opencascade-7.6.0-vc14-64.exe
+          #./opencascade-7.6.0-vc14-64.exe
+          vcpkg install opencascade
+        shell: powershell  
       - name: Install Boost
         uses: MarkusJx/install-boost@v2.1.0
         id: install-boost
