@@ -1,7 +1,7 @@
 name: Build for Windows with MinGW
 on:
   push:
-    #branches: [ master ]
+    branches: [ master ]
     tags:
       - 'v*'
   pull_request:
@@ -173,6 +173,7 @@ jobs:
         shell: powershell
         env:
           archive_name: atomscistudio-${{ matrix.qt_version }}-${{ matrix.qt_arch }}
+          executable: atomscistudio
         run: |
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
