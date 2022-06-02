@@ -41,17 +41,6 @@ jobs:
           platform_version: 2019
           boost_install_dir: 'C:/Program Files (x86)/'
           toolset: mingw
-      - name: Download GoogleTest
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
-          tar -xvf release-1.11.0.tar.gz
-      - name: Build GoogleTest
-        shell: powershell
-        run: |
-          cmake googletest-release-1.11.0 -B build_gtest -G 'MinGW Makefiles'
-          cmake --build build_gtest --config Release
-          cmake --install build_gtest
       - name: Download yaml-cpp
         shell: powershell
         run: |
@@ -64,10 +53,12 @@ jobs:
           # So, deafult C:/Program Files (x86)/YAML_CPP is not working for later
           # finding of yaml-cpp using cmake PkgConfig
           #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
+          $prefix_ = "C:/Softwares/yaml-cpp"
           git clone https://github.com/jbeder/yaml-cpp
-          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
+          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='$prefix_'
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
+          echo "::set-output name=prefix::$prefix_"
       - name: Download OpenSSL
         shell: powershell
         run: |
@@ -84,55 +75,14 @@ jobs:
           Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
           tar -xvf libssh2-1.10.0.tar.gz
       - name: Install libssh2
+        id: install-libssh2
         shell: powershell 
         run: |
-          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles'
+          $prefix_ = "C:/Softwares/libssh2"
+          cmake libssh2-1.10.0 -B build_libssh2 -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_"
           cmake --build build_libssh2 --parallel 4
           cmake --install build_libssh2
-      - name: Download BLAS
-        shell: powershell 
-        run: |
-          Invoke-WebRequest -Uri http://www.netlib.org/blas/blas-3.10.0.tgz -OutFile blas-3.10.0.tgz
-          tar -xvf blas-3.10.0.tgz
-      - name: Install BLAS
-        run: |
-          cmake BLAS-3.10.0 -B build_blas -G "MinGW Makefiles"
-          cmake --build build_blas --parallel 4
-          cmake --install build_blas
-        shell: powershell
-      - name: Download LAPACK
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri http://www.netlib.org/lapack/lapack-3.8.0.tar.gz -OutFile lapack-3.8.0.tar.gz
-          tar -xvf lapack-3.8.0.tar.gz
-      - name: Install LAPACK
-        run: |
-          cmake lapack-3.8.0 -B build_lapack -G 'MinGW Makefiles'
-          cmake --build build_lapack --parallel 4
-          cmake --install build_lapack
-        shell: bash  
-      - name: Download OpenBLAS
-        shell: powershell
-        run: |
-          #Invoke-WebRequest -Uri https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.19.tar.gz -OutFile v0.3.19.tar.gz
-          #tar -xvf v0.3.19.tar.gz
-      - name: Install OpenBLAS
-        run: |
-          #cmake OpenBLAS-0.3.19 -B build_openblas -G 'MinGW Makefiles'  
-          #cmake --build build_openblas --parallel 4
-          #cmake --install build_openblas 
-        shell: powershell
-      - name: Download SuperLU
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri https://github.com/xiaoyeli/superlu/archive/refs/tags/v5.3.0.tar.gz -OutFile v5.3.0.tar.gz
-          tar -xvf v5.3.0.tar.gz
-      - name: Install SuperLU
-        run: |
-          cmake superlu-5.3.0 -B build_superlu -G 'MinGW Makefiles' -DCMAKE_Fortran_FLAGS="-fPIC" -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
-          cmake --build build_superlu --parallel 4
-          cmake --install build_superlu
-        shell: bash 
+          echo "::set-output name=prefix::$prefix_"
       - name: Download armadillo
         shell: powershell
         run: |
@@ -144,17 +94,25 @@ jobs:
         run: |
           tar -xvf armadillo-10.8.2.tar.xz
       - name: Install armadillo
+        id: install-armadillo
         run: |
-          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="C:/Program Files (x86)/armadillo" #-DCMAKE_PREFIX_PATH='C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;C:/Program Files (x86)/SuperLU' 
+          $prefix_ = "C:/Softwares/armadillo"
+
+          cmake armadillo-10.8.2 -B build_armadillo -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" 
           cmake --build build_armadillo
           cmake --install build_armadillo
+          echo "::set-output name=prefix::$prefix_"
         shell: powershell
       - name: Install atomsciflow
+        id: install-atomsciflow
         run: |
+          $prefix_ = "C:/Softwares/atomsciflow"
+
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -G 'MinGW Makefiles' -DGTEST_ROOT="C:/Program Files (x86)/googletest-distribution" -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/libssh2;C:/Program Files (x86)/SuperLU;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig'
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH='${{ steps.install-armadillo.outputs.prefix }};${ steps.install-libssh2.outputs.prefix }' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
+          echo "::set-output name=prefix::$prefix_"
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         shell: powershell
@@ -163,7 +121,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='C:/Program Files (x86)/armadillo;C:/Program Files (x86)/atomsciflow;C:/Program Files (x86)/LAPACK;C:/Program Files (x86)/BLAS;' -DYAML_CPP_PKGCONFIG_DIR='C:/Softwares/yaml-cpp/share/pkgconfig'
+          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
