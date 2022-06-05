@@ -11,7 +11,8 @@ jobs:
     runs-on: [windows-2019]
     strategy:
       matrix:
-        qt_version: [6.2.1]
+        #qt_version: [6.2.1]
+        qt_version: [6.3.0]
         qt_arch: [win64_mingw81]
     steps: 
       - name: Caching vcpkg binary caches
@@ -27,11 +28,14 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
-          version: ${{ matrix.qt_version }}
+          #version: "6.2.2" 
+          version: "6.3.0" 
           host: 'windows'
           target: 'desktop'
-          arch: ${{ matrix.qt_arch }}
-          aqtversion: '==2.0.6'
+          #arch: ${{ matrix.qt_arch }}
+          arch: "win64_mingw81"
+          #aqtversion: '==2.0.6'
+          aqtversion: '==2.1.0'
           modules: 'qt3d'
       - name: Setup opencascade
         id: install-opencascade
@@ -138,7 +142,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
+          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
