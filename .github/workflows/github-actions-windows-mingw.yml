@@ -11,8 +11,7 @@ jobs:
     runs-on: [windows-2019]
     strategy:
       matrix:
-        #qt_version: [6.2.1]
-        qt_version: [6.3.0]
+        qt_version: [6.2.2]
         qt_arch: [win64_mingw81]
     steps: 
       - name: Caching vcpkg binary caches
@@ -28,12 +27,10 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
-          #version: "6.2.2" 
-          version: "6.3.0" 
+          version: "${{ matrix.qt_version }}" 
           host: 'windows'
           target: 'desktop'
-          #arch: ${{ matrix.qt_arch }}
-          arch: "win64_mingw81"
+          arch: ${{ matrix.qt_arch }}
           #aqtversion: '==2.0.6'
           aqtversion: '==2.1.0'
           modules: 'qt3d'
