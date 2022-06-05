@@ -16,6 +16,13 @@ jobs:
     env:
       executable: atomscistudio
     steps: 
+      - name: Caching vcpkg binary caches
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-cache-vcpkg-try-5
+        uses: 
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
