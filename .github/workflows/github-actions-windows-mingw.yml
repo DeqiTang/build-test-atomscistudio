@@ -32,14 +32,14 @@ jobs:
       - name: Setup opencascade
         id: install-opencascade
         run: |
-          #vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          #$prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
-          vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
-          vcpkg install tcl:x64-windows
-          $prefix_ = "C:/Softwares/opencascade"
+          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          #vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
+          #vcpkg install tcl:x64-windows
+          #$prefix_ = "C:/Softwares/opencascade"
           
-          Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-          tar -xf OCCT.tar.gz
+          #Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+          #tar -xf OCCT.tar.gz
           #cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -G "MinGW Makefiles" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;zlib_x64-windows" -DBUILD_LIBRARY_TYPE=Shared 
           #cmake --build build_opencascade --config Release  
           #cmake --install build_opencascade
@@ -59,6 +59,7 @@ jobs:
           Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
           tar -xvf yaml-cpp-0.7.0.tar.gz
       - name: Build yaml-cpp
+        id: install-yaml-cpp
         shell: powershell
         run: |
           # In the case of yaml-cpp the install path should contain no space
