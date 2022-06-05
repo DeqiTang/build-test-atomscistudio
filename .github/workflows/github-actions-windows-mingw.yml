@@ -19,7 +19,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-try-5
+          key: ${{ runner.os }}-cache-vcpkg-try-6
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
