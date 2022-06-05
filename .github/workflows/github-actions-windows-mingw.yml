@@ -1,7 +1,7 @@
 name: Build for Windows with MinGW
 on:
   push:
-    branches: [ master ]
+    #branches: [ master ]
     tags:
       - 'v*'
   pull_request:
@@ -22,7 +22,6 @@ jobs:
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
           key: ${{ runner.os }}-cache-vcpkg-try-5
-        uses: 
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
