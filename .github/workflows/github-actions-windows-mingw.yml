@@ -139,7 +139,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MinGW
         run: |
-          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
+          cmake -B build_atomscistudio -G 'MinGW Makefiles' -DCMAKE_PREFIX_PATH='${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }};${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
           cmake --build build_atomscistudio --config Release
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
