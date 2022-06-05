@@ -11,7 +11,7 @@ jobs:
     runs-on: [windows-2019]
     strategy:
       matrix:
-        qt_version: [6.2.2]
+        qt_version: [6.2.1]
         qt_arch: [win64_mingw81]
     steps: 
       - name: Caching vcpkg binary caches
