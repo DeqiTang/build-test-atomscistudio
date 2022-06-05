@@ -68,7 +68,7 @@ jobs:
           #cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='C:/Softwares/yaml-cpp'
           $prefix_ = "C:/Softwares/yaml-cpp"
           git clone https://github.com/jbeder/yaml-cpp
-          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX='$prefix_'
+          cmake yaml-cpp -B build_yaml_cpp -G 'MinGW Makefiles' -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX="$prefix_"
           cmake --build build_yaml_cpp --parallel 4
           cmake --install build_yaml_cpp
           echo "::set-output name=prefix::$prefix_"
@@ -122,7 +122,7 @@ jobs:
           $prefix_ = "C:/Softwares/atomsciflow"
 
           git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH='${{ steps.install-armadillo.outputs.prefix }};${ steps.install-libssh2.outputs.prefix }' -DYAML_CPP_PKGCONFIG_DIR='${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig'
+          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${ steps.install-libssh2.outputs.prefix }" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
           echo "::set-output name=prefix::$prefix_"
