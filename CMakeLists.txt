@@ -16,20 +16,20 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DR
 #find_package(GLUT REQUIRED)
 #include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
-find_package(OpenCASCADE COMPONENTS FoundationClasses REQUIRED)
-find_package(OpenCASCADE COMPONENTS ModelingAlgorithms REQUIRED)
-find_package(OpenCASCADE COMPONENTS Visualization REQUIRED)
-find_package(OpenCASCADE COMPONENTS ModelingData REQUIRED)
-find_package(OpenCASCADE COMPONENTS DataExchange REQUIRED)
-include_directories(
-    ${OpenCASCADE_INCLUDE_DIR}
-)
-link_directories(
-    ${OpenCASCADE_LIBRARY_DIR}
-)
-link_libraries(
-    ${OpenCASCADE_LIBRARIES}
-)
+#find_package(OpenCASCADE COMPONENTS FoundationClasses REQUIRED)
+#find_package(OpenCASCADE COMPONENTS ModelingAlgorithms REQUIRED)
+#find_package(OpenCASCADE COMPONENTS Visualization REQUIRED)
+#find_package(OpenCASCADE COMPONENTS ModelingData REQUIRED)
+#find_package(OpenCASCADE COMPONENTS DataExchange REQUIRED)
+#include_directories(
+#    ${OpenCASCADE_INCLUDE_DIR}
+#)
+#link_directories(
+#    ${OpenCASCADE_LIBRARY_DIR}
+#)
+#link_libraries(
+#    ${OpenCASCADE_LIBRARIES}
+#)
 
 include_directories(
     ${QT_QTOPENGL_INCLUDE_DIR} 

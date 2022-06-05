@@ -1,7 +1,7 @@
 name: Build for Windows with MinGW
 on:
   push:
-    #branches: [ master ]
+    branches: [ master ]
     tags:
       - 'v*'
   pull_request:
@@ -13,8 +13,6 @@ jobs:
       matrix:
         qt_version: [6.2.1]
         qt_arch: [win64_mingw81]
-    env:
-      executable: atomscistudio
     steps: 
       - name: Caching vcpkg binary caches
         id: cache-vcpkg
