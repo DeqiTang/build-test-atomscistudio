@@ -22,7 +22,6 @@ jobs:
           version: ${{ matrix.qt_version }}
           host: 'linux'
           target: 'desktop'
-          #aqtversion: '==2.0.5'
           aqtversion: '==2.1.0'
           modules: 'qt3d'
       - name: Install GL Library
