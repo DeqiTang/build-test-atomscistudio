@@ -1,7 +1,7 @@
 name: Build for MacOS
 on:
   push:
-    #branches: [ master ]
+    branches: [ master ]
     tags:
       - 'v*'
   pull_request:
@@ -40,8 +40,8 @@ jobs:
           cmake --install build_libssh2       
       - name: Install boost
         run: brew install boost
-      - name: Install gtest
-        uses: MarkusJx/googletest-installer@v1.1
+      # - name: Install gtest
+      #   uses: MarkusJx/googletest-installer@v1.1
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
