@@ -50,6 +50,7 @@ jobs:
         id: install-opencascade
         run: |
           $env:VCPKG_LIBRARY_LINKAGE = "dynamic"
+          $env:VCPKG_ENV_PASSTHROUGH = "True"
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
