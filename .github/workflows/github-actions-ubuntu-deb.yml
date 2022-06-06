@@ -31,7 +31,7 @@ jobs:
           sudo apt install -y libboost-all-dev
           sudo apt install -y liblapack-dev libblas-dev
           sudo apt install -y libarmadillo-dev
-          sudo apt install -y libgtest-dev
+          sudo apt install -y googletest libgtest-dev
           sudo apt install -y dh-make 
           sudo apt install -y dpkg-dev
           sudo apt install openssl libssl-dev
