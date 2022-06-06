@@ -16,16 +16,6 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
-        with:
-          version: ${{ matrix.qt_version }}
-          host: 'linux'
-          target: 'desktop'
-          aqtversion: '==2.1.0'
-          modules: 'qt3d'
-      - name: Install GL Library
-        run: sudo apt-get install -y libglew-dev libglfw3-dev
       - name: Install Dependencies using apt
         run: |
           sudo apt install -y libboost-all-dev
@@ -42,6 +32,16 @@ jobs:
           sudo apt install -y libocct-draw-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev libocct-ocaf-dev libocct-data-exchange-dev
           sudo apt install -y occt-draw occt-misc
           sudo apt install -y libtbb-dev # libtbb-dev is under Apache License, Version 2.0
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_version }}
+          host: 'linux'
+          target: 'desktop'
+          aqtversion: '==2.1.0'
+          modules: 'qt3d'
+      - name: Install GL Library
+        run: sudo apt-get install -y libglew-dev libglfw3-dev      
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/atomsciflow.git
