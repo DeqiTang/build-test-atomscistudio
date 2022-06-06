@@ -108,7 +108,7 @@ private:
     const Standard_Real m_device_px;
 
     Handle(Aspect_DisplayConnection) m_display_connection;
-    Handle_OpenGl_GraphicDriver m_graphic_driver;
+    Handle(OpenGl_GraphicDriver) m_graphic_driver;
     OccWindow* m_occwindow;
 };
 

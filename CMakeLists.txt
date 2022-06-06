@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 6)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DRender 3DInput 3DExtras Concurrent Svg REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DRender 3DInput 3DExtras Concurrent REQUIRED)
 #find_package(OpenGL REQUIRED)
 #find_package(GLUT REQUIRED)
 #include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
@@ -163,7 +163,6 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
     PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
-    PRIVATE Qt${QT_VERSION_MAJOR}::Svg
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
     ${Boost_LIBRARIES}

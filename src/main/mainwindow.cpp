@@ -29,12 +29,12 @@
 
 #include <atomsciflow/base/crystal.h>
 
+//#include "modeling/qt3dwindow_custom.h"
+//#include "modeling/tools.h"
 #include "modeling_occ/modeling.h"
 #include "modeling_occ/occwindow.h"
 #include "modeling_occ/tools.h"
 
-//#include "modeling/qt3dwindow_custom.h"
-//#include "modeling/tools.h"
 #include "calc/calccontrol.h"
 #include "config/config_manager.h"
 
@@ -215,11 +215,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 //    win_container->setMinimumSize(QSize(200, 100));
 //    win_container->setMaximumSize(screenSize);
 
-    auto tab2 = new CalcControl(this->m_central_widget);
-    this->m_root_tabwidget->addTab(tab2, QObject::tr("Calculation"));
-
     auto tab3 = new QWidget(this->m_central_widget);
-    this->m_root_tabwidget->addTab(tab3, QObject::tr("Occ"));
+    this->m_root_tabwidget->addTab(tab3, QObject::tr("Modeling"));
     auto tab3_hsplitter = new QSplitter(this->m_central_widget);
     auto tab3_hlayout= new QHBoxLayout(tab3);
     tab3->setLayout(tab3_hlayout);
@@ -240,6 +237,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSize screen_size = this->screen()->size();
     modeling_widget->setMinimumSize(QSize(1300, 800));
     modeling_widget->setMaximumSize(screen_size);
+
+    auto tab2 = new CalcControl(this->m_central_widget);
+    this->m_root_tabwidget->addTab(tab2, QObject::tr("Calculation"));
 
 }
 
