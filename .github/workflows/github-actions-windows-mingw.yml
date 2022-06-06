@@ -13,7 +13,7 @@ jobs:
       matrix:
         qt_version: [6.2.1]
         qt_arch: [win64_mingw81]
-    steps: 
+    steps:
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
