@@ -49,15 +49,23 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
+          #$env:VCPKG_LIBRARY_LINKAGE = "dynamic"
           #vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           #$prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
           vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
           vcpkg install tcl:x64-windows
+          ls "C:/vcpkg/packages/freetype_x64-windows/lib"
+          ls "C:/vcpkg/packages/tcl_x64-windows/lib"
+
           $prefix_ = "C:/Softwares/opencascade"
           Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
           tar -xf OCCT.tar.gz
-          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -DBUILD_LIBRARY_TYPE=Shared 
+          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared 
+          -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" 
+          -D3RDPARTY_TCL_INCLUDE_DIR="C:/vcpkg/tcl_x64-windows/include"
+          -D3RDPARTY_TCL_LIBRARY_DIR="C:/vcpkg/tcl_x64-windows/lib"
+          -D3RDPARTY_TK_INCLUDE_DIR="C:/vcpkg/tcl"
           cmake --build build_opencascade --config Release  
           cmake --install build_opencascade
 
