@@ -36,7 +36,7 @@ jobs:
       - name: Install opencascade
         id: install-opencascade
         run: |
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          vcpkg install opencascade:x64-mingw-dynamic --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell  
@@ -116,8 +116,8 @@ jobs:
         run: |
           $prefix_ = "C:/Softwares/atomsciflow"
 
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${ steps.install-libssh2.outputs.prefix }" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
+          git clone https://github.com/deqitang/atomsciflow.git
+          cmake atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G 'MinGW Makefiles' -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${ steps.install-libssh2.outputs.prefix }" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
           cmake --build build_atomsciflow --config Release 
           cmake --install build_atomsciflow
           echo "::set-output name=prefix::$prefix_"

@@ -43,8 +43,8 @@ jobs:
           sudo apt install -y libtbb-dev # libtbb-dev is under Apache License, Version 2.0
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF
+          git clone https://github.com/deqitang/atomsciflow.git
+          cmake atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF
           cmake --build build_atomsciflow
           sudo cmake --install build_atomsciflow
         shell: bash
