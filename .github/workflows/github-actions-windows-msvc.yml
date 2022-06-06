@@ -1,7 +1,8 @@
 # =======================================================================================
 # Visual Studio Community version is friendly to open source projects.
 # The eula indicates it can be used for the development of open source softwares.
-# Even the Official CPython package for Windows is built using Visual Studio.
+# Many open source softwares provide binaries built with Visual Studio Community version,
+# including Official CPython package for Windows.
 # So here, Visual Studio Community version is used to build and test atomscistudio.
 # =======================================================================================
 name: Build for Windows using MSVC community version
@@ -59,7 +60,7 @@ jobs:
         uses: jurplel/install-qt-action@v2.14.0
         with:
           host: 'windows'
-          version: ${{ env.qt_version }} 
+          version: ${{ matrix.qt_version }} 
           arch: ${{ matrix.qt_arch }}
           target: 'desktop'
           aqtversion: '==2.1.0'
