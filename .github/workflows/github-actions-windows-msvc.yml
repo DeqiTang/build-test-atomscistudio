@@ -58,8 +58,8 @@ jobs:
 
           #vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
           #vcpkg install tcl:x64-windows
-          ls "C:/vcpkg/packages/freetype_x64-windows"
-          ls "C:/vcpkg/packages/tcl_x64-windows"
+          # ls "C:/vcpkg/packages/freetype_x64-windows"
+          # ls "C:/vcpkg/packages/tcl_x64-windows"
 
           $prefix_ = "C:/Softwares/opencascade"
           Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
