@@ -14,12 +14,6 @@ jobs:
         qt_version: [6.2.1]
         qt_arch: [win64_mingw81]
     steps: 
-      - name: Caching vcpkg binary caches
-        id: cache-vcpkg
-        uses: actions/cache@v3
-        with:
-          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-try-6
       - name: Install MinGW
         uses: egor-tensin/setup-mingw@v2
         with:
@@ -33,13 +27,19 @@ jobs:
           arch: ${{ matrix.qt_arch }}
           aqtversion: '==2.1.0'
           modules: 'qt3d'
+      - name: Caching vcpkg binary caches
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-cache-vcpkg-mingw-try-1          
       - name: Install opencascade
         id: install-opencascade
         run: |
           vcpkg install opencascade:x64-mingw-dynamic --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           echo "::set-output name=prefix::${prefix_}"
-        shell: powershell  
+        shell: powershell
       - name: Install Boost
         uses: MarkusJx/install-boost@v2.1.0
         id: install-boost
