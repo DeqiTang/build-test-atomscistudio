@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 6)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DRender 3DInput 3DExtras Concurrent REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core OpenGL Gui 3DCore 3DRender 3DInput 3DExtras Concurrent Svg REQUIRED)
 #find_package(OpenGL REQUIRED)
 #find_package(GLUT REQUIRED)
 #include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
@@ -32,13 +32,13 @@ link_libraries(
 )
 
 include_directories(
-    ${QT_QTOPENGL_INCLUDE_DIR} 
-    ${OPENGL_INCLUDE_DIR} 
+    ${QT_QTOPENGL_INCLUDE_DIR}
+    ${OPENGL_INCLUDE_DIR}
 )
 
 find_package(Boost COMPONENTS program_options filesystem system  REQUIRED)
-include_directories( 
-    ${Boost_INCLUDE_DIR}  
+include_directories(
+    ${Boost_INCLUDE_DIR}
 )
 link_libraries(${Boost_LIBRARIES})
 
@@ -51,7 +51,7 @@ if (NOT ${YAML_CPP_PKGCONFIG_DIR} STREQUAL "UNSET")
         set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${YAML_CPP_PKGCONFIG_DIR}") # separated by colon
     endif()
     message(STATUS "PKG_CONFIG_PATH: $ENV{PKG_CONFIG_PATH}")
-endif()    
+endif()
 pkg_check_modules(YAML_CPP yaml-cpp)
 include_directories(${YAML_CPP_INCLUDE_DIRS})
 link_directories(${YAML_CPP_LIBRARY_DIRS})
@@ -113,16 +113,18 @@ file(GLOB PROJECT_SOURCES
     ./src/main/*.h
     ./src/main/*.cpp
 
-    ./src/modeling/*.h
-    ./src/modeling/*.cpp
+#    ./src/modeling/*.h
+#    ./src/modeling/*.cpp
 
     ./src/calc/*.h
     ./src/calc/*.cpp
 
     ./src/config/*.h
     ./src/config/*.cpp
-)
 
+    ./src/modeling_occ/*.h
+    ./src/modeling_occ/*.cpp
+)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     #if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -139,7 +141,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         qt_add_executable(atomscistudio
             ${PROJECT_SOURCES}
         )
-    endif()        
+    endif()
 else()
     if(ANDROID)
         add_library(atomscistudio SHARED
@@ -161,6 +163,7 @@ target_link_libraries(atomscistudio
     PRIVATE Qt${QT_VERSION_MAJOR}::3DInput
     PRIVATE Qt${QT_VERSION_MAJOR}::3DExtras
     PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent
+    PRIVATE Qt${QT_VERSION_MAJOR}::Svg
     #${OPENGL_LIBRARIES}
     #${GLUT_LIBRARY}
     ${Boost_LIBRARIES}

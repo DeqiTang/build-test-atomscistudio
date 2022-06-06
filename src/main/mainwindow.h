@@ -33,7 +33,7 @@
 #include <boost/filesystem.hpp>
 
 #include "config/config_manager.h"
-#include "modeling/qt3dwindow_custom.h"
+//#include "modeling/qt3dwindow_custom.h"
 
 namespace fs = boost::filesystem;
 
