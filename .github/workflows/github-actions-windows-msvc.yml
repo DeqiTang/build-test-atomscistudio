@@ -24,18 +24,18 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      - name: Caching MSVC community version
-        id: cache-msvc-community
-        uses: actions/cache@v3  
-        with:
-          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-try-1 
-      - name: Set up Visual Studio 2019 community version
-        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
-        run: |
-          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-        shell: powershell
+      #- name: Caching MSVC community version
+      #  id: cache-msvc-community
+      #  uses: actions/cache@v3  
+      #  with:
+      #    path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+      #    key: ${{ runner.os }}-cache-msvc-community-try-1 
+      #- name: Set up Visual Studio 2019 community version
+      #  if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+      #  run: |
+      #    choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+      #    & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+      #  shell: powershell
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
@@ -52,6 +52,7 @@ jobs:
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           echo "::set-output name=prefix::${prefix_}"
+          ls "C:/vcpkg/packages/opencascade_x64-windows"
         shell: powershell
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
