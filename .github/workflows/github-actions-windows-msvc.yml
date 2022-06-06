@@ -56,8 +56,9 @@ jobs:
           # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           # ls "C:/vcpkg/packages/opencascade_x64-windows/lib"
 
-          #vcpkg install brotli:x64-windows bzip2:x64-windows freetype:x64-windows libpng:x64-windows zlib:x64-windows
-          #vcpkg install tcl:x64-windows
+          # vcpkg install brotli:x64-windows bzip2:x64-windows zlib:x64-windows libpng:x64-windows 
+          # vcpkg install freetype:x64-windows
+          # vcpkg install tcl:x64-windows
           # ls "C:/vcpkg/packages/freetype_x64-windows"
           # ls "C:/vcpkg/packages/tcl_x64-windows"
 
