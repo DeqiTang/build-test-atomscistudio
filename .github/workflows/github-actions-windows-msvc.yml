@@ -46,9 +46,6 @@ jobs:
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
           key: ${{ runner.os }}-cache-vcpkg-try-6
-      - name: Test vcpkg gtest cache
-        run: |
-          vcpkg install gtest:x64-windows --binarysource=default,readwrite    
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
