@@ -49,12 +49,12 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          # $env:VCPKG_LIBRARY_LINKAGE = "dynamic"
-          # $env:VCPKG_ENV_PASSTHROUGH = "True"
-          # $env:VCPKG_KEEP_ENV_VARS = "VCPKG_LIBRARY_LINKAGE"
-          # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
-          # ls "C:/vcpkg/packages/opencascade_x64-windows/lib"
+          $env:VCPKG_LIBRARY_LINKAGE = "dynamic"
+          $env:VCPKG_ENV_PASSTHROUGH = "True"
+          $env:VCPKG_KEEP_ENV_VARS = "VCPKG_LIBRARY_LINKAGE"
+          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          ls "C:/vcpkg/packages/opencascade_x64-windows/lib"
 
           # vcpkg install brotli:x64-windows bzip2:x64-windows zlib:x64-windows libpng:x64-windows 
           # vcpkg install freetype:x64-windows
@@ -62,22 +62,22 @@ jobs:
           # ls "C:/vcpkg/packages/freetype_x64-windows"
           # ls "C:/vcpkg/packages/tcl_x64-windows"
 
-          $prefix_ = "C:/Softwares/opencascade"
-          Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-          tar -xf OCCT.tar.gz
+          # $prefix_ = "C:/Softwares/opencascade"
+          # Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+          # tar -xf OCCT.tar.gz
 
-          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
-          unzip tcltk-86-64.zip
-          New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
-          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/tcltk-86-64"
+          # Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
+          # unzip tcltk-86-64.zip
+          # New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+          # Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/tcltk-86-64"
            
-          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
-          unzip freetype-2.5.5-vc14-64.zip
-          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          # Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
+          # unzip freetype-2.5.5-vc14-64.zip
+          # Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
 
-          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
-          cmake --build build_opencascade --config Release  
-          cmake --install build_opencascade
+          # cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          # cmake --build build_opencascade --config Release  
+          # cmake --install build_opencascade
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
