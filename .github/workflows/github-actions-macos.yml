@@ -23,6 +23,7 @@ jobs:
           brew install yaml-cpp 
           #brew install qt
           brew install opencascade
+          brew install googletest
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
@@ -47,7 +48,7 @@ jobs:
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/atomsciflow.git
-          cmake atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -DBUILD_CMD=OFF -DBUILD_TEST=OFF
+          cmake atomsciflow -B build -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3 -DBUILD_CMD=OFF -DBUILD_TEST=ON
           cmake --build build
           cmake --install build
         shell: bash
