@@ -67,13 +67,14 @@ jobs:
 
           Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
           unzip tcltk-86-64.zip
-          New-Item -ItemType Directory "opencascade_3rdparty_dir"
-          Copy-Item tcltk-86-64 "opencascade_3rdparty_dir/tcltk-86-64"
+          New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/tcltk-86-64"
            
-          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" 
-          # -D3RDPARTY_TCL_DIR="C:/vcpkg/tcl_x64-windows/include"
-          # -D3RDPARTY_TK_DIR="C:/vcpkg/tcl_x64-windows/lib"
-          # -D3RDPARTY_TK_INCLUDE_DIR="C:/vcpkg/tcl"
+          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
+          uzip freetype-2.5.5-vc14-64.zip
+          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+
+          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
           cmake --build build_opencascade --config Release  
           cmake --install build_opencascade
 
