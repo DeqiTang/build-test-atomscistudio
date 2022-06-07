@@ -23,6 +23,7 @@ jobs:
         qt_arch: ["win64_msvc2019_64"]
     env:
       executable: atomscistudio
+      opencascade-build: vcpkg # vcpkg or manual-build
     steps:
       - name: Caching MSVC community version
         id: cache-msvc-community
@@ -45,46 +46,42 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-2022.06.07-version-1
+          key: ${{ runner.os }}-cache-vcpkg-2022.06.08-version-1
       - name: Caching OpenCASCADE installation
-        id: cache-opencascade-install
+        if: ${env:opencascade-build} == "manual-build"
+        id: cache-opencascade-manual-build
         uses: actions/cache@v3
         with:
           path: C:\Softwares\opencascade
-          key: ${{ runner.os }}-cache-opencascade-installation-2022.07.07-version-1
+          key: ${{ runner.os }}-cache-opencascade-manual-build-2022.06.08-version-1
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          
-          # ${env:VCPKG_BUILD_TYPE} = "release"
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          if (${env:opencascade-build} == "vcpkg") {
+            vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+            $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          } else {
+            & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+            $prefix_ = "C:/Softwares/opencascade"
+            if (${{ steps.cache-opencascade-manual-build.outputs.cache-hit }} != "true") {
+              Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+              tar -xf OCCT.tar.gz
 
-          # vcpkg install vtk:x64-windows --binarysource=default,readwrite
-          
-          $prefix_ = "C:/Softwares/opencascade"
+              New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
 
-          if (${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true') {
+              Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
+              unzip tcltk-86-64.zip
+              Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
+              
+              Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
+              unzip freetype-2.5.5-vc14-64.zip
+              Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
 
-            Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-            tar -xf OCCT.tar.gz
-
-            New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
-
-            Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
-            unzip tcltk-86-64.zip
-            Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
-            
-            Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
-            unzip freetype-2.5.5-vc14-64.zip
-            Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
-
-            cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
-            cmake --build build_opencascade --config Release --parallel 4
-            cmake --install build_opencascade
+              cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
+              cmake --build build_opencascade --config Release --parallel 4
+              cmake --install build_opencascade
+            }
           }
-
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install Qt
@@ -212,36 +209,39 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKPrim.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKOpenGl.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKernel.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKBRep.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKGeomBase.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKGeomAlgo.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKG3d.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKG2d.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMath.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMesh.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKHLR.dll" ${env:archive_name}\
-          # Copy-Item "C:/vcpkg/packages/freetype_x64-windows/bin/freetype.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKTopAlgo.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKService.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKPrim.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKOpenGl.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKernel.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKBRep.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomBase.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomAlgo.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG3d.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG2d.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMath.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMesh.dll" ${env:archive_name}\
-          Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKHLR.dll" ${env:archive_name}\
-          Copy-Item "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
+          if (${env:opencascade-build == "vcpkg") {
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKPrim.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKOpenGl.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKernel.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKBRep.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKGeomBase.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKGeomAlgo.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKG3d.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKG2d.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMath.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMesh.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKHLR.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/freetype_x64-windows/bin/freetype.dll" ${env:archive_name}\
+          } else {
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKTopAlgo.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKService.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKPrim.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKOpenGl.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKernel.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKBRep.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomBase.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomAlgo.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG3d.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG2d.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMath.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMesh.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKHLR.dll" ${env:archive_name}\
+            Copy-Item "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
+          }
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
