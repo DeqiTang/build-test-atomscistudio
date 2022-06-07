@@ -89,9 +89,9 @@ jobs:
             cmake --install build_opencascade
           }
 
-          is "C:/Softwares/opencascade"
-          is "C:/Softwares/opencascade/lib"
-          is "C:/Softwares/opencascade/bin"
+          ls "C:/Softwares/opencascade"
+          ls "C:/Softwares/opencascade/lib"
+          ls "C:/Softwares/opencascade/bin"
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
