@@ -62,7 +62,7 @@ jobs:
           cp LICENSE build/${executable}.app/Contents/
           cp NOTICE build/${executable}.app/Contents/
           mkdir -p build/${executable}.app/Contents/third_party/license
-          cp third_party/license/* build/${executable}.app/Contents/third_party/license
+          cp -r third_party/license/* build/${executable}.app/Contents/third_party/license
       - name: packaging
         run: |
           macdeployqt build/${executable}.app -verbose=2 -dmg
