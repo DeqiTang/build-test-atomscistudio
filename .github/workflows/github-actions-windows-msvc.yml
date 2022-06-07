@@ -59,6 +59,7 @@ jobs:
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           ls "C:/vcpkg/packages/opencascade_x64-windows/"
+          ls "C:/vcpkg/packages/opencascade_x64-windows/bin"
 
           # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
