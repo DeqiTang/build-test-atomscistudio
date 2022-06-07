@@ -66,7 +66,8 @@ jobs:
           
           $prefix_ = "C:/Softwares/opencascade"
 
-          if [[ ${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true' ]]; then
+          if (${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true') {
+
 
             Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
             tar -xf OCCT.tar.gz
@@ -86,7 +87,7 @@ jobs:
             #-D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
             cmake --build build_opencascade --config Release --parallel 4
             cmake --install build_opencascade
-          fi
+          }
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
