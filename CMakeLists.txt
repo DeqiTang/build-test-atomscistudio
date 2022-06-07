@@ -27,9 +27,9 @@ include_directories(
 link_directories(
     ${OpenCASCADE_LIBRARY_DIR}
 )
-link_libraries(
-    ${OpenCASCADE_LIBRARIES}
-)
+# link_libraries(
+#     ${OpenCASCADE_LIBRARIES}
+# )
 
 include_directories(
     ${QT_QTOPENGL_INCLUDE_DIR}
@@ -168,6 +168,7 @@ target_link_libraries(atomscistudio
     ${Boost_LIBRARIES}
     ${YAML_CPP_LIBRARIES}
     ${LIBSSH2_FOUND_LIBS}
+    ${OpenCASCADE_LIBRARIES}
 )
 
 # ------------------------------------------------
