@@ -57,13 +57,13 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          if ("${{ matrix.opencascade-build }}" == "vcpkg") {
+          if ("${{ matrix.opencascade-build }}" -eq "vcpkg") {
             vcpkg install opencascade:x64-windows --binarysource=default,readwrite
             $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           } else {
             # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
             $prefix_ = "C:/Softwares/opencascade"
-            if ("${{ steps.cache-opencascade-manual-build.outputs.cache-hit }}" != "true") {
+            if ("${{ steps.cache-opencascade-manual-build.outputs.cache-hit }}" -ne "true") {
               Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
               tar -xf OCCT.tar.gz
 
@@ -209,7 +209,7 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
-          if (${{ matrix.opencascade-build }} == "vcpkg") {
+          if (${{ matrix.opencascade-build }} -eq "vcpkg") {
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
