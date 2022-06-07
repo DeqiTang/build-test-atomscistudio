@@ -54,14 +54,14 @@ jobs:
           key: ${{ runner.os }}-cache-opencascade-installation-try-7
       - name: Install Open CASCADE
         id: install-opencascade
-        # if: steps.cache-opencascade-install.outputs.cache-hit != 'true'
         run: |
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
           # vcpkg install vtk:x64-windows --binarysource=default,readwrite
           
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/opencascade"
 
           if (${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true') {
@@ -69,19 +69,17 @@ jobs:
             Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
             tar -xf OCCT.tar.gz
 
+            New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+
             Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
             unzip tcltk-86-64.zip
-            New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
             Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
-            ls "C:/opencascade_3rdparty_dir/tcltk-86-64"
             
             Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
             unzip freetype-2.5.5-vc14-64.zip
             Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
-            ls "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
 
             cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
-            #-D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
             cmake --build build_opencascade --config Release --parallel 4
             cmake --install build_opencascade
           }
@@ -108,26 +106,25 @@ jobs:
       - name: Install googletest
         id: install-gtest
         run: |
-          Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
-          tar -xf release-1.11.0.tar.gz
-          
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
+          
+          Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
+          tar -xf release-1.11.0.tar.gz
 
           cmake googletest-release-1.11.0 -B build_gtest -G "Visual Studio 16 2019" -A x64
           cmake --build build_gtest --config Release
           cmake --install build_gtest
           echo "::set-output name=prefix::${prefix_}"
-      - name: Download yaml-cpp
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
-          tar -xf yaml-cpp-0.7.0.tar.gz
       - name: Install yaml-cpp
         id: install-yaml-cpp
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/yaml-cpp"
+          
+          Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
+          tar -xf yaml-cpp-0.7.0.tar.gz
+          
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release --parallel 4 
           cmake --install build_yaml_cpp
@@ -138,17 +135,16 @@ jobs:
         run: |
           choco install openssl
           choco upgrade openssl.light
-      - name: Download libssh2
-        shell: powershell 
-        run: |
-          Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
-          tar -xf libssh2-1.10.0.tar.gz
       - name: Install libssh2
         id: install-libssh2
         shell: powershell 
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
+
+          Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
+          tar -xf libssh2-1.10.0.tar.gz
+
           cmake libssh2-1.10.0 -B build_libssh2 -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release 
           cmake --build build_libssh2 --config Release --parallel 4
           cmake --install build_libssh2
@@ -166,6 +162,7 @@ jobs:
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
+
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
           cmake --install build_armadillo
@@ -219,6 +216,10 @@ jobs:
           # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
           # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
           # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKPrim.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKOpenGl.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKernel.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKBRep.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKGeomBase.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKTopAlgo.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKService.dll" ${env:archive_name}\
