@@ -63,10 +63,11 @@ jobs:
           # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
           # vckpg install vtk:x64-windows --binarysource=default,readwrite
+          
+          $prefix_ = "C:/Softwares/opencascade"
 
           if [[ ${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true' ]]; then
 
-            $prefix_ = "C:/Softwares/opencascade"
             Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
             tar -xf OCCT.tar.gz
 
