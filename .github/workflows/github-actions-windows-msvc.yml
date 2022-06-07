@@ -84,6 +84,9 @@ jobs:
           cmake --build build_opencascade --config Release --parallel 4
           cmake --install build_opencascade
 
+          ls "${prefix_}/"
+          ls "${prefix_}/lib"
+
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install Qt
