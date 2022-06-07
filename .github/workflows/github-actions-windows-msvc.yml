@@ -84,9 +84,6 @@ jobs:
           cmake --build build_opencascade --config Release --parallel 4
           cmake --install build_opencascade
 
-          ls "${prefix_}/"
-          ls "${prefix_}/lib"
-
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install Qt
@@ -203,6 +200,10 @@ jobs:
         env:
           archive_name: atomscistudio-${{ matrix.qt_version }}-${{ matrix.qt_arch }}
         run: |
+          ls "C:/Softwares/opencascade"
+          ls "C:/Softwares/opencascade/lib"
+          ls "C:/Softwares/opencascade/bin"
+
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\Release\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'
           windeployqt ${env:archive_name}\${env:executable}'.exe' --verbose=2 --compiler-runtime
