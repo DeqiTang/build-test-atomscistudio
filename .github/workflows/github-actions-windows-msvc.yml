@@ -54,7 +54,7 @@ jobs:
           key: ${{ runner.os }}-cache-opencascade-installation-try-7
       - name: Install Open CASCADE
         id: install-opencascade
-        if: steps.cache-opencascade-install.outputs.cache-hit != 'true'
+        # if: steps.cache-opencascade-install.outputs.cache-hit != 'true'
         run: |
           # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
@@ -64,25 +64,28 @@ jobs:
 
           # vckpg install vtk:x64-windows --binarysource=default,readwrite
 
-          $prefix_ = "C:/Softwares/opencascade"
-          Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-          tar -xf OCCT.tar.gz
+          if [[ ${{ steps.cache-opencascade-install.outputs.cache-hit }} != 'true' ]]; then
 
-          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
-          unzip tcltk-86-64.zip
-          New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
-          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
-          ls "C:/opencascade_3rdparty_dir/tcltk-86-64"
-           
-          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
-          unzip freetype-2.5.5-vc14-64.zip
-          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
-          ls "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+            $prefix_ = "C:/Softwares/opencascade"
+            Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+            tar -xf OCCT.tar.gz
 
-          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
-          #-D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
-          cmake --build build_opencascade --config Release --parallel 4
-          cmake --install build_opencascade
+            Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
+            unzip tcltk-86-64.zip
+            New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+            Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
+            ls "C:/opencascade_3rdparty_dir/tcltk-86-64"
+            
+            Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
+            unzip freetype-2.5.5-vc14-64.zip
+            Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
+            ls "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+
+            cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
+            #-D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+            cmake --build build_opencascade --config Release --parallel 4
+            cmake --install build_opencascade
+          fi
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
