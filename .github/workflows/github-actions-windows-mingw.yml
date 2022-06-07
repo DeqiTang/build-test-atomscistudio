@@ -36,10 +36,12 @@ jobs:
       - name: Install opencascade
         id: install-opencascade
         run: |
-          # export VCPKG_DEFAULT_TRIPLET=x64-mingw-dynamic
-          # export VCPKG_DEFAULT_HOST_TRIPLET=x64-mingw-dynamic
+          # export VCPKG_DEFAULT_TRIPLET="x64-mingw-dynamic"
+          # export VCPKG_DEFAULT_HOST_TRIPLET="x64-mingw-dynamic"
+          # export VCPKG_BUILD_TYPE="release"
           # ${env:VCPKG_DEFAULT_TRIPLET} = "x64-mingw-dynamic"
           # ${env:VCPKG_DEFAULT_HOST_TRIPLET} = "x64-mingw-dynamic"
+          ${env:VCPKG_BUILD_TYPE} = "release"
           vcpkg install opencascade --triplet=x64-mingw-dynamic --host-triplet=x64-mingw-dynamic --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           echo "::set-output name=prefix::${prefix_}"
