@@ -48,8 +48,8 @@ jobs:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
           key: ${{ runner.os }}-cache-vcpkg-2022.06.08-version-1
       - name: Caching OpenCASCADE installation
-        if: ${{ matrix.opencascade_build }} == "manual-build"
         id: cache-opencascade-manual-build
+        #if: ${{ matrix.opencascade_build }} == "manual-build"
         uses: actions/cache@v3
         with:
           path: C:\Softwares\opencascade
