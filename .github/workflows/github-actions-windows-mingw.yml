@@ -1,7 +1,7 @@
 name: Build for Windows with MinGW
 on:
   push:
-    #branches: [ master ]
+    branches: [ master ]
     tags:
       - 'v*'
   pull_request:
@@ -32,11 +32,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-mingw-try-1          
+          key: ${{ runner.os }}-cache-vcpkg-mingw-2022.06.07-version-1
       - name: Install opencascade
         id: install-opencascade
         run: |
-          vcpkg install opencascade:x64-mingw-dynamic --binarysource=default,readwrite
+          # export VCPKG_DEFAULT_TRIPLET=x64-mingw-dynamic
+          # export VCPKG_DEFAULT_HOST_TRIPLET=x64-mingw-dynamic
+          vcpkg install opencascade --triplet=x64-mingw-dynamic --host-triplet=x64-mingw-dynamic --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
@@ -153,6 +155,18 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/libyaml-cpp.dll' ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKV3d.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKTopAlgo.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKService.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKPrim.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKOpenGl.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKernel.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKBRep.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKGeomBase.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKGeomAlgo.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKG3d.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKG2d.dll" ${env:archive_name}\
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKMath.dll" ${env:archive_name}\          
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
