@@ -46,8 +46,15 @@ jobs:
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
           key: ${{ runner.os }}-cache-vcpkg-try-7
+      - name: Caching OpenCASCADE installation
+        id: cache-opencascade-install
+        uses: actions/cache@v3
+        with:
+          path: C:\Softwares\opencascade
+          key: ${{ runner.os }}-cache-opencascade-installation-try-7
       - name: Install Open CASCADE
         id: install-opencascade
+        if: steps.cache-opencascade-install.outputs.cache-hit != 'true'
         run: |
           # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
