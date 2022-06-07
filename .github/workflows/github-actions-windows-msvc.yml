@@ -71,13 +71,13 @@ jobs:
           Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
           unzip tcltk-86-64.zip
           New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
-          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/"
+          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
           ls "C:/opencascade_3rdparty_dir/tcltk-86-64"
            
           Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
           unzip freetype-2.5.5-vc14-64.zip
-          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/"
-          ls "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
+          ls"C:/opencascade_3rdparty_dir/freetype-2.5.50vc14-64"
 
           #-DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" 
           #cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TK_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64" -D3RDPARTY_FREETYPE_INCLUDE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/include" -D3RDPARTY_FREETYPE_LIBRARY_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/lib"
@@ -210,7 +210,7 @@ jobs:
           Copy-Item LICENSE ${env:archive_name}\LICENSE
           Copy-Item NOTICE ${env:archive_name}\NOTICE
           New-Item -ItemType Directory ${env:archive_name}\third_party\license
-          Copy-Item third_party\license\* ${env:archive_name}\third_party\license\
+          Copy-Item third_party\license\* ${env:archive_name}\third_party\license\ -Recurse
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           #Copy-Item 'C:/Softwares/yaml-cpp/bin/libyaml-cpp.dll' ${env:archive_name}\
