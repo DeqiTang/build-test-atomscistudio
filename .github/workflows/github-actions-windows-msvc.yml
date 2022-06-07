@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v3  
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-try-1 
+          key: ${{ runner.os }}-cache-msvc-community-2022.06.07-version-1 
       - name: Set up Visual Studio 2019 community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
@@ -45,13 +45,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-try-7
+          key: ${{ runner.os }}-cache-vcpkg-2022.06.07-version-1
       - name: Caching OpenCASCADE installation
         id: cache-opencascade-install
         uses: actions/cache@v3
         with:
           path: C:\Softwares\opencascade
-          key: ${{ runner.os }}-cache-opencascade-installation-try-7
+          key: ${{ runner.os }}-cache-opencascade-installation-2022.07.07-version-1
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
