@@ -24,18 +24,18 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      # - name: Caching MSVC community version
-      #   id: cache-msvc-community
-      #   uses: actions/cache@v3  
-      #   with:
-      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-      #     key: ${{ runner.os }}-cache-msvc-community-try-1 
-      # - name: Set up Visual Studio 2019 community version
-      #   if: steps.cache-msvc-community.outputs.cache-hit != 'true'
-      #   run: |
-      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-      #   shell: powershell
+      - name: Caching MSVC community version
+        id: cache-msvc-community
+        uses: actions/cache@v3  
+        with:
+          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+          key: ${{ runner.os }}-cache-msvc-community-try-1 
+      - name: Set up Visual Studio 2019 community version
+        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+        run: |
+          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+        shell: powershell
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
@@ -58,12 +58,10 @@ jobs:
         run: |
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
-          ls "C:/vcpkg/packages/opencascade_x64-windows/"
-          ls "C:/vcpkg/packages/opencascade_x64-windows/bin"
 
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
-          # vckpg install vtk:x64-windows --binarysource=default,readwrite
+          vckpg install vtk:x64-windows --binarysource=default,readwrite
           
           $prefix_ = "C:/Softwares/opencascade"
 
@@ -115,7 +113,7 @@ jobs:
           Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
           tar -xf release-1.11.0.tar.gz
           
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
 
           cmake googletest-release-1.11.0 -B build_gtest -G "Visual Studio 16 2019" -A x64
@@ -130,7 +128,7 @@ jobs:
       - name: Install yaml-cpp
         id: install-yaml-cpp
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/yaml-cpp"
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release --parallel 4 
@@ -151,7 +149,7 @@ jobs:
         id: install-libssh2
         shell: powershell 
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
           cmake libssh2-1.10.0 -B build_libssh2 -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release 
           cmake --build build_libssh2 --config Release --parallel 4
@@ -168,7 +166,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
@@ -178,7 +176,7 @@ jobs:
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/atomsciflow"
 
           git clone https://github.com/deqitang/build-test-atomsciflow.git
@@ -194,7 +192,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MSVC
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           cmake -B build_atomscistudio -G 'Visual Studio 16 2019' -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }};${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
           cmake --build build_atomscistudio --config Release
         env:
@@ -223,6 +221,10 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           #Copy-Item 'C:/Softwares/yaml-cpp/bin/libyaml-cpp.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
+          # Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKPrim.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKTopAlgo.dll" ${env:archive_name}\
           Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKService.dll" ${env:archive_name}\
