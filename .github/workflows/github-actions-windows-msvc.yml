@@ -91,7 +91,9 @@ jobs:
 
           ls "C:/Softwares/opencascade"
           ls "C:/Softwares/opencascade/win64"
-          ls "C:/Softwares/opencascade/win64/lib"
+          ls "C:/Softwares/opencascade/win64/vc14"
+          ls "C:/Softwares/opencascade/win64/vc14/lib"
+          ls "C:/Softwares/opencascade/win64/vc14/bin"
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
