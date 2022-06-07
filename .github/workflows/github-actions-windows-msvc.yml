@@ -25,18 +25,18 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      - name: Caching MSVC community version
-        id: cache-msvc-community
-        uses: actions/cache@v3  
-        with:
-          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-2022.06.07-version-1 
-      - name: Set up Visual Studio 2019 community version
-        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
-        run: |
-          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-        shell: powershell
+      # - name: Caching MSVC community version
+      #   id: cache-msvc-community
+      #   uses: actions/cache@v3  
+      #   with:
+      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+      #     key: ${{ runner.os }}-cache-msvc-community-2022.06.07-version-1 
+      # - name: Set up Visual Studio 2019 community version
+      #   if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+      #   run: |
+      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+      #   shell: powershell
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
@@ -61,7 +61,7 @@ jobs:
             vcpkg install opencascade:x64-windows --binarysource=default,readwrite
             $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           } else {
-            & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+            # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
             $prefix_ = "C:/Softwares/opencascade"
             if (${{ steps.cache-opencascade-manual-build.outputs.cache-hit }} != "true") {
               Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
@@ -104,7 +104,7 @@ jobs:
       - name: Install googletest
         id: install-gtest
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
           
           Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
@@ -118,7 +118,7 @@ jobs:
         id: install-yaml-cpp
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          $prefix_ = "C:/Softwares/yaml-cpp"
+          # $prefix_ = "C:/Softwares/yaml-cpp"
           
           Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
           tar -xf yaml-cpp-0.7.0.tar.gz
@@ -137,7 +137,7 @@ jobs:
         id: install-libssh2
         shell: powershell 
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
 
           Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
@@ -158,7 +158,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
 
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
@@ -169,7 +169,7 @@ jobs:
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/atomsciflow"
 
           git clone https://github.com/deqitang/build-test-atomsciflow.git
@@ -185,7 +185,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MSVC
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           cmake -B build_atomscistudio -G 'Visual Studio 16 2019' -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }};${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
           cmake --build build_atomscistudio --config Release
         env:
