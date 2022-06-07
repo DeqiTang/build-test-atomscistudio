@@ -57,7 +57,7 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          if (${{ matrix.opencascade-build }} == "vcpkg") {
+          if ("${{ matrix.opencascade-build }}" == "vcpkg") {
             vcpkg install opencascade:x64-windows --binarysource=default,readwrite
             $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
           } else {
