@@ -24,18 +24,18 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      - name: Caching MSVC community version
-        id: cache-msvc-community
-        uses: actions/cache@v3  
-        with:
-          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-try-1 
-      - name: Set up Visual Studio 2019 community version
-        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
-        run: |
-          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-        shell: powershell
+      # - name: Caching MSVC community version
+      #   id: cache-msvc-community
+      #   uses: actions/cache@v3  
+      #   with:
+      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+      #     key: ${{ runner.os }}-cache-msvc-community-try-1 
+      # - name: Set up Visual Studio 2019 community version
+      #   if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+      #   run: |
+      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+      #   shell: powershell
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
@@ -45,17 +45,16 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          # key: ${{ runner.os }}-cache-vcpkg-try-7
-          key: ${{ runner.os }}-cache-vcpkg-try-6
+          key: ${{ runner.os }}-cache-vcpkg-try-7
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          # $env:VCPKG_LIBRARY_LINKAGE = "dynamic"
-          # $env:VCPKG_ENV_PASSTHROUGH = "True"
-          # $env:VCPKG_KEEP_ENV_VARS = "VCPKG_LIBRARY_LINKAGE"
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
-          ls "C:/vcpkg/packages/opencascade_x64-windows/lib"
+          # # $env:VCPKG_LIBRARY_LINKAGE = "dynamic"
+          # # $env:VCPKG_ENV_PASSTHROUGH = "True"
+          # # $env:VCPKG_KEEP_ENV_VARS = "VCPKG_LIBRARY_LINKAGE"
+          # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          # ls "C:/vcpkg/packages/opencascade_x64-windows/lib"
 
           # #vcpkg install brotli:x64-windows bzip2:x64-windows zlib:x64-windows libpng:x64-windows 
           # vcpkg install freetype:x64-windows
@@ -63,22 +62,27 @@ jobs:
           # ls "C:/vcpkg/packages/freetype_x64-windows"
           # ls "C:/vcpkg/packages/tcl_x64-windows"
 
-          # $prefix_ = "C:/Softwares/opencascade"
-          # Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
-          # tar -xf OCCT.tar.gz
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
-          # Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
-          # unzip tcltk-86-64.zip
-          # New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
-          # Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/tcltk-86-64"
+          $prefix_ = "C:/Softwares/opencascade"
+          Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
+          tar -xf OCCT.tar.gz
+
+          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
+          unzip tcltk-86-64.zip
+          New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+          Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/tcltk-86-64"
+          ls "C:/opencascade_3rdparty_dir/tcltk-86-64"
            
-          # Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
-          # unzip freetype-2.5.5-vc14-64.zip
-          # Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
+          unzip freetype-2.5.5-vc14-64.zip
+          Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          ls "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
 
-          # cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TK_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64" -D3RDPARTY_FREETYPE_INCLUDE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/include" -D3RDPARTY_FREETYPE_LIBRARY_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/lib"
-          # cmake --build build_opencascade --config Release  
-          # cmake --install build_opencascade
+          #cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TK_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TK_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64" -D3RDPARTY_FREETYPE_INCLUDE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/include" -D3RDPARTY_FREETYPE_LIBRARY_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/lib"
+          cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="opencascade_3rdparty_dir" -DCMAKE_PREFIX_PATH="C:/vcpkg/brotli_x64-windows;C:/vcpkg/bzip2_x64-windows;C:/vcpkg/freetype_x64-windows;libpng_x64-windows;C:/vcpkg/zlib_x64-windows" -D3RDPARTY_TCL_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_TCL_INCLUDE_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/include" -D3RDPARTY_TCL_LIBRARY_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64/lib" -D3RDPARTY_TK_DIR="C:/opencascade_3rdparty_dir/tcltk-86-64" -D3RDPARTY_FREETYPE_DIR="C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64"
+          cmake --build build_opencascade --config Release  
+          cmake --install build_opencascade
 
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
@@ -104,6 +108,8 @@ jobs:
         run: |
           Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
           tar -xf release-1.11.0.tar.gz
+          
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
 
           cmake googletest-release-1.11.0 -B build_gtest -G "Visual Studio 16 2019" -A x64
@@ -118,7 +124,7 @@ jobs:
       - name: Install yaml-cpp
         id: install-yaml-cpp
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/yaml-cpp"
           cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
           cmake --build build_yaml_cpp --config Release --parallel 4 
@@ -139,7 +145,7 @@ jobs:
         id: install-libssh2
         shell: powershell 
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
           cmake libssh2-1.10.0 -B build_libssh2 -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release 
           cmake --build build_libssh2 --config Release --parallel 4
@@ -156,7 +162,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
@@ -166,7 +172,7 @@ jobs:
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/atomsciflow"
 
           git clone https://github.com/deqitang/build-test-atomsciflow.git
@@ -182,6 +188,7 @@ jobs:
           fetch-depth: 1
       - name: Build for Windows with MSVC
         run: |
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           cmake -B build_atomscistudio -G 'Visual Studio 16 2019' -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }};${{ steps.install-opencascade.outputs.prefix }};${{ steps.install-atomsciflow.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig"
           cmake --build build_atomscistudio --config Release
         env:
