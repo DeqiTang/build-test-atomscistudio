@@ -70,7 +70,7 @@ jobs:
           # Install-Package 7Zip4Powershell -ProviderName PowerShellGet
           # choco install 7zip.install
           # Expand-7Zip armadillo-10.8.2.tar.xz
-          choco install 7zip.install
+          choco install 7zip.install --force
           7Zip armadillo-10.8.2.tar.xz
         shell: powershell
       - name: Install OpenSSL
