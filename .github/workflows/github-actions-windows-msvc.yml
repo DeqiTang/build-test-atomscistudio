@@ -204,7 +204,6 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
-
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
