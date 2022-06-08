@@ -68,9 +68,12 @@ jobs:
           
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           tar -xf armadillo-10.8.2.tar.xz
-          Install-Package 7Zip4Powershell --Version 1.9.0
+          Install-Module -Name 7Zip4Powershell
+          Install-Package 7Zip4Powershell
+          Install-Package 7-Zip.CommandLine
+          Get-Command -Module 7Zip4PowerShell
           choco install 7zip.install
-          Expand-7Zip armadillo-10.8.2.tar.xz    
+          Expand-7Zip armadillo-10.8.2.tar.xz
           7-Zip
         shell: powershell
       - name: Install OpenSSL
