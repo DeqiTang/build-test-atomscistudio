@@ -67,8 +67,9 @@ jobs:
           # echo ${env:VCPKG_INSTALLATION_ROOT}
           
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-          # tar -xf armadillo-10.8.2.tar.xz          
-          Expand-Archive -Path armadillo-10.8.2.tar.xz          
+          # tar -xf armadillo-10.8.2.tar.xz
+          Install-Module -Name 7Zip4Powershell
+          Expand-7Zip -Path armadillo-10.8.2.tar.xz          
         shell: powershell
       - name: Install OpenSSL
         shell: powershell
