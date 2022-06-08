@@ -47,24 +47,25 @@ public:
         WireFrame,
         Shaded,
     };
+
 signals:
 
     void selection_changed();
 
 public slots:
 
-    void orbit() {
-        set_mouse_gestures(CursorAction::Nothing);
-    }
-    void select() {
-        set_mouse_gestures(CursorAction::Selecting);
-    }
-    void zoom() {
-        set_mouse_gestures(CursorAction::DynamicZooming);
-    }
-    void pan() {
-        set_mouse_gestures(CursorAction::DynamicPanning);
-    }
+//    void orbit() {
+//        set_mouse_gestures(CursorAction::Nothing);
+//    }
+//    void select() {
+//        set_mouse_gestures(CursorAction::Selecting);
+//    }
+//    void zoom() {
+//        set_mouse_gestures(CursorAction::DynamicZooming);
+//    }
+//    void pan() {
+//        set_mouse_gestures(CursorAction::DynamicPanning);
+//    }
 
     void fit_all() {
         m_v3d_view->FitAll();
@@ -81,12 +82,12 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* event) override;
     virtual void wheelEvent(QWheelEvent* event) override;
 
-    void set_mouse_gestures(CursorAction mode);
-
     void OnSelectionChanged(
         const Handle(AIS_InteractiveContext)& context,
         const Handle(V3d_View)& view
     ) Standard_OVERRIDE;
+
+    void set_mouse_gestures(CursorAction mode);
 
 private:
 

@@ -65,7 +65,10 @@ OccView::OccView(QWidget *parent) : QWidget(parent), m_device_px(devicePixelRati
     m_v3d_view->MustBeResized();
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
-    m_v3d_view->SetBackgroundColor(Quantity_Color(0.5, 0.5, 0.5, Quantity_TOC_sRGB));
+    m_v3d_view->SetBackgroundColor(Quantity_Color(
+        0.5, 0.5, 0.5,
+        Quantity_TOC_sRGB
+    ));
     m_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
     m_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
 
@@ -135,13 +138,11 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     }
     if (event->button() == Qt::RightButton && (flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
         if (m_context->NbSelected()) { // if any object is selected
-            QMenu* tool_menu = new QMenu{0};
+            QMenu* tool_menu = new QMenu{nullptr};
             tool_menu->exec(QCursor::pos());
             delete tool_menu;
         } else {
-
             auto context_menu = new QMenu{this};
-
             auto action = new QAction("Fit View", context_menu);
             action->setToolTip("Fit view to all objects");
             QObject::connect(action, &QAction::triggered, this, [&](){
@@ -150,19 +151,16 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_v3d_view->Redraw();
             });
             context_menu->addAction(action);
-
             context_menu->addSeparator();
 
             auto view_menu = context_menu->addMenu("Views");
-
             action = new QAction("Front", this);
-            action->setToolTip("View from front");
+            action->setToolTip("Front view");
             connect(action, &QAction::triggered, this, [&](){
                 m_v3d_view->SetProj(V3d_Yneg);
                 m_v3d_view->FitAll();
             });
             view_menu->addAction(action);
-
             action = new QAction("Back", this);
             action->setToolTip("View from back");
             connect(action, &QAction::triggered, this, [&]() {
@@ -178,9 +176,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_v3d_view->FitAll();
             });
             view_menu->addAction(action);
-
             action = new QAction("Right", this);
-            action->setToolTip("View from right");
+            action->setToolTip("Right view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Xpos);
                 m_v3d_view->FitAll();
@@ -188,7 +185,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             view_menu->addAction(action);
 
             action = new QAction("Top", this);
-            action->setToolTip("View from top");
+            action->setToolTip("Top view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zpos);
                 m_v3d_view->FitAll();
@@ -196,7 +193,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             view_menu->addAction(action);
 
             action = new QAction("Bottom", this);
-            action->setToolTip("View from bottom");
+            action->setToolTip("Bottom view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zneg);
                 m_v3d_view->FitAll();

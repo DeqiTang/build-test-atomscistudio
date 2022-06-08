@@ -13,7 +13,7 @@ ModelingControl::ModelingControl(QWidget* parent)
 
     m_layout = new QVBoxLayout(this);
     m_layout->setSpacing(0);
-    m_layout->setContentsMargins(3, 3, 3, 3);
+    m_layout->setContentsMargins(2, 2, 2, 2);
 
     m_occview = new OccView(this);
     m_layout->addWidget(m_occview);
@@ -21,7 +21,7 @@ ModelingControl::ModelingControl(QWidget* parent)
     this->setLayout(m_layout);
 
     this->show();
-    this->setMinimumSize(QSize(1300,800));
+    this->setMinimumSize(QSize(1200,800));
 
     this->m_crystal->read_xyz_str(
 "3\n"
