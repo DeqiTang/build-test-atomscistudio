@@ -23,48 +23,47 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      # - name: Caching MSVC Community Version
-      #   id: cache-msvc-community
-      #   uses: actions/cache@v3  
-      #   with:
-      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-      #     key: ${{ runner.os }}-cache-msvc-community-on-2022.06.08-version-1
-      # - name: Set up Visual Studio 2019 community version
-      #   if: steps.cache-msvc-community.outputs.cache-hit != 'true'
-      #   run: |
-      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-      #   shell: powershell
-      # - name: Install ninja
-      #   uses: seanmiddleditch/gha-setup-ninja@master
-      #   with:
-      #     destination: "C:/Softwares/ninja"
-      # - name: Caching vcpkg binary caches
-      #   id: cache-vcpkg
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-      #     key: ${{ runner.os }}-cache-vcpkg-on-2022.06.08-version-1
-      # - name: Caching built packages
-      #   id: cache-built-packages
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       C:\Softwares\gtest
-      #       C:\Softwares\yaml-cpp
-      #       C:\Softwares\libssh2
-      #       C:\Softwares\armadillo
-      #       C:\Softwares\atomsciflow
-      #     key: ${{ runner.os }}-cache-built-packages-on2022.06.08-version-2
+      - name: Caching MSVC Community Version
+        id: cache-msvc-community
+        uses: actions/cache@v3  
+        with:
+          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.08-version-1
+      - name: Set up Visual Studio 2019 community version
+        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+        run: |
+          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+        shell: powershell
+      - name: Install ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+        with:
+          destination: "C:/Softwares/ninja"
+      - name: Caching vcpkg binary caches
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.08-version-1
+      - name: Caching built packages
+        id: cache-built-packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:\Softwares\gtest
+            C:\Softwares\yaml-cpp
+            C:\Softwares\libssh2
+            C:\Softwares\armadillo
+            C:\Softwares\atomsciflow
+          key: ${{ runner.os }}-cache-built-packages-on2022.06.08-version-2
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
-          # echo "::set-output name=prefix::${prefix_}"
-          echo ${env:VCPKG_INSTALLATION_ROOT}
+          echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install OpenSSL
         shell: powershell
