@@ -66,6 +66,11 @@ jobs:
           echo "::set-output name=prefix::${prefix_}"
           echo ${env:VCPKG_INSTALLATION_ROOT}
         shell: powershell
+      - name: Install OpenSSL
+        shell: powershell
+        run: |
+          choco install openssl
+          choco upgrade openssl.light        
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
@@ -89,7 +94,7 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
           
-          if ("${{ steps.cache-built-packages }}" -notlike "true") {
+          if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
             Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
             tar -xf release-1.11.0.tar.gz
 
@@ -114,11 +119,6 @@ jobs:
           }
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
-      - name: Install OpenSSL
-        shell: powershell
-        run: |
-          choco install openssl
-          choco upgrade openssl.light
       - name: Install libssh2
         id: install-libssh2
         shell: powershell 
