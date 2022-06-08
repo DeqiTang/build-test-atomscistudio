@@ -65,20 +65,21 @@ jobs:
             $prefix_ = "C:/Softwares/opencascade"
 
             if ("${{ steps.cache-opencascade-manual-build.outputs.cache-hit }}" -notlike "true") {
+              # "${{ steps.xxx.outputs.cache-hit }}" can be "" or "true"
               Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
               tar -xf OCCT.tar.gz
 
-              New-Item -ItemType Directory "C:/opencascade_3rdparty_dir"
+              New-Item -ItemType Directory "C:/Softwares/opencascade_3rdparty_dir"
 
               Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/tcltk-86-64.zip -OutFile tcltk-86-64.zip
               unzip tcltk-86-64.zip
-              Copy-Item tcltk-86-64 "C:/opencascade_3rdparty_dir/" -Recurse
+              Copy-Item tcltk-86-64 "C:/Softwares/opencascade_3rdparty_dir/" -Recurse
               
               Invoke-WebRequest -Uri https://old.opencascade.com/sites/default/files/private/occt/3rdparty/freetype-2.5.5-vc14-64.zip -OutFile freetype-2.5.5-vc14-64.zip
               unzip freetype-2.5.5-vc14-64.zip
-              Copy-Item freetype-2.5.5-vc14-64 "C:/opencascade_3rdparty_dir/" -Recurse
+              Copy-Item freetype-2.5.5-vc14-64 "C:/Softwares/opencascade_3rdparty_dir/" -Recurse
 
-              cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/opencascade_3rdparty_dir" 
+              cmake OCCT-7_6_2 -B build_opencascade -DCMAKE_INSTALL_PREFIX="$prefix_" -DBUILD_LIBRARY_TYPE=Shared -D3RDPARTY_DIR="C:/Softwares/opencascade_3rdparty_dir" 
               cmake --build build_opencascade --config Release --parallel 4
               cmake --install build_opencascade
             }
@@ -243,7 +244,7 @@ jobs:
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMesh.dll" ${env:archive_name}\
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKHLR.dll" ${env:archive_name}\
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKShHealing.dll" ${env:archive_name}\
-            Copy-Item "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
           }
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
