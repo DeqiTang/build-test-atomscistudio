@@ -1,10 +1,10 @@
 # =======================================================================================
-# Atomscistudio on Windows is built and tested using Visuall Studio Community version.
-# Many open source softwares provide binaries built with MSVC, as the eula of msvc is 
-# open source friendly. Namely MSVC can be used in the development of OSI approved 
-# open source softwares.
+# Atomscistudio on Windows is built and tested using Visuall Studio Community Version.
+# Many open source softwares provide binaries built with MSVC, as the eula of 
+# MSVC Community Version is open source friendly. Namely MSVC Community Version can be 
+# used in the development of OSI approved open source softwares.
 # =======================================================================================
-name: Build for Windows using MSVC community version
+name: Build for Windows using MSVC Community Version
 on:
   push:
     branches: [ master ]
@@ -23,12 +23,12 @@ jobs:
     env:
       executable: atomscistudio
     steps:
-      - name: Caching MSVC community version
+      - name: Caching MSVC Community Version
         id: cache-msvc-community
         uses: actions/cache@v3  
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-2022.06.08-version-1
+          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.08-version-1
       - name: Set up Visual Studio 2019 community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
@@ -44,13 +44,25 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-2022.06.08-version-2
+          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.08-version-1
+      - name: Caching built packages
+        id: cache-built-packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:\Softwares\gtest
+            C:\Softwares\yaml-cpp
+            C:\Softwares\libssh2
+            C:\Softwares\armadillo
+            C:\Softwares\atomsciflow
+          key: ${{ runner.os }}-cache-built-packages-on2022.06.08-version-1
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           vcpkg install opencascade:x64-windows --binarysource=default,readwrite
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install Qt
@@ -76,12 +88,14 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/gtest"
           
-          Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
-          tar -xf release-1.11.0.tar.gz
+          if ("${{ steps.cache-built-packages }}" -notlike "true") {
+            Invoke-WebRequest -Uri https://github.com/google/googletest/archive/refs/tags/release-1.11.0.tar.gz -OutFile release-1.11.0.tar.gz
+            tar -xf release-1.11.0.tar.gz
 
-          cmake googletest-release-1.11.0 -B build_gtest -G "Visual Studio 16 2019" -A x64
-          cmake --build build_gtest --config Release --parallel 4
-          cmake --install build_gtest
+            cmake googletest-release-1.11.0 -B build_gtest -G "Visual Studio 16 2019" -A x64
+            cmake --build build_gtest --config Release --parallel 4
+            cmake --install build_gtest
+          }
           echo "::set-output name=prefix::${prefix_}"
       - name: Install yaml-cpp
         id: install-yaml-cpp
@@ -89,12 +103,14 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/yaml-cpp"
           
-          Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
-          tar -xf yaml-cpp-0.7.0.tar.gz
-          
-          cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
-          cmake --build build_yaml_cpp --config Release --parallel 4 
-          cmake --install build_yaml_cpp
+          if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
+            Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
+            tar -xf yaml-cpp-0.7.0.tar.gz
+
+            cmake yaml-cpp-yaml-cpp-0.7.0 -B build_yaml_cpp -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release -DYAML_BUILD_SHARED_LIBS=ON
+            cmake --build build_yaml_cpp --config Release --parallel 4 
+            cmake --install build_yaml_cpp
+          }
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - name: Install OpenSSL
@@ -109,12 +125,14 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
 
-          Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
-          tar -xf libssh2-1.10.0.tar.gz
+          if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
+            Invoke-WebRequest -Uri https://github.com/libssh2/libssh2/releases/download/libssh2-1.10.0/libssh2-1.10.0.tar.gz -OutFile libssh2-1.10.0.tar.gz
+            tar -xf libssh2-1.10.0.tar.gz
 
-          cmake libssh2-1.10.0 -B build_libssh2 -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release 
-          cmake --build build_libssh2 --config Release --parallel 4
-          cmake --install build_libssh2
+            cmake libssh2-1.10.0 -B build_libssh2 -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release 
+            cmake --build build_libssh2 --config Release --parallel 4
+            cmake --install build_libssh2
+          }
           echo "::set-output name=prefix::${prefix_}"
       - name: Download armadillo
         shell: powershell
@@ -130,24 +148,21 @@ jobs:
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
 
-          cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
-          cmake --build build_armadillo --config Release --parallel 4
-          cmake --install build_armadillo
+          if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
+            cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+            cmake --build build_armadillo --config Release --parallel 4
+            cmake --install build_armadillo
+          }
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
-      - name: Cache atomsciflow
-        id: cache-atomsciflow
-        uses: actions/cache@v3
-        with:
-          path: C:\Softwares\atomsciflow
-          key: ${{ runner.os }}-cache-atomsciflow-2022.06.08-version-2
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/atomsciflow"
-          if ("${{ steps.cache-atomsciflow.outputs.cache-hit }}" -notlike "true") {
-            # "${{ steps.cache-atomsciflow.outputs.cache-hit }}" could be "" or "true"
+
+          if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
+            # "${{ steps.xxx.outputs.cache-hit }}" could be "" or "true"
             git clone https://github.com/deqitang/build-test-atomsciflow.git
             cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig" -DGTEST_ROOT="${{ steps.install-gtest.outputs.prefix }}"
             cmake --build build_atomsciflow --config Release --parallel 4
