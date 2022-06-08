@@ -15,25 +15,6 @@
 
 #include "occwindow.h"
 
-namespace occview_enums {
-
-enum CursorAction {
-    Nothing,
-    DynamicZooming,
-    WindowZooming,
-    DynamicPanning,
-    GlobalPanning,
-    DynamicRotation,
-    Selecting
-};
-
-enum DrawStyle {
-    WireFrame,
-    Shaded,
-};
-
-} // namespace occview_enums
-
 class OccView : public QWidget, protected AIS_ViewController {
     Q_OBJECT
 public:
@@ -51,6 +32,21 @@ public:
         return m_context;
     }
 
+public:
+    enum CursorAction {
+        Nothing,
+        DynamicZooming,
+        WindowZooming,
+        DynamicPanning,
+        GlobalPanning,
+        DynamicRotation,
+        Selecting
+    };
+
+    enum DrawStyle {
+        WireFrame,
+        Shaded,
+    };
 signals:
 
     void selection_changed();
@@ -58,16 +54,16 @@ signals:
 public slots:
 
     void orbit() {
-        set_mouse_gestures(occview_enums::CursorAction::Nothing);
+        set_mouse_gestures(CursorAction::Nothing);
     }
     void select() {
-        set_mouse_gestures(occview_enums::CursorAction::Selecting);
+        set_mouse_gestures(CursorAction::Selecting);
     }
     void zoom() {
-        set_mouse_gestures(occview_enums::CursorAction::DynamicZooming);
+        set_mouse_gestures(CursorAction::DynamicZooming);
     }
     void pan() {
-        set_mouse_gestures(occview_enums::CursorAction::DynamicPanning);
+        set_mouse_gestures(CursorAction::DynamicPanning);
     }
 
     void fit_all() {
@@ -85,7 +81,7 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* event) override;
     virtual void wheelEvent(QWheelEvent* event) override;
 
-    void set_mouse_gestures(occview_enums::CursorAction mode);
+    void set_mouse_gestures(CursorAction mode);
 
     void OnSelectionChanged(
         const Handle(AIS_InteractiveContext)& context,
@@ -102,8 +98,8 @@ private:
 
     AIS_MouseGestureMap m_mouse_default_gestures;
     Graphic3d_Vec2i m_click_pos;
-    occview_enums::CursorAction m_cur_mode;
-    occview_enums::DrawStyle m_draw_style;
+    CursorAction m_cur_mode;
+    DrawStyle m_draw_style;
     Standard_Real m_cur_zoom{0};
     const Standard_Real m_device_px;
 

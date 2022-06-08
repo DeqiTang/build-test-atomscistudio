@@ -191,7 +191,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     this->m_root_vlayout->addWidget(this->m_root_tabwidget);
     this->m_root_tabwidget->setTabPosition(QTabWidget::West);
 
-    auto tab1 = new QWidget(this->m_central_widget);
+//    auto tab1 = new QWidget(this->m_central_widget);
 //    this->m_root_tabwidget->addTab(tab1, QObject::tr("Modeling"));
 //    auto tab1_hsplitter = new QSplitter(this->m_central_widget);
 //    auto tab1_hlayout= new QHBoxLayout(tab1);
@@ -215,25 +215,25 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 //    win_container->setMinimumSize(QSize(200, 100));
 //    win_container->setMaximumSize(screenSize);
 
-    auto tab3 = new QWidget(this->m_central_widget);
-    this->m_root_tabwidget->addTab(tab3, QObject::tr("Modeling"));
-    auto tab3_hsplitter = new QSplitter(this->m_central_widget);
-    auto tab3_hlayout= new QHBoxLayout(tab3);
-    tab3->setLayout(tab3_hlayout);
-    tab3_hlayout->addWidget(tab3_hsplitter);
-    tab3_hsplitter->setOrientation(Qt::Orientation::Horizontal);
-    tab3_hsplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    tab3_hsplitter->setVisible(true);
-    tab3_hsplitter->setHandleWidth(7);
-    tab3_hsplitter->setFrameShape(QFrame::StyledPanel);
-    tab3_hsplitter->setFrameShadow(QFrame::Plain);
-    tab3_hsplitter->setStyleSheet("QSplitter::handle {background-color: gray}");
+    auto tab1 = new QWidget(this->m_central_widget);
+    this->m_root_tabwidget->addTab(tab1, QObject::tr("Modeling"));
+    auto tab1_hsplitter = new QSplitter(this->m_central_widget);
+    auto tab1_hlayout= new QHBoxLayout(tab1);
+    tab1->setLayout(tab1_hlayout);
+    tab1_hlayout->addWidget(tab1_hsplitter);
+    tab1_hsplitter->setOrientation(Qt::Orientation::Horizontal);
+    tab1_hsplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    tab1_hsplitter->setVisible(true);
+    tab1_hsplitter->setHandleWidth(7);
+    tab1_hsplitter->setFrameShape(QFrame::StyledPanel);
+    tab1_hsplitter->setFrameShadow(QFrame::Plain);
+    tab1_hsplitter->setStyleSheet("QSplitter::handle {background-color: gray}");
 
-    auto tab3_vlayout = new QVBoxLayout(tab3);
+    auto tab1_vlayout = new QVBoxLayout(tab1);
     auto modeling_widget = new ModelingControl(this->m_central_widget);
     auto modeling_tools = new Tools(this->m_central_widget, modeling_widget);
-    tab3_hsplitter->addWidget(modeling_tools);
-    tab3_hsplitter->addWidget(modeling_widget);
+    tab1_hsplitter->addWidget(modeling_tools);
+    tab1_hsplitter->addWidget(modeling_widget);
     QSize screen_size = this->screen()->size();
     modeling_widget->setMinimumSize(QSize(1300, 800));
     modeling_widget->setMaximumSize(screen_size);
