@@ -21,7 +21,8 @@ jobs:
         os: [windows-2019]
         qt_version: ["6.2.2"]
         qt_arch: ["win64_msvc2019_64"]
-        opencascade-build: ["manual-build"] # vcpkg or manual-build
+        opencascade-build: ["vcpkg"] # vcpkg or manual-build
+        #opencascade-build: ["manual-build"] # vcpkg or manual-build
     env:
       executable: atomscistudio
     steps:
@@ -117,8 +118,8 @@ jobs:
       - name: Install yaml-cpp
         id: install-yaml-cpp
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          # $prefix_ = "C:/Softwares/yaml-cpp"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          $prefix_ = "C:/Softwares/yaml-cpp"
           
           Invoke-WebRequest -Uri https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -OutFile yaml-cpp-0.7.0.tar.gz
           tar -xf yaml-cpp-0.7.0.tar.gz
