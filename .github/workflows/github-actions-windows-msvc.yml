@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v3  
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-2022.06.07-version-1 
+          key: ${{ runner.os }}-cache-msvc-community-2022.06.08-version-1
       - name: Set up Visual Studio 2019 community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
@@ -38,13 +38,13 @@ jobs:
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
-          destination: "C:/Softwares/ninja"          
+          destination: "C:/Softwares/ninja"
       - name: Caching vcpkg binary caches
         id: cache-vcpkg
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-2022.06.08-version-1
+          key: ${{ runner.os }}-cache-vcpkg-2022.06.08-version-2
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
@@ -140,7 +140,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Softwares\atomsciflow
-          key: ${{ runner.os }}-cache-atomsciflow-2022.06.08-version-1
+          key: ${{ runner.os }}-cache-atomsciflow-2022.06.08-version-2
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
@@ -186,6 +186,7 @@ jobs:
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
           Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
+
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
@@ -206,7 +207,7 @@ jobs:
           Copy-Item "C:/vcpkg/packages/libpng_x64-windows/bin/libpng16.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/brotli_x64-windows/bin/brotlidec.dll" ${env:archive_name}\
           Copy-Item "C:/vcpkg/packages/brotli_x64-windows/bin/brotlicommon.dll" ${env:archive_name}\
-          
+
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
           echo "::set-output name=package_name::$name"
