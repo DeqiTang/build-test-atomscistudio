@@ -65,7 +65,7 @@ jobs:
 
           echo "::set-output name=prefix::${prefix_}"
           echo ${env:VCPKG_INSTALLATION_ROOT}
-          7z
+          Expand-7Zip
         shell: powershell
       - name: Install OpenSSL
         shell: powershell
