@@ -73,6 +73,7 @@ jobs:
           # C:\ProgramData\chocolatey\bin\7z.exe
           # choco install 7zip.install --force
           7z x armadillo-10.8.2.tar.xz
+          tar -xf armadillo-10.8.2.tar
           ls
         shell: powershell
       - name: Install OpenSSL
