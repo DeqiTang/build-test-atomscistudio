@@ -59,12 +59,12 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
-          echo "::set-output name=prefix::${prefix_}"
-          echo ${env:VCPKG_INSTALLATION_ROOT}
+          # echo "::set-output name=prefix::${prefix_}"
+          # echo ${env:VCPKG_INSTALLATION_ROOT}
           Expand-7Zip
         shell: powershell
       - name: Install OpenSSL
