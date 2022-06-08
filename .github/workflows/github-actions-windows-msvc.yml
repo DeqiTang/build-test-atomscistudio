@@ -68,9 +68,9 @@ jobs:
           
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           # tar -xvf armadillo-10.8.2.tar.xz
-          Install-Module -Name 7Zip4Powershell -Verbose
-          Install-Package 7Zip4Powershell
-          Install-Package 7-Zip.CommandLine
+          # Install-Module -Name 7Zip4Powershell -Verbose
+          Install-Package 7Zip4Powershell -ProviderName PowerShellGet
+          # Install-Package 7-Zip.CommandLine
           Get-Command -Module 7Zip4PowerShell
           choco install 7zip.install
           Expand-7Zip armadillo-10.8.2.tar.xz
