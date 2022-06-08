@@ -48,7 +48,7 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 
           if ("${{ steps.cache-vcpkg.outputs.cache-hit }}" -notlike "true") {
             # "${{ steps.xxx.outputs.cache-hit }}" can be "" or "true"
