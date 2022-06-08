@@ -55,7 +55,7 @@ jobs:
             C:\Softwares\libssh2
             C:\Softwares\armadillo
             C:\Softwares\atomsciflow
-          key: ${{ runner.os }}-cache-built-packages-on2022.06.08-version-1
+          key: ${{ runner.os }}-cache-built-packages-on2022.06.08-version-2
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
@@ -158,7 +158,7 @@ jobs:
           }
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
-      - name: Build atomsciflow
+      - name: Install atomsciflow
         id: install-atomsciflow
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
