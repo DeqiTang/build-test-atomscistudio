@@ -1,9 +1,8 @@
 # =======================================================================================
-# Visual Studio Community version is friendly to open source projects.
-# The eula indicates it can be used for the development of open source softwares.
-# Many open source softwares provide binaries built with Visual Studio Community version,
-# including Official CPython package for Windows.
-# So here, Visual Studio Community version is used to build and test atomscistudio.
+# Atomscistudio on Windows is built and tested using Visuall Studio Community version.
+# Many open source softwares provide binaries built with MSVC, as the eula of msvc is 
+# open source friendly. Namely MSVC can be used in the development of OSI approved 
+# open source softwares.
 # =======================================================================================
 name: Build for Windows using MSVC community version
 on:
@@ -64,6 +63,7 @@ jobs:
           } else {
             # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
             $prefix_ = "C:/Softwares/opencascade"
+
             if ("${{ steps.cache-opencascade-manual-build.outputs.cache-hit }}" -notlike "true") {
               Invoke-WebRequest -Uri https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/refs/tags/V7_6_2 -OutFile OCCT.tar.gz
               tar -xf OCCT.tar.gz
@@ -225,6 +225,7 @@ jobs:
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMath.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKMesh.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKHLR.dll" ${env:archive_name}\
+            Copy-Item "C:/vcpkg/packages/opencascade_x64-windows/bin/TKShHealing.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/freetype_x64-windows/bin/freetype.dll" ${env:archive_name}\
           } else {
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
@@ -241,6 +242,7 @@ jobs:
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMath.dll" ${env:archive_name}\
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMesh.dll" ${env:archive_name}\
             Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKHLR.dll" ${env:archive_name}\
+            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKShHealing.dll" ${env:archive_name}\
             Copy-Item "C:/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
           }
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'

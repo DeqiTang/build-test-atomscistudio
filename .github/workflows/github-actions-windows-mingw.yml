@@ -173,6 +173,7 @@ jobs:
           Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKMath.dll" ${env:archive_name}\          
           Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKMesh.dll" ${env:archive_name}\          
           Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKHLR.dll" ${env:archive_name}\          
+          Copy-Item "C:/vcpkg/packages/opencascade_x64-mingw-dynamic/bin/TKShHealing.dll" ${env:archive_name}\          
           Copy-Item "C:/vcpkg/packages/freetype_x64-mingw-dynamic/bin/freetype.dll" ${env:archive_name}\          
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
