@@ -59,22 +59,12 @@ jobs:
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          # vcpkg install opencascade:x64-windows --binarysource=default,readwrite
-          # $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          vcpkg install opencascade:x64-windows --binarysource=default,readwrite
+          $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
-          # echo "::set-output name=prefix::${prefix_}"
-          # echo ${env:VCPKG_INSTALLATION_ROOT}
-          
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-          # Install-Package 7Zip4Powershell -ProviderName PowerShellGet
-          # choco install 7zip.install
-          # Expand-7Zip armadillo-10.8.2.tar.xz
-          # C:\ProgramData\chocolatey\bin\7z.exe
-          # choco install 7zip.install --force
-          7z x armadillo-10.8.2.tar.xz
-          tar -xf armadillo-10.8.2.tar
-          ls
+          echo "::set-output name=prefix::${prefix_}"
+          echo ${env:VCPKG_INSTALLATION_ROOT}
         shell: powershell
       - name: Install OpenSSL
         shell: powershell
@@ -145,16 +135,6 @@ jobs:
             cmake --install build_libssh2
           }
           echo "::set-output name=prefix::${prefix_}"
-      - name: Download armadillo
-        if: steps.cache-built-packages.outputs.cache-hit != 'true'
-        run: |
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-        shell: powershell
-      - name: Extract armadillo
-        if: steps.cache-built-packages.outputs.cache-hit != 'true'
-        run: |
-          tar -xf armadillo-10.8.2.tar.xz
-        shell: bash
       - name: Install armadillo
         id: install-armadillo
         run: |
@@ -162,6 +142,13 @@ jobs:
           $prefix_ = "C:/Softwares/armadillo"
 
           if ("${{ steps.cache-built-packages.outputs.cache-hit }}" -notlike "true") {
+            
+            Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+
+            # choco install 7zip.install --force
+            7z x armadillo-10.8.2.tar.xz
+            tar -xf armadillo-10.8.2.tar
+
             cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
             cmake --build build_armadillo --config Release --parallel 4
             cmake --install build_armadillo
