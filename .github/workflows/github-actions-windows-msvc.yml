@@ -231,23 +231,6 @@ jobs:
             Copy-Item "C:/vcpkg/packages/bzip2_x64-windows/bin/bz2.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/libpng_x64-windows/bin/libpng16.dll" ${env:archive_name}\
             Copy-Item "C:/vcpkg/packages/brotli_x64-windows/bin/brotlidec.dll" ${env:archive_name}\
-          } else {
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKV3d.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKTopAlgo.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKService.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKPrim.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKOpenGl.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKernel.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKBRep.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomBase.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKGeomAlgo.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG3d.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKG2d.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMath.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKMesh.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKHLR.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade/win64/vc14/bin/TKShHealing.dll" ${env:archive_name}\
-            Copy-Item "C:/Softwares/opencascade_3rdparty_dir/freetype-2.5.5-vc14-64/bin/freetype.dll" ${env:archive_name}\
           }
           Compress-Archive -Path ${env:archive_name} ${env:archive_name}'.zip'
           $name = ${env:archive_name}
