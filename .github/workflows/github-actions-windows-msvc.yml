@@ -21,8 +21,8 @@ jobs:
         os: [windows-2019]
         qt_version: ["6.2.2"]
         qt_arch: ["win64_msvc2019_64"]
-        opencascade-build: ["vcpkg"] # vcpkg or manual-build
-        #opencascade-build: ["manual-build"] # vcpkg or manual-build
+        # opencascade-build: ["vcpkg"] # vcpkg or manual-build
+        opencascade-build: ["manual-build"] # vcpkg or manual-build
     env:
       executable: atomscistudio
     steps:
