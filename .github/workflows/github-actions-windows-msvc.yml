@@ -64,6 +64,7 @@ jobs:
           $prefix_ = "C:/vcpkg/packages/opencascade_x64-windows"
 
           echo "::set-output name=prefix::${prefix_}"
+          echo ${env:VCPKG_INSTALLATION_ROOT}
         shell: powershell
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
@@ -135,13 +136,15 @@ jobs:
           }
           echo "::set-output name=prefix::${prefix_}"
       - name: Download armadillo
-        shell: powershell
+        if: steps.cache-built-packages.outputs.cache-hit != 'true'
         run: |
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+        shell: powershell
       - name: Extract armadillo
-        shell: bash
+        if: steps.cache-built-packages.outputs.cache-hit != 'true'
         run: |
           tar -xf armadillo-10.8.2.tar.xz
+        shell: bash
       - name: Install armadillo
         id: install-armadillo
         run: |
