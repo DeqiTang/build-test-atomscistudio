@@ -142,16 +142,24 @@ jobs:
           cmake --install build_armadillo
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
+      - name: Cache atomsciflow
+        id: cache-atomsciflow
+        uses: actions/cache@v3
+        with:
+          path: C:\Softwares\atomsciflow
+          key: ${{ runner.os }}-cache-atomsciflow-2022.06.08-version-1
       - name: Build atomsciflow
         id: install-atomsciflow
         run: |
           # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/atomsciflow"
-
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig" -DGTEST_ROOT="${{ steps.install-gtest.outputs.prefix }}"
-          cmake --build build_atomsciflow --config Release 
-          cmake --install build_atomsciflow
+          if ("${{ steps.cache-atomsciflow.outputs.cache-hit }}" -notlike "true") {
+            # "${{ steps.cache-atomsciflow.outputs.cache-hit }}" could be "" or "true"
+            git clone https://github.com/deqitang/build-test-atomsciflow.git
+            cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=OFF -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX="$prefix_" -DCMAKE_PREFIX_PATH="${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libssh2.outputs.prefix }}" -DYAML_CPP_PKGCONFIG_DIR="${{ steps.install-yaml-cpp.outputs.prefix }}/share/pkgconfig" -DGTEST_ROOT="${{ steps.install-gtest.outputs.prefix }}"
+            cmake --build build_atomsciflow --config Release 
+            cmake --install build_atomsciflow
+          }
           echo "::set-output name=prefix::${prefix_}"
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
