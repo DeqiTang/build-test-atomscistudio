@@ -64,6 +64,7 @@ jobs:
           $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/opencascade_x64-windows"
 
           echo "::set-output name=prefix::${prefix_}"
+          ls "C:/Program Files (x86)/Microsoft Visual Studio/2019/"
         shell: powershell
       - name: Install OpenSSL
         shell: powershell
