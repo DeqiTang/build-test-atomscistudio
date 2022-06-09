@@ -2,10 +2,11 @@
 
 OccWindow::OccWindow(QWidget* parent): m_widget{parent} {
 
-    m_x_left = m_widget->rect().left();
-    m_y_top = m_widget->rect().top();
-    m_x_right = m_widget->rect().right();
-    m_y_bottom = m_widget->rect().bottom();
+    auto rect = m_widget->rect();
+    m_x_left = rect.left();
+    m_y_top = rect.top();
+    m_x_right = rect.right();
+    m_y_bottom = rect.bottom();
 
     this->DoResize();
 }
@@ -61,17 +62,19 @@ Aspect_TypeOfResize OccWindow::DoResize() {
     int bit_mask = 0;
     auto type_of_resize = Aspect_TOR_UNKNOWN;
 
+    auto rect = m_widget->rect();
+
     if (!m_widget->isMinimized()) {
-        if (Abs(m_widget->rect().left() - m_x_left) > 2.) {
+        if (Abs(rect.left() - m_x_left) > 2.) {
             bit_mask |= 1;
         }
-        if (Abs(m_widget->rect().right() - m_x_right) > 2.) {
+        if (Abs(rect.right() - m_x_right) > 2.) {
             bit_mask |= 2;
         }
-        if (Abs(m_widget->rect().top() - m_y_top) > 2.) {
+        if (Abs(rect.top() - m_y_top) > 2.) {
             bit_mask |= 4;
         }
-        if (Abs(m_widget->rect().bottom() - m_y_bottom) > 2.) {
+        if (Abs(rect.bottom() - m_y_bottom) > 2.) {
             bit_mask |= 8;
         }
 
@@ -106,10 +109,10 @@ Aspect_TypeOfResize OccWindow::DoResize() {
             default:
                 break;
         }
-        m_x_left = m_widget->rect().left();
-        m_x_right = m_widget->rect().right();
-        m_y_top = m_widget->rect().top();
-        m_y_bottom = m_widget->rect().bottom();
+        m_x_left = rect.left();
+        m_x_right = rect.right();
+        m_y_top = rect.top();
+        m_y_bottom = rect.bottom();
     }
     return type_of_resize;
 }
@@ -120,8 +123,11 @@ Standard_Real OccWindow::Ratio() const {
 }
 
 void OccWindow::Size(Standard_Integer& width, Standard_Integer& height) const {
-    width = m_widget->rect().right();
-    height = m_widget->rect().bottom();
+//    width = Abs(m_widget->rect().right());
+//    height = Abs(m_widget->rect().bottom());
+    auto rect = m_widget->rect();
+    width = Abs(rect.right() - rect.left());
+    height = Abs(rect.bottom() - rect.top());
 }
 
 void OccWindow::Position(
@@ -130,10 +136,11 @@ void OccWindow::Position(
     Standard_Integer &x2,
     Standard_Integer &y2) const {
 
-    x1 = m_widget->rect().left();
-    x2 = m_widget->rect().right();
-    y1 = m_widget->rect().top();
-    y2 = m_widget->rect().bottom();
+    auto rect = m_widget->rect();
+    x1 = rect.left();
+    x2 = rect.right();
+    y1 = rect.top();
+    y2 = rect.bottom();
 }
 
 IMPLEMENT_STANDARD_RTTIEXT(OccWindow, Aspect_Window)
