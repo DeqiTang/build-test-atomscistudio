@@ -55,16 +55,16 @@ signals:
 public slots:
 
 //    void orbit() {
-//        set_mouse_gestures(MouseGesture::Nothing);
+//        bind_mouse_gestures(MouseGesture::Nothing);
 //    }
 //    void select() {
-//        set_mouse_gestures(MouseGesture::SelectRectangle);
+//        bind_mouse_gestures(MouseGesture::SelectRectangle);
 //    }
 //    void zoom() {
-//        set_mouse_gestures(MouseGesture::Zoom);
+//        bind_mouse_gestures(MouseGesture::Zoom);
 //    }
 //    void pan() {
-//        set_mouse_gestures(MouseGesture::Pan);
+//        bind_mouse_gestures(MouseGesture::Pan);
 //    }
 
     void fit_all() {
@@ -87,7 +87,7 @@ protected:
         const Handle(V3d_View)& view
     ) Standard_OVERRIDE;
 
-    void set_mouse_gestures(MouseGesture mode);
+    void bind_mouse_gestures(MouseGesture mode);
 
 private:
 

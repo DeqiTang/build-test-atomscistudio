@@ -134,7 +134,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         m_v3d_view->Place(point.x(), point.y(), m_cur_zoom);
     }
     if (m_cur_mode != MouseGesture::Nothing) {
-        set_mouse_gestures(MouseGesture::Nothing);
+        bind_mouse_gestures(MouseGesture::Nothing);
     }
     if (event->button() == Qt::RightButton && (flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
         if (m_context->NbSelected()) { // if any object is selected
@@ -275,7 +275,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
     }
 }
 
-void OccView::set_mouse_gestures(MouseGesture mode) {
+void OccView::bind_mouse_gestures(MouseGesture mode) {
     m_cur_mode = mode;
     myMouseGestureMap.Clear();
     AIS_MouseGesture rot = AIS_MouseGesture_RotateOrbit;
