@@ -58,24 +58,24 @@ void OccWindow::Unmap() const {
 }
 
 Aspect_TypeOfResize OccWindow::DoResize() {
-    int mask = 0;
+    int bit_mask = 0;
     auto type_of_resize = Aspect_TOR_UNKNOWN;
 
     if (!m_widget->isMinimized()) {
         if (Abs(m_widget->rect().left() - m_x_left) > 2.) {
-            mask |= 1;
+            bit_mask |= 1;
         }
         if (Abs(m_widget->rect().right() - m_x_right) > 2.) {
-            mask |= 2;
+            bit_mask |= 2;
         }
         if (Abs(m_widget->rect().top() - m_y_top) > 2.) {
-            mask |= 4;
+            bit_mask |= 4;
         }
         if (Abs(m_widget->rect().bottom() - m_y_bottom) > 2.) {
-            mask |= 8;
+            bit_mask |= 8;
         }
 
-        switch (mask) {
+        switch (bit_mask) {
             case 0:
                 type_of_resize = Aspect_TOR_NO_BORDER;
                 break;

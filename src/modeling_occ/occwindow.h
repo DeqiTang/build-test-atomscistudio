@@ -12,7 +12,6 @@ public:
     OccWindow(QWidget* parent = nullptr);
 
     ~OccWindow() {
-        m_widget = nullptr;
     }
 
     Standard_EXPORT virtual Aspect_Drawable NativeHandle() const override;

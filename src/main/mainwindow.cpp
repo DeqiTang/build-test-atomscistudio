@@ -33,7 +33,7 @@
 //#include "modeling/tools.h"
 #include "modeling_occ/modeling.h"
 #include "modeling_occ/occwindow.h"
-#include "modeling_occ/tools.h"
+#include "modeling_occ/modeling_tools.h"
 
 #include "calc/calccontrol.h"
 #include "config/config_manager.h"
