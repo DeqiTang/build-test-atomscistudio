@@ -40,7 +40,7 @@ public:
         Pan,
         GlobalPanning,
         RotateOrbit,
-        Selecting
+        SelectRectangle
     };
 
     enum DisplayMode {
@@ -58,7 +58,7 @@ public slots:
 //        set_mouse_gestures(MouseGesture::Nothing);
 //    }
 //    void select() {
-//        set_mouse_gestures(MouseGesture::Selecting);
+//        set_mouse_gestures(MouseGesture::SelectRectangle);
 //    }
 //    void zoom() {
 //        set_mouse_gestures(MouseGesture::Zoom);

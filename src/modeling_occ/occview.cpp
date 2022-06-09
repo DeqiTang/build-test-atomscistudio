@@ -296,10 +296,9 @@ void OccView::set_mouse_gestures(MouseGesture mode) {
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Pan);
             break;
         case MouseGesture::RotateOrbit:
-//            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, rot);
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_RotateOrbit);
             break;
-        case MouseGesture::Selecting:
+        case MouseGesture::SelectRectangle:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_SelectRectangle);
             break;
     }
