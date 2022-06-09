@@ -33,17 +33,17 @@ public:
     }
 
 public:
-    enum CursorAction {
+    enum MouseGesture {
         Nothing,
-        DynamicZooming,
-        WindowZooming,
-        DynamicPanning,
+        Zoom,
+        ZoomWindow,
+        Pan,
         GlobalPanning,
-        DynamicRotation,
+        RotateOrbit,
         Selecting
     };
 
-    enum DrawStyle {
+    enum DisplayMode {
         WireFrame,
         Shaded,
     };
@@ -55,16 +55,16 @@ signals:
 public slots:
 
 //    void orbit() {
-//        set_mouse_gestures(CursorAction::Nothing);
+//        set_mouse_gestures(MouseGesture::Nothing);
 //    }
 //    void select() {
-//        set_mouse_gestures(CursorAction::Selecting);
+//        set_mouse_gestures(MouseGesture::Selecting);
 //    }
 //    void zoom() {
-//        set_mouse_gestures(CursorAction::DynamicZooming);
+//        set_mouse_gestures(MouseGesture::Zoom);
 //    }
 //    void pan() {
-//        set_mouse_gestures(CursorAction::DynamicPanning);
+//        set_mouse_gestures(MouseGesture::Pan);
 //    }
 
     void fit_all() {
@@ -87,7 +87,7 @@ protected:
         const Handle(V3d_View)& view
     ) Standard_OVERRIDE;
 
-    void set_mouse_gestures(CursorAction mode);
+    void set_mouse_gestures(MouseGesture mode);
 
 private:
 
@@ -99,8 +99,8 @@ private:
 
     AIS_MouseGestureMap m_mouse_default_gestures;
     Graphic3d_Vec2i m_click_pos;
-    CursorAction m_cur_mode;
-    DrawStyle m_draw_style;
+    MouseGesture m_cur_mode;
+    DisplayMode m_draw_style;
     Standard_Real m_cur_zoom{0};
     const Standard_Real m_device_px;
 

@@ -36,7 +36,7 @@ Aspect_VKeyFlags map_qt_mouse_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers)
 OccView::OccView(QWidget *parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
     m_mouse_default_gestures = myMouseGestureMap;
-    m_cur_mode = CursorAction::Nothing;
+    m_cur_mode = MouseGesture::Nothing;
 
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
@@ -49,7 +49,7 @@ OccView::OccView(QWidget *parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context = new AIS_InteractiveContext(m_v3d_viewer);
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
-    m_draw_style =  DrawStyle::Shaded;
+    m_draw_style =  DisplayMode::Shaded;
 
     if (m_v3d_view.IsNull()) {
         m_v3d_view = m_context->CurrentViewer()->CreateView();
@@ -130,11 +130,11 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), flags, false)) {
         this->update();
     }
-    if (m_cur_mode == CursorAction::GlobalPanning) {
+    if (m_cur_mode == MouseGesture::GlobalPanning) {
         m_v3d_view->Place(point.x(), point.y(), m_cur_zoom);
     }
-    if (m_cur_mode != CursorAction::Nothing) {
-        set_mouse_gestures(CursorAction::Nothing);
+    if (m_cur_mode != MouseGesture::Nothing) {
+        set_mouse_gestures(MouseGesture::Nothing);
     }
     if (event->button() == Qt::RightButton && (flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
         if (m_context->NbSelected()) { // if any object is selected
@@ -208,7 +208,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_v3d_view->SetComputedMode(false);
                 m_context->SetDisplayMode(AIS_Shaded, Standard_False);
                 m_context->SetDisplayMode(AIS_WireFrame, Standard_True);
-                m_draw_style =  DrawStyle::WireFrame;
+                m_draw_style =  DisplayMode::WireFrame;
                 m_v3d_view->Redraw();
                 QApplication::restoreOverrideCursor();
             });
@@ -221,16 +221,16 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_context->SetDisplayMode(AIS_Shaded, Standard_True);
                 m_v3d_view->SetComputedMode(false);
                 m_v3d_view->Redraw();
-                m_draw_style =  DrawStyle::Shaded;
+                m_draw_style =  DisplayMode::Shaded;
                 QApplication::restoreOverrideCursor();
             });
             shaded->setCheckable(true);
 
             switch(m_draw_style) {
-                case  DrawStyle::WireFrame:
+                case  DisplayMode::WireFrame:
                     wireframe->setChecked(true);
                     break;
-                case  DrawStyle::Shaded:
+                case  DisplayMode::Shaded:
                     shaded->setChecked(true);
                     break;
             }
@@ -275,30 +275,31 @@ void OccView::wheelEvent(QWheelEvent* event) {
     }
 }
 
-void OccView::set_mouse_gestures(CursorAction mode) {
+void OccView::set_mouse_gestures(MouseGesture mode) {
     m_cur_mode = mode;
     myMouseGestureMap.Clear();
     AIS_MouseGesture rot = AIS_MouseGesture_RotateOrbit;
 
     switch(m_cur_mode) {
-        case CursorAction::Nothing:
+        case MouseGesture::Nothing:
             myMouseGestureMap = m_mouse_default_gestures;
             break;
-        case CursorAction::DynamicZooming:
+        case MouseGesture::Zoom:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Zoom);
             break;
-        case CursorAction::GlobalPanning:
+        case MouseGesture::GlobalPanning:
             break;
-        case CursorAction::WindowZooming:
+        case MouseGesture::ZoomWindow:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_ZoomWindow);
             break;
-        case CursorAction::DynamicPanning:
+        case MouseGesture::Pan:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Pan);
             break;
-        case CursorAction::DynamicRotation:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, rot);
+        case MouseGesture::RotateOrbit:
+//            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, rot);
+            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_RotateOrbit);
             break;
-        case CursorAction::Selecting:
+        case MouseGesture::Selecting:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_SelectRectangle);
             break;
     }

@@ -64,13 +64,12 @@ jobs:
           $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/opencascade_x64-windows"
 
           echo "::set-output name=prefix::${prefix_}"
-          ls "C:/Program Files (x86)/Microsoft Visual Studio/2019/"
         shell: powershell
       - name: Install OpenSSL
-        shell: powershell
         run: |
           choco install openssl
           choco upgrade openssl.light        
+        shell: powershell
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
@@ -103,6 +102,7 @@ jobs:
             cmake --install build_gtest
           }
           echo "::set-output name=prefix::${prefix_}"
+        shell: powershell
       - name: Install yaml-cpp
         id: install-yaml-cpp
         run: |
@@ -121,7 +121,6 @@ jobs:
         shell: powershell
       - name: Install libssh2
         id: install-libssh2
-        shell: powershell 
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/libssh2"
@@ -135,6 +134,7 @@ jobs:
             cmake --install build_libssh2
           }
           echo "::set-output name=prefix::${prefix_}"
+        shell: powershell 
       - name: Install armadillo
         id: install-armadillo
         run: |
@@ -155,7 +155,7 @@ jobs:
           }
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
-      - name: Install atomsciflow
+      - name: Install Atomsciflow
         id: install-atomsciflow
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
@@ -198,9 +198,9 @@ jobs:
           Copy-Item NOTICE ${env:archive_name}\NOTICE
           New-Item -ItemType Directory ${env:archive_name}\third_party\license
           Copy-Item third_party\license\* ${env:archive_name}\third_party\license\ -Recurse
-          Copy-Item 'C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll' ${env:archive_name}\
-          Copy-Item 'C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll' ${env:archive_name}\
-          Copy-Item 'C:/Softwares/yaml-cpp/bin/yaml-cpp.dll' ${env:archive_name}\
+          Copy-Item "C:/Program Files/OpenSSL-Win64/libcrypto-1_1-x64.dll" ${env:archive_name}\
+          Copy-Item "C:/Program Files/OpenSSL-Win64/libssl-1_1-x64.dll" ${env:archive_name}\
+          Copy-Item "C:/Softwares/yaml-cpp/bin/yaml-cpp.dll" ${env:archive_name}\
           Copy-Item "${env:VCPKG_INSTALLATION_ROOT}/packages/opencascade_x64-windows/bin/TKV3d.dll" ${env:archive_name}\
           Copy-Item "${env:VCPKG_INSTALLATION_ROOT}/packages/opencascade_x64-windows/bin/TKTopAlgo.dll" ${env:archive_name}\
           Copy-Item "${env:VCPKG_INSTALLATION_ROOT}/packages/opencascade_x64-windows/bin/TKService.dll" ${env:archive_name}\
