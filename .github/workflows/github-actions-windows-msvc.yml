@@ -1,5 +1,5 @@
 # =======================================================================================
-# Atomscistudio on Windows is built and tested using Visuall Studio Community Version.
+# Atomscistudio on Windows is built and tested using Visual Studio Community Version.
 # Many open source softwares provide binaries built with MSVC, as the eula of 
 # MSVC Community Version is open source friendly. Namely MSVC Community Version can be 
 # used in the development of OSI approved open source softwares.
