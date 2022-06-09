@@ -87,6 +87,7 @@ protected:
         const Handle(V3d_View)& view
     ) Standard_OVERRIDE;
 
+protected:
     void bind_mouse_gestures(MouseGesture mode);
 
 private:
@@ -97,7 +98,7 @@ private:
     Handle(V3d_View) m_v3d_view;
     Handle(AIS_InteractiveContext) m_context;
 
-    AIS_MouseGestureMap m_mouse_default_gestures;
+//    AIS_MouseGestureMap m_mouse_default_gestures;
     Graphic3d_Vec2i m_click_pos;
     MouseGesture m_cur_mode;
     DisplayMode m_draw_style;

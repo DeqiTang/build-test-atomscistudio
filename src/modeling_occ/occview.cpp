@@ -20,22 +20,21 @@ Aspect_VKeyMouse map_qt_mouse_buttons_2_vkeys(Qt::MouseButtons buttons) {
 }
 
 Aspect_VKeyFlags map_qt_mouse_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers) {
-    Aspect_VKeyFlags flags = Aspect_VKeyFlags_NONE;
+    Aspect_VKeyFlags vkeys = Aspect_VKeyFlags_NONE;
     if ((modifiers & Qt::ShiftModifier) != 0) {
-        flags |= Aspect_VKeyFlags_SHIFT;
+        vkeys |= Aspect_VKeyFlags_SHIFT;
     }
     if ((modifiers & Qt::ControlModifier) != 0) {
-        flags |= Aspect_VKeyFlags_CTRL;
+        vkeys |= Aspect_VKeyFlags_CTRL;
     }
     if ((modifiers & Qt::AltModifier) != 0) {
-        flags |= Aspect_VKeyFlags_ALT;
+        vkeys |= Aspect_VKeyFlags_ALT;
     }
-    return flags;
+    return vkeys;
 }
 
 OccView::OccView(QWidget *parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
-    m_mouse_default_gestures = myMouseGestureMap;
     m_cur_mode = MouseGesture::Nothing;
 
     setFocusPolicy(Qt::StrongFocus);
@@ -278,12 +277,11 @@ void OccView::wheelEvent(QWheelEvent* event) {
 void OccView::bind_mouse_gestures(MouseGesture mode) {
     m_cur_mode = mode;
     myMouseGestureMap.Clear();
-    AIS_MouseGesture rot = AIS_MouseGesture_RotateOrbit;
 
     switch(m_cur_mode) {
-        case MouseGesture::Nothing:
-            myMouseGestureMap = m_mouse_default_gestures;
-            break;
+//        case MouseGesture::Nothing:
+//            myMouseGestureMap = m_mouse_default_gestures;
+//            break;
         case MouseGesture::Zoom:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Zoom);
             break;
