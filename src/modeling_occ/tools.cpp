@@ -1,10 +1,30 @@
+/************************************************************************
+ *
+ * Atom Science Studio
+ * Copyright (C) 2022  Deqi Tang
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ ***********************************************************************/
+
 #include "modeling_occ/tools.h"
 
 #include <QSplitter>
 #include <QGroupBox>
 #include <QButtonGroup>
 
-Tools::Tools(QWidget* parent, ModelingControl* modeling_widget)
+ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     : QWidget(parent) {
 
     this->set_modeling_widget(modeling_widget);
@@ -55,7 +75,7 @@ Tools::Tools(QWidget* parent, ModelingControl* modeling_widget)
     checkbox_show_atoms->setSizePolicy(size_policy_preferred);
     checkbox_show_atoms->setChecked(true);
     checkbox_show_atoms->setText(QCoreApplication::translate("Atoms3DTools", "Show Atoms", nullptr));
-    QObject::connect(checkbox_show_atoms, &QCheckBox::stateChanged, this, &Tools::on_checkbox_state_changed);
+    QObject::connect(checkbox_show_atoms, &QCheckBox::stateChanged, this, &ModelingTools::on_checkbox_state_changed);
 
     auto horizontal_slider = new QSlider(tab_1);
     grid_layout->addWidget(horizontal_slider, 1, 0, 1, 1);
@@ -111,6 +131,6 @@ Tools::Tools(QWidget* parent, ModelingControl* modeling_widget)
     ));
 }
 
-void Tools::on_checkbox_state_changed(int arg1) {
+void ModelingTools::on_checkbox_state_changed(int arg1) {
     std::cout << "Doing nothing\n";
 }

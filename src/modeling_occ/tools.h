@@ -34,10 +34,10 @@
 
 #include "modeling_occ/modeling.h"
 
-class Tools : public QWidget {
+class ModelingTools : public QWidget {
     Q_OBJECT
 public:
-    explicit Tools(QWidget* parent = nullptr, ModelingControl* modeling_widget = nullptr);
+    explicit ModelingTools(QWidget* parent = nullptr, ModelingControl* modeling_widget = nullptr);
 
     void set_modeling_widget(ModelingControl* modeling_widget) {
         this->m_modeling_widget = modeling_widget;

@@ -231,7 +231,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     auto tab1_vlayout = new QVBoxLayout(tab1);
     auto modeling_widget = new ModelingControl(this->m_central_widget);
-    auto modeling_tools = new Tools(this->m_central_widget, modeling_widget);
+    auto modeling_tools = new ModelingTools(this->m_central_widget, modeling_widget);
     tab1_hsplitter->addWidget(modeling_tools);
     tab1_hsplitter->addWidget(modeling_widget);
     QSize screen_size = this->screen()->size();
