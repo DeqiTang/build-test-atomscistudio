@@ -58,8 +58,8 @@ void OccWindow::Unmap() const {
 }
 
 Aspect_TypeOfResize OccWindow::DoResize() {
-    int mask{0};
-    auto mode = Aspect_TOR_UNKNOWN;
+    int mask = 0;
+    auto type_of_resize = Aspect_TOR_UNKNOWN;
 
     if (!m_widget->isMinimized()) {
         if (Abs(m_widget->rect().left() - m_x_left) > 2.) {
@@ -75,35 +75,33 @@ Aspect_TypeOfResize OccWindow::DoResize() {
             mask |= 8;
         }
 
-        std::cout << "OccWindow::DoResize -> mask -> " << mask << "\n";
-
         switch (mask) {
             case 0:
-                mode = Aspect_TOR_NO_BORDER;
+                type_of_resize = Aspect_TOR_NO_BORDER;
                 break;
             case 1:
-                mode = Aspect_TOR_LEFT_BORDER;
+                type_of_resize = Aspect_TOR_LEFT_BORDER;
                 break;
             case 2:
-                mode = Aspect_TOR_RIGHT_BORDER;
+                type_of_resize = Aspect_TOR_RIGHT_BORDER;
                 break;
             case 4:
-                mode = Aspect_TOR_TOP_BORDER;
+                type_of_resize = Aspect_TOR_TOP_BORDER;
                 break;
             case 5:
-                mode = Aspect_TOR_LEFT_AND_TOP_BORDER;
+                type_of_resize = Aspect_TOR_LEFT_AND_TOP_BORDER;
                 break;
             case 6:
-                mode = Aspect_TOR_TOP_AND_RIGHT_BORDER;
+                type_of_resize = Aspect_TOR_TOP_AND_RIGHT_BORDER;
                 break;
             case 8:
-                mode = Aspect_TOR_BOTTOM_BORDER;
+                type_of_resize = Aspect_TOR_BOTTOM_BORDER;
                 break;
             case 9:
-                mode = Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
+                type_of_resize = Aspect_TOR_BOTTOM_AND_LEFT_BORDER;
                 break;
             case 10:
-                mode = Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
+                type_of_resize = Aspect_TOR_RIGHT_AND_BOTTOM_BORDER;
                 break;
             default:
                 break;
@@ -113,7 +111,7 @@ Aspect_TypeOfResize OccWindow::DoResize() {
         m_y_top = m_widget->rect().top();
         m_y_bottom = m_widget->rect().bottom();
     }
-    return mode;
+    return type_of_resize;
 }
 
 Standard_Real OccWindow::Ratio() const {
@@ -121,7 +119,7 @@ Standard_Real OccWindow::Ratio() const {
     return Abs(Standard_Real(rect.right() - rect.left()) / Standard_Real(rect.top() - rect.bottom()));
 }
 
-void OccWindow::Size(Standard_Integer &width, Standard_Integer &height) const {
+void OccWindow::Size(Standard_Integer& width, Standard_Integer& height) const {
     width = m_widget->rect().right();
     height = m_widget->rect().bottom();
 }
