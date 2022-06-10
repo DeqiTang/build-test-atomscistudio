@@ -7,8 +7,6 @@ OccWindow::OccWindow(QWidget* parent): m_widget{parent} {
     m_y_top = rect.top();
     m_x_right = rect.right();
     m_y_bottom = rect.bottom();
-
-    this->DoResize();
 }
 
 Aspect_Drawable OccWindow::NativeParentHandle() const {
@@ -123,8 +121,6 @@ Standard_Real OccWindow::Ratio() const {
 }
 
 void OccWindow::Size(Standard_Integer& width, Standard_Integer& height) const {
-//    width = Abs(m_widget->rect().right());
-//    height = Abs(m_widget->rect().bottom());
     auto rect = m_widget->rect();
     width = Abs(rect.right() - rect.left());
     height = Abs(rect.bottom() - rect.top());

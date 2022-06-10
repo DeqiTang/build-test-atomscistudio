@@ -1,5 +1,5 @@
-#ifndef MODELING_OCCTWIDGET_H
-#define MODELING_OCCTWIDGET_H
+#ifndef MODELING_OCC__OCCTWIDGET_H
+#define MODELING_OCC__OCCTWIDGET_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -30,4 +30,4 @@ private:
     std::shared_ptr<AtomicColor> m_atomic_color;
     OccView* m_occview;
 };
-#endif // MODELING_OCCTWIDGET_H
+#endif // MODELING_OCC__OCCTWIDGET_H
