@@ -6,31 +6,31 @@
 #include <QObject>
 
 Aspect_VKeyMouse map_qt_mouse_buttons_2_vkeys(Qt::MouseButtons buttons) {
-    Aspect_VKeyMouse button = Aspect_VKeyMouse_NONE;
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if ((buttons & Qt::LeftButton) != 0) {
-        button |= Aspect_VKeyMouse_LeftButton;
+        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
     }
     if ((buttons & Qt::MiddleButton) != 0) {
-        button |= Aspect_VKeyMouse_MiddleButton;
+        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
     }
     if ((buttons & Qt::RightButton) != 0) {
-        button |= Aspect_VKeyMouse_RightButton;
+        vkey_mouse |= Aspect_VKeyMouse_RightButton;
     }
-    return button;
+    return vkey_mouse;
 }
 
-Aspect_VKeyFlags map_qt_mouse_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers) {
-    Aspect_VKeyFlags vkeys = Aspect_VKeyFlags_NONE;
+Aspect_VKeyFlags map_qt_keyboard_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers) {
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     if ((modifiers & Qt::ShiftModifier) != 0) {
-        vkeys |= Aspect_VKeyFlags_SHIFT;
+        vkey_flags |= Aspect_VKeyFlags_SHIFT;
     }
     if ((modifiers & Qt::ControlModifier) != 0) {
-        vkeys |= Aspect_VKeyFlags_CTRL;
+        vkey_flags |= Aspect_VKeyFlags_CTRL;
     }
     if ((modifiers & Qt::AltModifier) != 0) {
-        vkeys |= Aspect_VKeyFlags_ALT;
+        vkey_flags |= Aspect_VKeyFlags_ALT;
     }
-    return vkeys;
+    return vkey_flags;
 }
 
 OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
@@ -112,8 +112,8 @@ void OccView::mousePressEvent(QMouseEvent* event) {
         m_device_px * event->pos().x(),
         m_device_px * event->pos().y()
     );
-    const Aspect_VKeyFlags flags = map_qt_mouse_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), flags, false)) {
+    const Aspect_VKeyFlags vkey_flags = map_qt_keyboard_modifiers_2_vkeys(event->modifiers());
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
     m_click_pos = point;
@@ -125,7 +125,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         m_device_px * event->pos().x(),
         m_device_px * event->pos().y()
     );
-    const Aspect_VKeyFlags vkey_flags = map_qt_mouse_modifiers_2_vkeys(event->modifiers());
+    const Aspect_VKeyFlags vkey_flags = map_qt_keyboard_modifiers_2_vkeys(event->modifiers());
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
@@ -250,7 +250,7 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
             && UpdateMousePosition(
                 point,
                 map_qt_mouse_buttons_2_vkeys(event->buttons()),
-                map_qt_mouse_modifiers_2_vkeys(event->modifiers()),
+                map_qt_keyboard_modifiers_2_vkeys(event->modifiers()),
                 false
             )
         ) {
