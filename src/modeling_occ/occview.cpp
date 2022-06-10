@@ -277,7 +277,6 @@ void OccView::wheelEvent(QWheelEvent* event) {
 void OccView::bind_mouse_gestures(MouseGesture mode) {
     m_cur_mode = mode;
     myMouseGestureMap.Clear();
-
     switch(m_cur_mode) {
 //        case MouseGesture::Nothing:
 //            myMouseGestureMap = m_mouse_default_gestures;
