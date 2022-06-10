@@ -33,7 +33,7 @@ Aspect_VKeyFlags map_qt_mouse_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers)
     return vkeys;
 }
 
-OccView::OccView(QWidget *parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
+OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
     m_cur_mode = MouseGesture::Nothing;
 
@@ -125,8 +125,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         m_device_px * event->pos().x(),
         m_device_px * event->pos().y()
     );
-    const Aspect_VKeyFlags flags = map_qt_mouse_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), flags, false)) {
+    const Aspect_VKeyFlags vkey_flags = map_qt_mouse_modifiers_2_vkeys(event->modifiers());
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
     if (m_cur_mode == MouseGesture::GlobalPanning) {
@@ -135,7 +135,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     if (m_cur_mode != MouseGesture::Nothing) {
         bind_mouse_gestures(MouseGesture::Nothing);
     }
-    if (event->button() == Qt::RightButton && (flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
+    if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
         if (m_context->NbSelected()) { // if any object is selected
             QMenu* tool_menu = new QMenu{nullptr};
             tool_menu->exec(QCursor::pos());
