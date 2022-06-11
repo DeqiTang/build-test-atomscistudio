@@ -93,11 +93,11 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_v3d_view->Redraw();
     // this->update();
 
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_NoSystemBackground);
     setBackgroundRole(QPalette::NoRole);
     setFocusPolicy(Qt::StrongFocus);
-    setAttribute(Qt::WA_PaintOnScreen);
     setAttribute (Qt::WA_OpaquePaintEvent);
-    setAttribute(Qt::WA_NoSystemBackground);
     setMouseTracking(true);
 }
 
@@ -112,6 +112,7 @@ QPaintEngine* OccView::paintEngine() const {
 void OccView::paintEvent(QPaintEvent* event ) {
     m_v3d_view->InvalidateImmediate();
     FlushViewEvents(m_context, m_v3d_view, true);
+    // m_v3d_view.Redraw();
 }
 
 void OccView::resizeEvent(QResizeEvent* event) {
