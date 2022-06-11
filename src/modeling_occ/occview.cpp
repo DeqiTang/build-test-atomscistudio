@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QObject>
 
-Aspect_VKeyMouse map_qt_mouse_buttons_2_vkeys(Qt::MouseButtons buttons) {
+Aspect_VKeyMouse qt_mouse_buttons_2_vkeys(const Qt::MouseButtons& buttons) {
     Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if ((buttons & Qt::LeftButton) != 0) {
         vkey_mouse |= Aspect_VKeyMouse_LeftButton;
@@ -19,7 +19,7 @@ Aspect_VKeyMouse map_qt_mouse_buttons_2_vkeys(Qt::MouseButtons buttons) {
     return vkey_mouse;
 }
 
-Aspect_VKeyFlags map_qt_keyboard_modifiers_2_vkeys(Qt::KeyboardModifiers modifiers) {
+Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modifiers) {
     Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     if ((modifiers & Qt::ShiftModifier) != 0) {
         vkey_flags |= Aspect_VKeyFlags_SHIFT;
@@ -42,7 +42,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     setMouseTracking(true);
 
     m_display_connection = new Aspect_DisplayConnection();
-    m_graphic_driver = new OpenGl_GraphicDriver(m_display_connection);
+    m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
     m_context = new AIS_InteractiveContext(m_v3d_viewer);
@@ -112,8 +112,8 @@ void OccView::mousePressEvent(QMouseEvent* event) {
         m_device_px * event->pos().x(),
         m_device_px * event->pos().y()
     );
-    const Aspect_VKeyFlags vkey_flags = map_qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
     m_click_pos = point;
@@ -125,8 +125,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         m_device_px * event->pos().x(),
         m_device_px * event->pos().y()
     );
-    const Aspect_VKeyFlags vkey_flags = map_qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, map_qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
     if (m_cur_mode == MouseGesture::GlobalPanning) {
@@ -249,8 +249,8 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
             !m_v3d_view.IsNull()
             && UpdateMousePosition(
                 point,
-                map_qt_mouse_buttons_2_vkeys(event->buttons()),
-                map_qt_keyboard_modifiers_2_vkeys(event->modifiers()),
+                qt_mouse_buttons_2_vkeys(event->buttons()),
+                qt_keyboard_modifiers_2_vkeys(event->modifiers()),
                 false
             )
         ) {
