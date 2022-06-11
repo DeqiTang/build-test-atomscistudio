@@ -35,8 +35,6 @@ Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modi
 
 OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
-//    m_cur_mode = MouseGesture::Nothing;
-
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
     setMouseTracking(true);
