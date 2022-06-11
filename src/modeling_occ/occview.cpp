@@ -55,10 +55,8 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
-    if (m_v3d_view.IsNull()) {
-        // m_v3d_view = m_context->CurrentViewer()->CreateView();
-        m_v3d_view = m_v3d_viewer->CreateView();
-    }
+    // m_v3d_view = m_context->CurrentViewer()->CreateView();
+    m_v3d_view = m_v3d_viewer->CreateView();
 
 //    m_occwindow = new OccWindow{this};
 //    m_v3d_view->SetWindow(m_occwindow);
@@ -96,7 +94,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
-
+    m_v3d_view->MustBeResized();
     m_v3d_view->FitAll(0.01, false);
     m_occwindow->Map();
     m_v3d_view->Redraw();
