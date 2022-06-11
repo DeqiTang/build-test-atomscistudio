@@ -45,6 +45,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_NoSystemBackground);
     setMouseTracking(true);
 
     m_display_connection = new Aspect_DisplayConnection();
