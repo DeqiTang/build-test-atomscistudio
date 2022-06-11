@@ -43,13 +43,6 @@ Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modi
 
 OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
-    setBackgroundRole(QPalette::NoRole);
-    setFocusPolicy(Qt::StrongFocus);
-    setAttribute(Qt::WA_PaintOnScreen);
-    setAttribute (Qt::WA_OpaquePaintEvent);
-    setAttribute(Qt::WA_NoSystemBackground);
-    setMouseTracking(true);
-
     m_display_connection = new Aspect_DisplayConnection();
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
 
@@ -99,6 +92,13 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_occwindow->Map();
     m_v3d_view->Redraw();
     // this->update();
+
+    setBackgroundRole(QPalette::NoRole);
+    setFocusPolicy(Qt::StrongFocus);
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute (Qt::WA_OpaquePaintEvent);
+    setAttribute(Qt::WA_NoSystemBackground);
+    setMouseTracking(true);
 }
 
 OccView::~OccView() {
