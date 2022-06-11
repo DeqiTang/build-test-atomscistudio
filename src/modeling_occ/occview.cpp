@@ -5,6 +5,14 @@
 #include <QFileDialog>
 #include <QObject>
 
+#if defined(__linux__)
+#include <Xw_Window.hxx>
+#elif defined(__APPLE__)
+#include <Cocoa_Window.hxx>
+#elif defined(_WIN32)
+#include <WNT_Window.hxx>
+#endif
+
 Aspect_VKeyMouse qt_mouse_buttons_2_vkeys(const Qt::MouseButtons& buttons) {
     Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if ((buttons & Qt::LeftButton) != 0) {
@@ -52,12 +60,22 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
         m_v3d_view = m_context->CurrentViewer()->CreateView();
     }
 
-    m_occwindow = new OccWindow{this};
-    m_v3d_view->SetWindow(m_occwindow);
+//    m_occwindow = new OccWindow{this};
+//    m_v3d_view->SetWindow(m_occwindow);
 
-    if (!m_occwindow->IsMapped()) {
-        m_occwindow->Map();
-    }
+//    if (!m_occwindow->IsMapped()) {
+//        m_occwindow->Map();
+//    }
+
+    #if defined(__linux__)
+    m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
+    #elif defined(__APPLE__)
+    m_occwindow = new Cocoa_Window{(Window)winId()}
+    #elif defined(_WIN32)
+    m_occwindow = new WNT_Window{(Aspect_Handle)winId()}
+    #endif
+
+    m_v3d_view->SetWindow(m_occwindow);
 
     m_v3d_view->MustBeResized();
     m_v3d_viewer->SetDefaultLights();

@@ -104,7 +104,8 @@ private:
 
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(OpenGl_GraphicDriver) m_graphic_driver;
-    OccWindow* m_occwindow;
+    //OccWindow* m_occwindow;
+    Handle(Aspect_Window) m_occwindow;
 };
 
 #endif // MODELING_OCCVIEW_H
