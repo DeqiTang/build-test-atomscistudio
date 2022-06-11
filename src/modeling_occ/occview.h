@@ -1,5 +1,5 @@
-#ifndef MODELING_OCC_OCCVIEW_H
-#define MODELING_OCC_OCCVIEW_H
+#ifndef MODELING_OCCVIEW_H
+#define MODELING_OCCVIEW_H
 
 #include <QWidget>
 #include <QMenu>
@@ -34,6 +34,7 @@ public:
 
 public:
     enum MouseGesture {
+//        Nothing,
         Zoom,
         ZoomWindow,
         Pan,
@@ -52,6 +53,19 @@ signals:
     void selection_changed();
 
 public slots:
+
+//    void orbit() {
+//        bind_mouse_gestures(MouseGesture::Nothing);
+//    }
+//    void select() {
+//        bind_mouse_gestures(MouseGesture::SelectRectangle);
+//    }
+//    void zoom() {
+//        bind_mouse_gestures(MouseGesture::Zoom);
+//    }
+//    void pan() {
+//        bind_mouse_gestures(MouseGesture::Pan);
+//    }
 
     void fit_all() {
         m_v3d_view->FitAll();
@@ -86,7 +100,7 @@ private:
 
 //    AIS_MouseGestureMap m_mouse_default_gestures;
     Graphic3d_Vec2i m_click_pos;
-    MouseGesture m_mouse_gesture;
+    MouseGesture m_cur_mode;
     DisplayMode m_draw_style;
     Standard_Real m_cur_zoom{0};
     const Standard_Real m_device_px;
@@ -96,4 +110,4 @@ private:
     OccWindow* m_occwindow;
 };
 
-#endif // MODELING_OCC_OCCVIEW_H
+#endif // MODELING_OCCVIEW_H
