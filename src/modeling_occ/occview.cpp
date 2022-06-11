@@ -65,13 +65,11 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 //    m_occwindow = new OccWindow{this};
 //    m_v3d_view->SetWindow(m_occwindow);
 
-
     #if defined(__linux__)
     m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
     #elif defined(__APPLE__)
     m_occwindow = new Cocoa_Window{(NSView *)winId()};
     #elif defined(_WIN32)
-    //m_occwindow = new WNT_Window{(Aspect_Handle)(WId)winId()};
     m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
     #endif
     m_v3d_view->SetWindow(m_occwindow);
@@ -101,7 +99,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_v3d_view->FitAll(0.01, false);
     m_occwindow->Map();
     m_v3d_view->Redraw();
-    this->update();
+    // this->update();
 }
 
 OccView::~OccView() {
