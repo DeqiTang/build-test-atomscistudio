@@ -126,11 +126,8 @@ void OccWindow::Size(Standard_Integer& width, Standard_Integer& height) const {
     height = Abs(rect.bottom() - rect.top());
 }
 
-void OccWindow::Position(
-    Standard_Integer &x1,
-    Standard_Integer &y1,
-    Standard_Integer &x2,
-    Standard_Integer &y2) const {
+void OccWindow::Position(Standard_Integer &x1, Standard_Integer &y1,
+    Standard_Integer &x2, Standard_Integer &y2) const {
 
     auto rect = m_widget->rect();
     x1 = rect.left();

@@ -35,24 +35,27 @@ Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modi
 
 OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
-    m_cur_mode = MouseGesture::Nothing;
-
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
     setMouseTracking(true);
 
+    m_mouse_gesture = MouseGesture::Nothing;
+
     m_display_connection = new Aspect_DisplayConnection();
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
+
+    if (m_v3d_view.IsNull()) {
+        m_v3d_view = m_context->CurrentViewer()->CreateView();
+//        m_v3d_view = m_v3d_viewer->CreateView();
+    }
 
     m_context = new AIS_InteractiveContext(m_v3d_viewer);
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_draw_style =  DisplayMode::Shaded;
 
-    if (m_v3d_view.IsNull()) {
-        m_v3d_view = m_context->CurrentViewer()->CreateView();
-    }
+
 
     m_occwindow = new OccWindow{this};
     m_v3d_view->SetWindow(m_occwindow);
@@ -62,21 +65,27 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     }
 
     m_v3d_view->MustBeResized();
-    m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
+    m_v3d_viewer->SetDefaultLights();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
         0.5, 0.5, 0.5,
         Quantity_TOC_sRGB
     ));
+    m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
+    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
+    m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
+
     m_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
     m_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
-
-    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
+    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     if (m_is_raytracing) {
         m_v3d_view->ChangeRenderingParams().Method = Graphic3d_RM_RAYTRACING;
     }
 
+    m_v3d_view->FitAll(0.01, false);
+    m_occwindow->Map();
+    m_v3d_view->Redraw();
     this->update();
 }
 
@@ -129,10 +138,10 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
-    if (m_cur_mode == MouseGesture::GlobalPanning) {
+    if (m_mouse_gesture == MouseGesture::GlobalPanning) {
         m_v3d_view->Place(point.x(), point.y(), m_cur_zoom);
     }
-    if (m_cur_mode != MouseGesture::Nothing) {
+    if (m_mouse_gesture != MouseGesture::Nothing) {
         bind_mouse_gestures(MouseGesture::Nothing);
     }
     if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
@@ -267,7 +276,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
     if (num_pixels != 0) {
         delta = num_pixels;
     } else if (num_degrees != 0) {
-        delta = num_degrees / 15;
+        delta = num_degrees / 15.;
     }
     if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
         this->update();
@@ -275,12 +284,9 @@ void OccView::wheelEvent(QWheelEvent* event) {
 }
 
 void OccView::bind_mouse_gestures(MouseGesture mode) {
-    m_cur_mode = mode;
+    m_mouse_gesture = mode;
     myMouseGestureMap.Clear();
-    switch(m_cur_mode) {
-//        case MouseGesture::Nothing:
-//            myMouseGestureMap = m_mouse_default_gestures;
-//            break;
+    switch(m_mouse_gesture) {
         case MouseGesture::Zoom:
             myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Zoom);
             break;
