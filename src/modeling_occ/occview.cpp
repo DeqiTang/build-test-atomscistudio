@@ -46,6 +46,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     setBackgroundRole(QPalette::NoRole);
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute (Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
     setMouseTracking(true);
 
@@ -70,7 +71,8 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     #elif defined(__APPLE__)
     m_occwindow = new Cocoa_Window{(NSView *)winId()};
     #elif defined(_WIN32)
-    m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
+    device = new Graphic3d_WNTGraphicDevice();
+    m_occwindow = new WNT_Window{device, (Aspect_Handle)winId()};
     #endif
     m_v3d_view->SetWindow(m_occwindow);
 
@@ -94,7 +96,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
-
 
     m_v3d_view->FitAll(0.01, false);
     m_occwindow->Map();
