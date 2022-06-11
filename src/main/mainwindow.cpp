@@ -32,7 +32,6 @@
 //#include "modeling/qt3dwindow_custom.h"
 //#include "modeling/tools.h"
 #include "modeling_occ/modeling.h"
-#include "modeling_occ/occwindow.h"
 #include "modeling_occ/modeling_tools.h"
 
 #include "calc/calccontrol.h"

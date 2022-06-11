@@ -51,9 +51,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     // m_v3d_view = m_context->CurrentViewer()->CreateView();
     m_v3d_view = m_v3d_viewer->CreateView();
 
-//    m_occwindow = new OccWindow{this};
-//    m_v3d_view->SetWindow(m_occwindow);
-
     #if defined(__linux__)
     m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
     #elif defined(__APPLE__)
@@ -70,7 +67,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context = new AIS_InteractiveContext(m_v3d_viewer);
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
-    m_draw_style =  DisplayMode::Shaded;
+    m_draw_style =  AIS_Shaded;
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
@@ -150,12 +147,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
-    if (m_cur_mode == MouseGesture::GlobalPanning) {
-        m_v3d_view->Place(point.x(), point.y(), m_cur_zoom);
-    }
-//    if (m_cur_mode != MouseGesture::Nothing) {
-//        bind_mouse_gestures(MouseGesture::Nothing);
-//    }
+
     if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
         if (m_context->NbSelected()) { // if any object is selected
             QMenu* tool_menu = new QMenu{nullptr};
@@ -228,7 +220,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_v3d_view->SetComputedMode(false);
                 m_context->SetDisplayMode(AIS_Shaded, Standard_False);
                 m_context->SetDisplayMode(AIS_WireFrame, Standard_True);
-                m_draw_style =  DisplayMode::WireFrame;
+                m_draw_style = AIS_WireFrame;
                 m_v3d_view->Redraw();
                 QApplication::restoreOverrideCursor();
             });
@@ -241,16 +233,16 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 m_context->SetDisplayMode(AIS_Shaded, Standard_True);
                 m_v3d_view->SetComputedMode(false);
                 m_v3d_view->Redraw();
-                m_draw_style =  DisplayMode::Shaded;
+                m_draw_style = AIS_DisplayMode::AIS_Shaded;
                 QApplication::restoreOverrideCursor();
             });
             shaded->setCheckable(true);
 
             switch(m_draw_style) {
-                case  DisplayMode::WireFrame:
+                case  AIS_DisplayMode::AIS_WireFrame:
                     wireframe->setChecked(true);
                     break;
-                case  DisplayMode::Shaded:
+                case  AIS_DisplayMode::AIS_Shaded:
                     shaded->setChecked(true);
                     break;
             }

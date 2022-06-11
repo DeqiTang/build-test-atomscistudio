@@ -13,8 +13,6 @@
 #include <Aspect_DisplayConnection.hxx>
 #include <OpenGl_GraphicDriver.hxx>
 
-#include "occwindow.h"
-
 class OccView : public QWidget, protected AIS_ViewController {
     Q_OBJECT
 public:
@@ -22,8 +20,8 @@ public:
     OccView(QWidget* parent = nullptr);
     ~OccView();
 
-    Standard_EXPORT static void onButtonUserAction(int exercise_step, Handle(AIS_InteractiveContext)&);
-    Standard_EXPORT static void doSelection(int id, Handle(AIS_InteractiveContext)&);
+    Standard_EXPORT static void onButtonUserAction(int exercise_step, Handle(AIS_InteractiveContext)& context);
+    Standard_EXPORT static void doSelection(int id, Handle(AIS_InteractiveContext)& context);
 
     const Handle(V3d_View)& get_view() const {
         return m_v3d_view;
@@ -32,40 +30,11 @@ public:
         return m_context;
     }
 
-public:
-    enum MouseGesture {
-//        Nothing,
-        Zoom,
-        ZoomWindow,
-        Pan,
-        GlobalPanning,
-        RotateOrbit,
-        SelectRectangle
-    };
-
-    enum DisplayMode {
-        WireFrame,
-        Shaded,
-    };
-
 signals:
 
     void selection_changed();
 
 public slots:
-
-//    void orbit() {
-//        bind_mouse_gestures(MouseGesture::Nothing);
-//    }
-//    void select() {
-//        bind_mouse_gestures(MouseGesture::SelectRectangle);
-//    }
-//    void zoom() {
-//        bind_mouse_gestures(MouseGesture::Zoom);
-//    }
-//    void pan() {
-//        bind_mouse_gestures(MouseGesture::Pan);
-//    }
 
     void fit_all() {
         m_v3d_view->FitAll();
@@ -89,23 +58,18 @@ protected:
 
 private:
 
-//    bool m_is_raytracing{false};
-
     Handle(V3d_Viewer) m_v3d_viewer;
     Handle(V3d_View) m_v3d_view;
     Handle(AIS_InteractiveContext) m_context;
 
-//    AIS_MouseGestureMap m_mouse_default_gestures;
     Graphic3d_Vec2i m_click_pos;
-    MouseGesture m_cur_mode;
-    DisplayMode m_draw_style;
+    AIS_DisplayMode m_draw_style;
     Standard_Real m_cur_zoom{0};
     const Standard_Real m_device_px;
 
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(Graphic3d_GraphicDriver) m_graphic_driver;
     // Handle(OpenGl_GraphicDriver) m_graphic_driver;
-    //OccWindow* m_occwindow;
     Handle(Aspect_Window) m_occwindow;
 };
 
