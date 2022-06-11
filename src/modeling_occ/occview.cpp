@@ -52,6 +52,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_display_connection = new Aspect_DisplayConnection();
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
+    
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
     if (m_v3d_view.IsNull()) {
