@@ -52,7 +52,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_display_connection = new Aspect_DisplayConnection();
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
-    
+
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
     if (m_v3d_view.IsNull()) {
@@ -68,8 +68,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     #elif defined(__APPLE__)
     m_occwindow = new Cocoa_Window{(NSView *)winId()};
     #elif defined(_WIN32)
-    device = new Graphic3d_WNTGraphicDevice();
-    // m_occwindow = new WNT_Window{device, (Aspect_Handle)winId()};
     m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
     #endif
     m_v3d_view->SetWindow(m_occwindow);
