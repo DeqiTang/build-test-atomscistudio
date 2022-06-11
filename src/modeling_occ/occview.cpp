@@ -54,13 +54,9 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
-    m_context = new AIS_InteractiveContext(m_v3d_viewer);
-    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
-
-    m_draw_style =  DisplayMode::Shaded;
-
     if (m_v3d_view.IsNull()) {
-        m_v3d_view = m_context->CurrentViewer()->CreateView();
+        // m_v3d_view = m_context->CurrentViewer()->CreateView();
+        m_v3d_view = m_v3d_viewer->CreateView();
     }
 
 //    m_occwindow = new OccWindow{this};
@@ -72,7 +68,8 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_occwindow = new Cocoa_Window{(NSView *)winId()};
     #elif defined(_WIN32)
     device = new Graphic3d_WNTGraphicDevice();
-    m_occwindow = new WNT_Window{device, (Aspect_Handle)winId()};
+    // m_occwindow = new WNT_Window{device, (Aspect_Handle)winId()};
+    m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
     #endif
     m_v3d_view->SetWindow(m_occwindow);
 
@@ -80,6 +77,10 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
         m_occwindow->Map();
     }
 
+    m_context = new AIS_InteractiveContext(m_v3d_viewer);
+    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
+
+    m_draw_style =  DisplayMode::Shaded;
     m_v3d_view->MustBeResized();
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
