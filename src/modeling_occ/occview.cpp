@@ -88,10 +88,10 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->MustBeResized();
-    m_v3d_view->FitAll(0.01, false);
-    m_occwindow->Map();
-    m_v3d_view->Redraw();
-    // this->update();
+    // m_v3d_view->FitAll(0.01, false);
+    // m_occwindow->Map();
+    // m_v3d_view->Redraw();
+    this->update();
 
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
