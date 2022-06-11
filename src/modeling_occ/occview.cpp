@@ -71,7 +71,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_draw_style =  DisplayMode::Shaded;
-    m_v3d_view->MustBeResized();
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
