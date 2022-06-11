@@ -92,7 +92,7 @@ protected:
 
 private:
 
-    bool m_is_raytracing{false};
+//    bool m_is_raytracing{false};
 
     Handle(V3d_Viewer) m_v3d_viewer;
     Handle(V3d_View) m_v3d_view;
