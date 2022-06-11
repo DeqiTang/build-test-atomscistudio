@@ -43,6 +43,7 @@ Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modi
 
 OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
 
+    setBackgroundRole(QPalette::NoRole);
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
