@@ -78,9 +78,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
 
-//    if (m_is_raytracing) {
-//        m_v3d_view->ChangeRenderingParams().Method = Graphic3d_RM_RAYTRACING;
-//    }
 
     m_v3d_view->FitAll(0.01, false);
     m_occwindow->Map();
@@ -279,32 +276,5 @@ void OccView::wheelEvent(QWheelEvent* event) {
     }
     if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
         this->update();
-    }
-}
-
-void OccView::bind_mouse_gestures(MouseGesture mode) {
-    m_cur_mode = mode;
-    myMouseGestureMap.Clear();
-    switch(m_cur_mode) {
-//        case MouseGesture::Nothing:
-//            myMouseGestureMap = m_mouse_default_gestures;
-//            break;
-        case MouseGesture::Zoom:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Zoom);
-            break;
-        case MouseGesture::GlobalPanning:
-            break;
-        case MouseGesture::ZoomWindow:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_ZoomWindow);
-            break;
-        case MouseGesture::Pan:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_Pan);
-            break;
-        case MouseGesture::RotateOrbit:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_RotateOrbit);
-            break;
-        case MouseGesture::SelectRectangle:
-            myMouseGestureMap.Bind(Aspect_VKeyMouse_LeftButton, AIS_MouseGesture_SelectRectangle);
-            break;
     }
 }

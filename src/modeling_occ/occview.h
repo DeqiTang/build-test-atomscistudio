@@ -87,9 +87,6 @@ protected:
         const Handle(V3d_View)& view
     ) Standard_OVERRIDE;
 
-protected:
-    void bind_mouse_gestures(MouseGesture mode);
-
 private:
 
 //    bool m_is_raytracing{false};
