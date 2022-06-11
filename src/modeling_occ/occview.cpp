@@ -64,9 +64,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
 //    m_occwindow = new OccWindow{this};
 //    m_v3d_view->SetWindow(m_occwindow);
-//    if (!m_occwindow->IsMapped()) {
-//        m_occwindow->Map();
-//    }
+
 
     #if defined(__linux__)
     m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
@@ -77,6 +75,10 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
     #endif
     m_v3d_view->SetWindow(m_occwindow);
+
+    if (!m_occwindow->IsMapped()) {
+        m_occwindow->Map();
+    }
 
     m_v3d_view->MustBeResized();
     m_v3d_viewer->SetDefaultLights();
