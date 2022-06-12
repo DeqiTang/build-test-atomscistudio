@@ -258,14 +258,14 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
     Graphic3d_Vec2i point;
     point.SetValues(m_device_px * event->pos().x(), m_device_px * event->pos().y());
     if (
-            !m_v3d_view.IsNull()
-            && UpdateMousePosition(
-                point,
-                qt_mouse_buttons_2_vkeys(event->buttons()),
-                qt_keyboard_modifiers_2_vkeys(event->modifiers()),
-                false
-            )
-        ) {
+        !m_v3d_view.IsNull() &&
+        UpdateMousePosition(
+            point,
+            qt_mouse_buttons_2_vkeys(event->buttons()),
+            qt_keyboard_modifiers_2_vkeys(event->modifiers()),
+            false
+        )
+    ) {
         this->update();
     }
 }

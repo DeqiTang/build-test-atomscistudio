@@ -21,7 +21,6 @@ ModelingControl::ModelingControl(QWidget* parent)
     this->setLayout(m_layout);
 
     this->show();
-//    this->setMinimumSize(QSize(1200,800));
 
     this->m_crystal->read_xyz_str(
 "3\n"
