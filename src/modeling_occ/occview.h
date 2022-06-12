@@ -20,9 +20,6 @@ public:
     OccView(QWidget* parent = nullptr);
     ~OccView();
 
-    Standard_EXPORT static void onButtonUserAction(int exercise_step, Handle(AIS_InteractiveContext)& context);
-    Standard_EXPORT static void doSelection(int id, Handle(AIS_InteractiveContext)& context);
-
     const Handle(V3d_View)& get_view() const {
         return m_v3d_view;
     }
@@ -36,10 +33,8 @@ signals:
 
 public slots:
 
-    void fit_all() {
-        m_v3d_view->FitAll();
-        m_v3d_view->ZFitAll();
-        m_v3d_view->Redraw();
+    void fit_view() {
+        FitAllAuto(m_context, m_v3d_view);
     }
 
 protected:

@@ -97,7 +97,7 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     auto checkbox_wireframe = new QCheckBox(tab_2);
     v_layout_tab_2_group_box->addWidget(checkbox_wireframe);
     button_group->addButton(checkbox_wireframe);
-    checkbox_wireframe->setObjectName(tr("WIreframe"));
+    checkbox_wireframe->setObjectName(tr("Wireframe"));
     checkbox_wireframe->setSizePolicy(size_policy_preferred);
     checkbox_wireframe->setText(QCoreApplication::translate("Atoms3DTools", "Wireframe", nullptr));
     checkbox_wireframe->setChecked(false);
