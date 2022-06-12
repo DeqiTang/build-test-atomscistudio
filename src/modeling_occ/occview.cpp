@@ -68,30 +68,29 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_draw_style =  AIS_Shaded;
-    // m_v3d_viewer->SetDefaultLights();
-    // m_v3d_viewer->SetLightOn();
+    m_v3d_viewer->SetDefaultLights();
+    m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
         0.5, 0.5, 0.5,
         Quantity_TOC_sRGB
     ));
-    // m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
-    // m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
-    // m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
+    m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
+    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
+    m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
 
-    // m_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
-    // m_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
-    // m_context->SetDisplayMode(AIS_Shaded, Standard_True);
+    m_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
+    m_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
+    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
-    // m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
-    // m_v3d_view->MustBeResized();
-    // this->update();
+    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
+    m_v3d_view->MustBeResized();
+    this->update();
 
-    // setAttribute(Qt::WA_PaintOnScreen);
-    // setAttribute(Qt::WA_NoSystemBackground);
-    // setBackgroundRole(QPalette::NoRole);
-    // setFocusPolicy(Qt::StrongFocus);
-    // setAttribute (Qt::WA_OpaquePaintEvent);
-    // setMouseTracking(true);
+     setAttribute(Qt::WA_PaintOnScreen);
+//     setAttribute(Qt::WA_NoSystemBackground);
+//     setBackgroundRole(QPalette::NoRole);
+//     setFocusPolicy(Qt::StrongFocus);
+//     setMouseTracking(true);
 }
 
 OccView::~OccView() {
