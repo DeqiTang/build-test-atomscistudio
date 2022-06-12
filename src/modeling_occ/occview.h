@@ -29,6 +29,15 @@ public:
         FitAllAuto(m_ais_context, m_v3d_view);
     }
 
+    void set_ball_and_stick_style();
+    void set_van_der_waals_style();
+
+public:
+    enum DrawStyle {
+        BallAndStick,
+        VanDerWaals,
+    };
+
 signals:
 
     void selection_changed();
@@ -52,7 +61,7 @@ protected:
 private:
 
     Graphic3d_Vec2i m_click_pos;
-    AIS_DisplayMode m_draw_style;
+    DrawStyle m_draw_style;
     Standard_Real m_cur_zoom{0};
 
     Handle(Aspect_DisplayConnection) m_display_connection;

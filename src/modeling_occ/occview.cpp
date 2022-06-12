@@ -45,8 +45,6 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
 
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
-
-    // m_v3d_view = m_ais_context->CurrentViewer()->CreateView();
     m_v3d_view = m_v3d_viewer->CreateView();
 
     #if defined(__linux__)
@@ -65,7 +63,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_ais_context = new AIS_InteractiveContext(m_v3d_viewer);
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
-    m_draw_style =  AIS_Shaded;
+    m_draw_style = DrawStyle::BallAndStick;
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
@@ -118,31 +116,31 @@ void OccView::OnSelectionChanged(
 }
 
 void OccView::mousePressEvent(QMouseEvent* event) {
-    Graphic3d_Vec2i point;
-    point.SetValues(
+    Graphic3d_Vec2i position;
+    position.SetValues(
         event->pos().x(),
         event->pos().y()
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
-    m_click_pos = point;
+    m_click_pos = position;
 }
 
 void OccView::mouseReleaseEvent(QMouseEvent* event) {
-    Graphic3d_Vec2i point;
-    point.SetValues(
+    Graphic3d_Vec2i position;
+    position.SetValues(
         event->pos().x(),
         event->pos().y()
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
         this->update();
     }
 
-    if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
-        if (m_ais_context->NbSelected()) { // if any object is selected
+    if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - position).cwiseAbs().maxComp() <= 4) {
+        if (m_ais_context->NbSelected() > 0) {
             QMenu* tool_menu = new QMenu{nullptr};
             tool_menu->exec(QCursor::pos());
             delete tool_menu;
@@ -151,116 +149,75 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             auto action = new QAction("Fit View", context_menu);
             action->setToolTip("Fit view to all objects");
             QObject::connect(action, &QAction::triggered, this, [&](){
-                m_v3d_view->FitAll();
-                m_v3d_view->ZFitAll();
-                m_v3d_view->Redraw();
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             context_menu->addAction(action);
             context_menu->addSeparator();
 
             auto view_menu = context_menu->addMenu("Views");
-            action = new QAction("Front", this);
-            action->setToolTip("Front view");
+
+            action = new QAction("X", this);
+            view_menu->addAction(action);
+            action->setToolTip("X");
             connect(action, &QAction::triggered, this, [&](){
-                m_v3d_view->SetProj(V3d_Yneg);
-                // m_v3d_view->FitAll();
+                m_v3d_view->SetProj(V3d_Xpos);
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
+
+            action = new QAction("Y", this);
             view_menu->addAction(action);
-            action = new QAction("Back", this);
-            action->setToolTip("View from back");
+            action->setToolTip("Y");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Ypos);
-                // m_v3d_view->FitAll();
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
-            view_menu->addAction(action);
 
-            action = new QAction("Left", this);
-            action->setToolTip("View from left");
-            connect(action, &QAction::triggered, this, [&]() {
-                m_v3d_view->SetProj(V3d_Xneg);
-                // m_v3d_view->FitAll();
-                FitAllAuto(m_ais_context, m_v3d_view);
-            });
+            action = new QAction("Z", this);
             view_menu->addAction(action);
-            action = new QAction("Right", this);
-            action->setToolTip("Right view");
-            connect(action, &QAction::triggered, this, [&]() {
-                m_v3d_view->SetProj(V3d_Xpos);
-                // m_v3d_view->FitAll();
-                FitAllAuto(m_ais_context, m_v3d_view);
-            });
-            view_menu->addAction(action);
-
-            action = new QAction("Top", this);
-            action->setToolTip("Top view");
+            action->setToolTip("Z");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zpos);
-                // m_v3d_view->FitAll();
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
-            view_menu->addAction(action);
-
-            action = new QAction("Bottom", this);
-            action->setToolTip("Bottom view");
-            connect(action, &QAction::triggered, this, [&]() {
-                m_v3d_view->SetProj(V3d_Zneg);
-                // m_v3d_view->FitAll();
-                FitAllAuto(m_ais_context, m_v3d_view);
-            });
-            view_menu->addAction(action);
 
             auto style_menu = context_menu->addMenu("Style");
-            auto wireframe = new QAction("Wireframe", this );
-            wireframe->setToolTip("Wireframe style");
-            connect(wireframe, &QAction::triggered, this, [&]() {
-                QApplication::setOverrideCursor(Qt::WaitCursor);
-                m_v3d_view->SetComputedMode(false);
-                m_ais_context->SetDisplayMode(AIS_Shaded, Standard_False);
-                m_ais_context->SetDisplayMode(AIS_WireFrame, Standard_True);
-                m_draw_style = AIS_WireFrame;
-                m_v3d_view->Redraw();
-                QApplication::restoreOverrideCursor();
-            });
-            wireframe->setCheckable(true);
 
-            auto shaded = new QAction("Shaded", this );
-            shaded->setToolTip("Shaded style");
-            connect(shaded, &QAction::triggered, this, [&]() {
-                QApplication::setOverrideCursor(Qt::WaitCursor);
-                m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
-                m_v3d_view->SetComputedMode(false);
-                m_v3d_view->Redraw();
-                m_draw_style = AIS_DisplayMode::AIS_Shaded;
-                QApplication::restoreOverrideCursor();
+            auto ball_and_stick = new QAction("Ball & Stick");
+            style_menu->addAction(ball_and_stick);
+            ball_and_stick->setToolTip("Ball & Stick");
+            connect(ball_and_stick, &QAction::triggered, this, [&]() {
+                this->set_ball_and_stick_style();
             });
-            shaded->setCheckable(true);
+            ball_and_stick->setCheckable(true);
+
+            auto van_der_waals = new QAction("Van der Waals", this);
+            style_menu->addAction(van_der_waals);
+            van_der_waals->setToolTip("Van der Waals");
+            connect(van_der_waals, &QAction::triggered, this, [&]() {
+                this->set_van_der_waals_style();
+            });
+            van_der_waals->setCheckable(true);
 
             switch(m_draw_style) {
-                case  AIS_DisplayMode::AIS_WireFrame:
-                    wireframe->setChecked(true);
+                case DrawStyle::BallAndStick:
+                    ball_and_stick->setChecked(true);
                     break;
-                case  AIS_DisplayMode::AIS_Shaded:
-                    shaded->setChecked(true);
+                case DrawStyle::VanDerWaals:
+                    van_der_waals->setChecked(true);
                     break;
             }
-
-            style_menu->addAction(wireframe);
-            style_menu->addAction(shaded);
-
             context_menu->exec(QCursor::pos());
+            delete context_menu;
         }
     }
 }
 
 void OccView::mouseMoveEvent(QMouseEvent* event) {
-    Graphic3d_Vec2i point;
-    point.SetValues(event->pos().x(), event->pos().y());
-    if (
-        !m_v3d_view.IsNull() &&
+    Graphic3d_Vec2i position;
+    position.SetValues(event->pos().x(), event->pos().y());
+    if (!m_v3d_view.IsNull() &&
         UpdateMousePosition(
-            point,
+            position,
             qt_mouse_buttons_2_vkeys(event->buttons()),
             qt_keyboard_modifiers_2_vkeys(event->modifiers()),
             false
@@ -273,15 +230,27 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
 void OccView::wheelEvent(QWheelEvent* event) {
     Graphic3d_Vec2i pos;
     pos.SetValues(event->position().x(), event->position().y());
-    int num_pixels = event->pixelDelta().y();
-    int num_degrees = event->angleDelta().y() / 8;
+    int delta_pixels = event->pixelDelta().y();
+    int delta_degrees = event->angleDelta().y() / 8;
     Standard_Real delta{0.0};
-    if (num_pixels != 0) {
-        delta = num_pixels;
-    } else if (num_degrees != 0) {
-        delta = num_degrees / 15;
-    }
+    delta = delta_pixels != 0 ? delta_pixels : (delta_degrees != 0 ? (delta_degrees / 15) : 0);
     if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
         this->update();
     }
+}
+
+void OccView::set_ball_and_stick_style() {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
+    m_draw_style = DrawStyle::BallAndStick;
+    m_v3d_view->SetComputedMode(false);
+    m_v3d_view->Redraw();
+    QApplication::restoreOverrideCursor();
+    return;
+}
+
+void OccView::set_van_der_waals_style() {
+    //TODO
+    m_draw_style = DrawStyle::VanDerWaals;
+    return;
 }
