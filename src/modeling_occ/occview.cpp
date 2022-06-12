@@ -1,9 +1,7 @@
 #include "occview.h"
 
 #include <QApplication>
-#include <QColorDialog>
-#include <QFileDialog>
-#include <QObject>
+
 
 #if defined(__linux__)
 #include <Xw_Window.hxx>
@@ -48,7 +46,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
 
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
 
-    // m_v3d_view = m_context->CurrentViewer()->CreateView();
+    // m_v3d_view = m_ais_context->CurrentViewer()->CreateView();
     m_v3d_view = m_v3d_viewer->CreateView();
 
     #if defined(__linux__)
@@ -64,8 +62,8 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
         m_occwindow->Map();
     }
 
-    m_context = new AIS_InteractiveContext(m_v3d_viewer);
-    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
+    m_ais_context = new AIS_InteractiveContext(m_v3d_viewer);
+    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_draw_style =  AIS_Shaded;
     m_v3d_viewer->SetDefaultLights();
@@ -78,19 +76,19 @@ OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRati
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
 
-    m_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
-    m_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
-    m_context->SetDisplayMode(AIS_Shaded, Standard_True);
+    m_ais_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
+    m_ais_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
+    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->MustBeResized();
     this->update();
 
      setAttribute(Qt::WA_PaintOnScreen);
-//     setAttribute(Qt::WA_NoSystemBackground);
-//     setBackgroundRole(QPalette::NoRole);
-//     setFocusPolicy(Qt::StrongFocus);
-//     setMouseTracking(true);
+     setAttribute(Qt::WA_NoSystemBackground);
+     setBackgroundRole(QPalette::NoRole);
+     setFocusPolicy(Qt::StrongFocus);
+     setMouseTracking(true);
 }
 
 OccView::~OccView() {
@@ -103,7 +101,7 @@ QPaintEngine* OccView::paintEngine() const {
 
 void OccView::paintEvent(QPaintEvent* event ) {
     m_v3d_view->InvalidateImmediate();
-    FlushViewEvents(m_context, m_v3d_view, true);
+    FlushViewEvents(m_ais_context, m_v3d_view, true);
 }
 
 void OccView::resizeEvent(QResizeEvent* event) {
@@ -140,12 +138,11 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
-        // this->update();
-        updateView();
+        this->update();
     }
 
     if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
-        if (m_context->NbSelected()) { // if any object is selected
+        if (m_ais_context->NbSelected()) { // if any object is selected
             QMenu* tool_menu = new QMenu{nullptr};
             tool_menu->exec(QCursor::pos());
             delete tool_menu;
@@ -167,7 +164,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&](){
                 m_v3d_view->SetProj(V3d_Yneg);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
             action = new QAction("Back", this);
@@ -175,7 +172,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Ypos);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -184,7 +181,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Xneg);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
             action = new QAction("Right", this);
@@ -192,7 +189,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Xpos);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -201,7 +198,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zpos);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -210,7 +207,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zneg);
                 // m_v3d_view->FitAll();
-                FitAllAuto(m_context, m_v3d_view);
+                FitAllAuto(m_ais_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -220,8 +217,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(wireframe, &QAction::triggered, this, [&]() {
                 QApplication::setOverrideCursor(Qt::WaitCursor);
                 m_v3d_view->SetComputedMode(false);
-                m_context->SetDisplayMode(AIS_Shaded, Standard_False);
-                m_context->SetDisplayMode(AIS_WireFrame, Standard_True);
+                m_ais_context->SetDisplayMode(AIS_Shaded, Standard_False);
+                m_ais_context->SetDisplayMode(AIS_WireFrame, Standard_True);
                 m_draw_style = AIS_WireFrame;
                 m_v3d_view->Redraw();
                 QApplication::restoreOverrideCursor();
@@ -232,7 +229,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             shaded->setToolTip("Shaded style");
             connect(shaded, &QAction::triggered, this, [&]() {
                 QApplication::setOverrideCursor(Qt::WaitCursor);
-                m_context->SetDisplayMode(AIS_Shaded, Standard_True);
+                m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
                 m_v3d_view->SetComputedMode(false);
                 m_v3d_view->Redraw();
                 m_draw_style = AIS_DisplayMode::AIS_Shaded;
@@ -285,7 +282,6 @@ void OccView::wheelEvent(QWheelEvent* event) {
         delta = num_degrees / 15;
     }
     if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
-        // this->update();
-        this->updateView();
+        this->update();
     }
 }

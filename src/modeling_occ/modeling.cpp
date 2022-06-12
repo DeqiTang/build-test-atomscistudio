@@ -48,6 +48,6 @@ void ModelingControl::draw_atoms() {
         atom_sphere->Attributes()->SetFaceBoundaryDraw(Standard_False);
 
         m_occview->get_context()->Display(atom_sphere, Standard_True);
-        m_occview->fit_view();
+        m_occview->fit_all_auto();
     }
 }
