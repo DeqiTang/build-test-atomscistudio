@@ -63,7 +63,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_ais_context = new AIS_InteractiveContext(m_v3d_viewer);
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
 
-    m_draw_style = DrawStyle::BallAndStick;
+    m_draw_style = DisplayStyle::BallAndStick;
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
@@ -185,24 +185,20 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             auto ball_and_stick = new QAction("Ball & Stick");
             style_menu->addAction(ball_and_stick);
             ball_and_stick->setToolTip("Ball & Stick");
-            connect(ball_and_stick, &QAction::triggered, this, [&]() {
-                this->set_ball_and_stick_style();
-            });
+            connect(ball_and_stick, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
             ball_and_stick->setCheckable(true);
 
             auto van_der_waals = new QAction("Van der Waals", this);
             style_menu->addAction(van_der_waals);
             van_der_waals->setToolTip("Van der Waals");
-            connect(van_der_waals, &QAction::triggered, this, [&]() {
-                this->set_van_der_waals_style();
-            });
+            connect(van_der_waals, &QAction::triggered, this, &OccView::set_van_der_waals_style);
             van_der_waals->setCheckable(true);
 
             switch(m_draw_style) {
-                case DrawStyle::BallAndStick:
+                case DisplayStyle::BallAndStick:
                     ball_and_stick->setChecked(true);
                     break;
-                case DrawStyle::VanDerWaals:
+                case DisplayStyle::VanDerWaals:
                     van_der_waals->setChecked(true);
                     break;
             }
@@ -242,7 +238,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
 void OccView::set_ball_and_stick_style() {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
-    m_draw_style = DrawStyle::BallAndStick;
+    m_draw_style = DisplayStyle::BallAndStick;
     m_v3d_view->SetComputedMode(false);
     m_v3d_view->Redraw();
     QApplication::restoreOverrideCursor();
@@ -251,6 +247,6 @@ void OccView::set_ball_and_stick_style() {
 
 void OccView::set_van_der_waals_style() {
     //TODO
-    m_draw_style = DrawStyle::VanDerWaals;
+    m_draw_style = DisplayStyle::VanDerWaals;
     return;
 }

@@ -33,13 +33,12 @@ public:
     void set_van_der_waals_style();
 
 public:
-    enum DrawStyle {
+    enum DisplayStyle {
         BallAndStick,
         VanDerWaals,
     };
 
 signals:
-
     void selection_changed();
 
 public slots:
@@ -61,7 +60,7 @@ protected:
 private:
 
     Graphic3d_Vec2i m_click_pos;
-    DrawStyle m_draw_style;
+    DisplayStyle m_draw_style;
     Standard_Real m_cur_zoom{0};
 
     Handle(Aspect_DisplayConnection) m_display_connection;
