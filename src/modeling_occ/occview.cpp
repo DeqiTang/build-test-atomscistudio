@@ -104,7 +104,6 @@ QPaintEngine* OccView::paintEngine() const {
 void OccView::paintEvent(QPaintEvent* event ) {
     m_v3d_view->InvalidateImmediate();
     FlushViewEvents(m_context, m_v3d_view, true);
-    // m_v3d_view.Redraw();
 }
 
 void OccView::resizeEvent(QResizeEvent* event) {
@@ -141,7 +140,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
-        this->update();
+        // this->update();
+        updateView();
     }
 
     if (event->button() == Qt::RightButton && (vkey_flags & Aspect_VKeyFlags_CTRL) == 0 && (m_click_pos - point).cwiseAbs().maxComp() <= 4) {
@@ -166,14 +166,16 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action->setToolTip("Front view");
             connect(action, &QAction::triggered, this, [&](){
                 m_v3d_view->SetProj(V3d_Yneg);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
             action = new QAction("Back", this);
             action->setToolTip("View from back");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Ypos);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -181,14 +183,16 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action->setToolTip("View from left");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Xneg);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
             action = new QAction("Right", this);
             action->setToolTip("Right view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Xpos);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -196,7 +200,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action->setToolTip("Top view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zpos);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -204,7 +209,8 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action->setToolTip("Bottom view");
             connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zneg);
-                m_v3d_view->FitAll();
+                // m_v3d_view->FitAll();
+                FitAllAuto(m_context, m_v3d_view);
             });
             view_menu->addAction(action);
 
@@ -279,6 +285,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
         delta = num_degrees / 15;
     }
     if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
-        this->update();
+        // this->update();
+        this->updateView();
     }
 }
