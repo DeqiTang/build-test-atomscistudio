@@ -186,12 +186,23 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             connect(van_der_waals, &QAction::triggered, this, &OccView::set_van_der_waals_style);
             van_der_waals->setCheckable(true);
 
+            auto stick = new QAction("Stick", this);
+            style_menu->addAction(stick);
+            stick->setToolTip("Stick");
+            connect(stick, &QAction::triggered, this, &OccView::set_stick_style);
+            stick->setCheckable(true);
+
             switch(m_draw_style) {
                 case DisplayStyle::BallAndStick:
                     ball_and_stick->setChecked(true);
                     break;
                 case DisplayStyle::VanDerWaals:
                     van_der_waals->setChecked(true);
+                    break;
+                case DisplayStyle::Stick:
+                    stick->setChecked(true);
+                    break;
+                default:
                     break;
             }
             context_menu->exec(QCursor::pos());
@@ -240,5 +251,11 @@ void OccView::set_ball_and_stick_style() {
 void OccView::set_van_der_waals_style() {
     //TODO
     m_draw_style = DisplayStyle::VanDerWaals;
+    return;
+}
+
+void OccView::set_stick_style() {
+    //TODO
+    m_draw_style = DisplayStyle::Stick;
     return;
 }

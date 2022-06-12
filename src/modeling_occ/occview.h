@@ -31,11 +31,13 @@ public:
 
     void set_ball_and_stick_style();
     void set_van_der_waals_style();
+    void set_stick_style();
 
 public:
     enum DisplayStyle {
         BallAndStick,
         VanDerWaals,
+        Stick,
     };
 
 signals:
