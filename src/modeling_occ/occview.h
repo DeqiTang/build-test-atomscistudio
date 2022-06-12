@@ -39,7 +39,6 @@ public:
     };
 
 signals:
-    void selection_changed();
 
 public slots:
 
@@ -52,17 +51,10 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* event) override;
     virtual void wheelEvent(QWheelEvent* event) override;
 
-    void OnSelectionChanged(
-        const Handle(AIS_InteractiveContext)& context,
-        const Handle(V3d_View)& view
-    ) Standard_OVERRIDE;
-
 private:
+    DisplayStyle m_draw_style;
 
     Graphic3d_Vec2i m_click_pos;
-    DisplayStyle m_draw_style;
-    Standard_Real m_cur_zoom{0};
-
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(Graphic3d_GraphicDriver) m_graphic_driver;
     Handle(V3d_Viewer) m_v3d_viewer;

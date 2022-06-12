@@ -2,7 +2,6 @@
 
 #include <QApplication>
 
-
 #if defined(__linux__)
 #include <Xw_Window.hxx>
 #elif defined(__APPLE__)
@@ -106,13 +105,6 @@ void OccView::resizeEvent(QResizeEvent* event) {
     if(!m_v3d_view.IsNull()) {
         m_v3d_view->MustBeResized();
     }
-}
-
-void OccView::OnSelectionChanged(
-    const Handle(AIS_InteractiveContext)& context,
-    const Handle(V3d_View)& view) {
-
-    emit selection_changed();
 }
 
 void OccView::mousePressEvent(QMouseEvent* event) {
@@ -238,10 +230,10 @@ void OccView::wheelEvent(QWheelEvent* event) {
 void OccView::set_ball_and_stick_style() {
     QApplication::setOverrideCursor(Qt::WaitCursor);
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
-    m_draw_style = DisplayStyle::BallAndStick;
     m_v3d_view->SetComputedMode(false);
     m_v3d_view->Redraw();
     QApplication::restoreOverrideCursor();
+    m_draw_style = DisplayStyle::BallAndStick;
     return;
 }
 
