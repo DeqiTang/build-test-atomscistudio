@@ -54,7 +54,6 @@ private:
     Graphic3d_Vec2i m_click_pos;
     AIS_DisplayMode m_draw_style;
     Standard_Real m_cur_zoom{0};
-    const Standard_Real m_device_px;
 
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(Graphic3d_GraphicDriver) m_graphic_driver;

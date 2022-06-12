@@ -39,7 +39,7 @@ Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modi
     return vkey_flags;
 }
 
-OccView::OccView(QWidget* parent) : QWidget(parent), m_device_px(devicePixelRatio()) {
+OccView::OccView(QWidget* parent) : QWidget(parent) {
 
     m_display_connection = new Aspect_DisplayConnection();
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
@@ -120,8 +120,8 @@ void OccView::OnSelectionChanged(
 void OccView::mousePressEvent(QMouseEvent* event) {
     Graphic3d_Vec2i point;
     point.SetValues(
-        m_device_px * event->pos().x(),
-        m_device_px * event->pos().y()
+        event->pos().x(),
+        event->pos().y()
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
@@ -133,8 +133,8 @@ void OccView::mousePressEvent(QMouseEvent* event) {
 void OccView::mouseReleaseEvent(QMouseEvent* event) {
     Graphic3d_Vec2i point;
     point.SetValues(
-        m_device_px * event->pos().x(),
-        m_device_px * event->pos().y()
+        event->pos().x(),
+        event->pos().y()
     );
     const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(point, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
@@ -256,7 +256,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 
 void OccView::mouseMoveEvent(QMouseEvent* event) {
     Graphic3d_Vec2i point;
-    point.SetValues(m_device_px * event->pos().x(), m_device_px * event->pos().y());
+    point.SetValues(event->pos().x(), event->pos().y());
     if (
         !m_v3d_view.IsNull() &&
         UpdateMousePosition(
