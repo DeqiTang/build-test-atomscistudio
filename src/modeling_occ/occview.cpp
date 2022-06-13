@@ -10,34 +10,6 @@
 #include <WNT_Window.hxx>
 #endif
 
-Aspect_VKeyMouse qt_mouse_buttons_2_vkeys(const Qt::MouseButtons& buttons) {
-    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
-    if ((buttons & Qt::LeftButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
-    }
-    if ((buttons & Qt::MiddleButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
-    }
-    if ((buttons & Qt::RightButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_RightButton;
-    }
-    return vkey_mouse;
-}
-
-Aspect_VKeyFlags qt_keyboard_modifiers_2_vkeys(const Qt::KeyboardModifiers& modifiers) {
-    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
-    if ((modifiers & Qt::ShiftModifier) != 0) {
-        vkey_flags |= Aspect_VKeyFlags_SHIFT;
-    }
-    if ((modifiers & Qt::ControlModifier) != 0) {
-        vkey_flags |= Aspect_VKeyFlags_CTRL;
-    }
-    if ((modifiers & Qt::AltModifier) != 0) {
-        vkey_flags |= Aspect_VKeyFlags_ALT;
-    }
-    return vkey_flags;
-}
-
 OccView::OccView(QWidget* parent) : QWidget(parent) {
 
     m_display_connection = new Aspect_DisplayConnection();
@@ -109,8 +81,29 @@ void OccView::mousePressEvent(QMouseEvent* event) {
         event->pos().x(),
         event->pos().y()
     );
-    const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
+    if (event->modifiers() == Qt::ShiftModifier) {
+        vkey_flags = Aspect_VKeyFlags_SHIFT;
+    } else if (event->modifiers() == Qt::ControlModifier) {
+        vkey_flags = Aspect_VKeyFlags_CTRL;
+    } else if (event->modifiers() == Qt::AltModifier) {
+        vkey_flags = Aspect_VKeyFlags_ALT;
+    } else if (event->modifiers() & Qt::MetaModifier) {
+        vkey_flags = Aspect_VKeyFlags_META;
+    }
+
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
+    if ((event->buttons() & Qt::LeftButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
+    }
+    if ((event->buttons() & Qt::MiddleButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
+    }
+    if ((event->buttons() & Qt::RightButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_RightButton;
+    }
+
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
         this->update();
     }
     m_click_pos = position;
@@ -122,8 +115,29 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         event->pos().x(),
         event->pos().y()
     );
-    const Aspect_VKeyFlags vkey_flags = qt_keyboard_modifiers_2_vkeys(event->modifiers());
-    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, qt_mouse_buttons_2_vkeys(event->buttons()), vkey_flags, false)) {
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
+    if (event->modifiers() == Qt::ShiftModifier) {
+        vkey_flags = Aspect_VKeyFlags_SHIFT;
+    } else if (event->modifiers() == Qt::ControlModifier) {
+        vkey_flags = Aspect_VKeyFlags_CTRL;
+    } else if (event->modifiers() == Qt::AltModifier) {
+        vkey_flags = Aspect_VKeyFlags_ALT;
+    } else if (event->modifiers() & Qt::MetaModifier) {
+        vkey_flags = Aspect_VKeyFlags_META;
+    }
+
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
+    if ((event->buttons() & Qt::LeftButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
+    }
+    if ((event->buttons() & Qt::MiddleButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
+    }
+    if ((event->buttons() & Qt::RightButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_RightButton;
+    }
+
+    if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
         this->update();
     }
 
@@ -210,11 +224,32 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 void OccView::mouseMoveEvent(QMouseEvent* event) {
     Graphic3d_Vec2i position;
     position.SetValues(event->pos().x(), event->pos().y());
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
+    if (event->modifiers() == Qt::ShiftModifier) {
+        vkey_flags = Aspect_VKeyFlags_SHIFT;
+    } else if (event->modifiers() == Qt::ControlModifier) {
+        vkey_flags = Aspect_VKeyFlags_CTRL;
+    } else if (event->modifiers() == Qt::AltModifier) {
+        vkey_flags = Aspect_VKeyFlags_ALT;
+    } else if (event->modifiers() & Qt::MetaModifier) {
+        vkey_flags = Aspect_VKeyFlags_META;
+    }
+
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
+    if ((event->buttons() & Qt::LeftButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
+    }
+    if ((event->buttons() & Qt::MiddleButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
+    }
+    if ((event->buttons() & Qt::RightButton) != 0) {
+        vkey_mouse |= Aspect_VKeyMouse_RightButton;
+    }
     if (!m_v3d_view.IsNull() &&
         UpdateMousePosition(
             position,
-            qt_mouse_buttons_2_vkeys(event->buttons()),
-            qt_keyboard_modifiers_2_vkeys(event->modifiers()),
+            vkey_mouse,
+            vkey_flags,
             false
         )
     ) {
