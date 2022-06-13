@@ -1,5 +1,5 @@
-#ifndef MODELING_OCCVIEW_H
-#define MODELING_OCCVIEW_H
+#ifndef MODELING_OCC_OCCVIEW_H
+#define MODELING_OCC_OCCVIEW_H
 
 #include <QWidget>
 #include <QMenu>
@@ -64,4 +64,4 @@ private:
     Handle(Aspect_Window) m_occwindow;
 };
 
-#endif // MODELING_OCCVIEW_H
+#endif // MODELING_OCC_OCCVIEW_H

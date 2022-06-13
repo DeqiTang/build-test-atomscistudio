@@ -169,7 +169,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action = new QAction("X", this);
             view_menu->addAction(action);
             action->setToolTip("X");
-            connect(action, &QAction::triggered, this, [&](){
+            QObject::connect(action, &QAction::triggered, this, [&](){
                 m_v3d_view->SetProj(V3d_Xpos);
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
@@ -177,7 +177,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action = new QAction("Y", this);
             view_menu->addAction(action);
             action->setToolTip("Y");
-            connect(action, &QAction::triggered, this, [&]() {
+            QObject::connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Ypos);
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
@@ -185,7 +185,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             action = new QAction("Z", this);
             view_menu->addAction(action);
             action->setToolTip("Z");
-            connect(action, &QAction::triggered, this, [&]() {
+            QObject::connect(action, &QAction::triggered, this, [&]() {
                 m_v3d_view->SetProj(V3d_Zpos);
                 FitAllAuto(m_ais_context, m_v3d_view);
             });
@@ -195,19 +195,19 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
             auto ball_and_stick_style = new QAction("Ball & Stick");
             style_menu->addAction(ball_and_stick_style);
             ball_and_stick_style->setToolTip("Ball & Stick");
-            connect(ball_and_stick_style, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
+            QObject::connect(ball_and_stick_style, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
             ball_and_stick_style->setCheckable(true);
 
             auto van_der_waals_style = new QAction("Van der Waals", this);
             style_menu->addAction(van_der_waals_style);
             van_der_waals_style->setToolTip("Van der Waals");
-            connect(van_der_waals_style, &QAction::triggered, this, &OccView::set_van_der_waals_style);
+            QObject::connect(van_der_waals_style, &QAction::triggered, this, &OccView::set_van_der_waals_style);
             van_der_waals_style->setCheckable(true);
 
             auto stick_style = new QAction("Stick", this);
             style_menu->addAction(stick_style);
             stick_style->setToolTip("Stick");
-            connect(stick_style, &QAction::triggered, this, &OccView::set_stick_style);
+            QObject::connect(stick_style, &QAction::triggered, this, &OccView::set_stick_style);
             stick_style->setCheckable(true);
 
             switch(m_draw_style) {
@@ -268,22 +268,22 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void OccView::wheelEvent(QWheelEvent* event) {
-    Graphic3d_Vec2i pos;
-    pos.SetValues(event->position().x(), event->position().y());
+    Graphic3d_Vec2i position;
+    position.SetValues(event->position().x(), event->position().y());
     int delta_pixels = event->pixelDelta().y();
-    int delta_degrees = event->angleDelta().y() / 8;
+    int delta_degrees = event->angleDelta().y() / 8.0;
     Standard_Real delta{0.0};
     delta = delta_pixels != 0 ? delta_pixels : (delta_degrees != 0 ? (delta_degrees / 15) : 0);
-    if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(pos, delta))) {
+    if (!m_v3d_view.IsNull() && UpdateZoom(Aspect_ScrollDelta(position, delta))) {
         this->update();
     }
 }
 
 void OccView::set_ball_and_stick_style() {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
     m_v3d_view->SetComputedMode(false);
     m_v3d_view->Redraw();
+    QApplication::setOverrideCursor(Qt::WaitCursor);
     QApplication::restoreOverrideCursor();
     m_draw_style = DisplayStyle::BallAndStick;
     return;
