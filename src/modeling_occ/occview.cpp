@@ -223,6 +223,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
                 default:
                     break;
             }
+
             context_menu->exec(QCursor::pos());
             delete context_menu;
         }
