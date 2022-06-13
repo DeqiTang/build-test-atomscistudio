@@ -92,10 +92,6 @@ OccView::~OccView() {
 
 }
 
-QPaintEngine* OccView::paintEngine() const {
-    return nullptr;
-}
-
 void OccView::paintEvent(QPaintEvent* event ) {
     m_v3d_view->InvalidateImmediate();
     FlushViewEvents(m_ais_context, m_v3d_view, true);

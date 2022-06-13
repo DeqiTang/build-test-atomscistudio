@@ -45,7 +45,6 @@ signals:
 public slots:
 
 protected:
-    virtual QPaintEngine* paintEngine() const override;
     virtual void paintEvent(QPaintEvent* event) override;
     virtual void resizeEvent(QResizeEvent* event) override;
     virtual void mousePressEvent(QMouseEvent* event) override;
