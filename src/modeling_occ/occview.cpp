@@ -12,28 +12,24 @@
 
 OccView::OccView(QWidget* parent) : QWidget(parent) {
 
-    m_display_connection = new Aspect_DisplayConnection();
+    m_display_connection = new Aspect_DisplayConnection{};
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
     m_v3d_viewer = new V3d_Viewer{m_graphic_driver};
     m_v3d_view = m_v3d_viewer->CreateView();
 
-    #if defined(__linux__)
+#if defined(__linux__)
     m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
-    #elif defined(__APPLE__)
+#elif defined(__APPLE__)
     m_occwindow = new Cocoa_Window{(NSView *)winId()};
-    #elif defined(_WIN32)
+#elif defined(_WIN32)
     m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
-    #endif
+#endif
     m_v3d_view->SetWindow(m_occwindow);
 
     if (!m_occwindow->IsMapped()) {
         m_occwindow->Map();
     }
 
-    m_ais_context = new AIS_InteractiveContext(m_v3d_viewer);
-    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
-
-    m_draw_style = DisplayStyle::BallAndStick;
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
@@ -43,20 +39,23 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
-
-    m_ais_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
-    m_ais_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
-    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
-
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->MustBeResized();
-    this->update();
+
+
+    m_ais_context = new AIS_InteractiveContext{m_v3d_viewer};
+    m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
+    m_ais_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
+    m_ais_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
+
+    m_draw_style = DisplayStyle::BallAndStick;
 
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
     setBackgroundRole(QPalette::NoRole);
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
+    this->update();
 }
 
 OccView::~OccView() {
@@ -76,10 +75,8 @@ void OccView::resizeEvent(QResizeEvent* event) {
 
 void OccView::mousePressEvent(QMouseEvent* event) {
     Graphic3d_Vec2i position;
-    position.SetValues(
-        event->pos().x(),
-        event->pos().y()
-    );
+    position.SetValues(event->pos().x(), event->pos().y());
+
     Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     auto event_modifiers = event->modifiers();
     switch (event_modifiers) {
@@ -117,10 +114,8 @@ void OccView::mousePressEvent(QMouseEvent* event) {
 
 void OccView::mouseReleaseEvent(QMouseEvent* event) {
     Graphic3d_Vec2i position;
-    position.SetValues(
-        event->pos().x(),
-        event->pos().y()
-    );
+    position.SetValues(event->pos().x(), event->pos().y());
+
     Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     auto event_modifiers = event->modifiers();
     switch (event_modifiers) {
@@ -197,33 +192,33 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 
             auto style_menu = context_menu->addMenu("Style");
 
-            auto ball_and_stick = new QAction("Ball & Stick");
-            style_menu->addAction(ball_and_stick);
-            ball_and_stick->setToolTip("Ball & Stick");
-            connect(ball_and_stick, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
-            ball_and_stick->setCheckable(true);
+            auto ball_and_stick_style = new QAction("Ball & Stick");
+            style_menu->addAction(ball_and_stick_style);
+            ball_and_stick_style->setToolTip("Ball & Stick");
+            connect(ball_and_stick_style, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
+            ball_and_stick_style->setCheckable(true);
 
-            auto van_der_waals = new QAction("Van der Waals", this);
-            style_menu->addAction(van_der_waals);
-            van_der_waals->setToolTip("Van der Waals");
-            connect(van_der_waals, &QAction::triggered, this, &OccView::set_van_der_waals_style);
-            van_der_waals->setCheckable(true);
+            auto van_der_waals_style = new QAction("Van der Waals", this);
+            style_menu->addAction(van_der_waals_style);
+            van_der_waals_style->setToolTip("Van der Waals");
+            connect(van_der_waals_style, &QAction::triggered, this, &OccView::set_van_der_waals_style);
+            van_der_waals_style->setCheckable(true);
 
-            auto stick = new QAction("Stick", this);
-            style_menu->addAction(stick);
-            stick->setToolTip("Stick");
-            connect(stick, &QAction::triggered, this, &OccView::set_stick_style);
-            stick->setCheckable(true);
+            auto stick_style = new QAction("Stick", this);
+            style_menu->addAction(stick_style);
+            stick_style->setToolTip("Stick");
+            connect(stick_style, &QAction::triggered, this, &OccView::set_stick_style);
+            stick_style->setCheckable(true);
 
             switch(m_draw_style) {
                 case DisplayStyle::BallAndStick:
-                    ball_and_stick->setChecked(true);
+                    ball_and_stick_style->setChecked(true);
                     break;
                 case DisplayStyle::VanDerWaals:
-                    van_der_waals->setChecked(true);
+                    van_der_waals_style->setChecked(true);
                     break;
                 case DisplayStyle::Stick:
-                    stick->setChecked(true);
+                    stick_style->setChecked(true);
                     break;
                 default:
                     break;
@@ -237,6 +232,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 void OccView::mouseMoveEvent(QMouseEvent* event) {
     Graphic3d_Vec2i position;
     position.SetValues(event->pos().x(), event->pos().y());
+
     Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     auto event_modifiers = event->modifiers();
     switch (event_modifiers) {
