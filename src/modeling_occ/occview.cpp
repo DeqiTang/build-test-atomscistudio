@@ -93,14 +93,13 @@ void OccView::mousePressEvent(QMouseEvent* event) {
     }
 
     Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
-    if ((event->buttons() & Qt::LeftButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
-    }
-    if ((event->buttons() & Qt::MiddleButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
-    }
-    if ((event->buttons() & Qt::RightButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_RightButton;
+    auto mouse_button = event->buttons();
+    if (mouse_button == Qt::LeftButton) {
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
+    } else if (mouse_button == Qt::MiddleButton) {
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+    } else if (mouse_button == Qt::RightButton) {
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
@@ -127,14 +126,13 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     }
 
     Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
-    if ((event->buttons() & Qt::LeftButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
-    }
-    if ((event->buttons() & Qt::MiddleButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
-    }
-    if ((event->buttons() & Qt::RightButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_RightButton;
+    auto mouse_button = event->buttons();
+    if (mouse_button == Qt::LeftButton) {
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
+    } else if (mouse_button == Qt::MiddleButton) {
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+    } else if (mouse_button == Qt::RightButton) {
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
     if (!m_v3d_view.IsNull() && UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
@@ -236,15 +234,15 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
     }
 
     Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
-    if ((event->buttons() & Qt::LeftButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_LeftButton;
+    auto mouse_button = event->buttons();
+    if (mouse_button == Qt::LeftButton) {
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
+    } else if (mouse_button == Qt::MiddleButton) {
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+    } else if (mouse_button == Qt::RightButton) {
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
-    if ((event->buttons() & Qt::MiddleButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_MiddleButton;
-    }
-    if ((event->buttons() & Qt::RightButton) != 0) {
-        vkey_mouse |= Aspect_VKeyMouse_RightButton;
-    }
+
     if (!m_v3d_view.IsNull() &&
         UpdateMousePosition(
             position,
