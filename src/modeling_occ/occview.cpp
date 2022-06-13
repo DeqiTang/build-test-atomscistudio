@@ -249,13 +249,13 @@ void OccView::set_ball_and_stick_style() {
 }
 
 void OccView::set_van_der_waals_style() {
-    //TODO
+    //TODO: set Van der Waals style displaying of structure
     m_draw_style = DisplayStyle::VanDerWaals;
     return;
 }
 
 void OccView::set_stick_style() {
-    //TODO
+    //TODO: set Stick style displaying of structure
     m_draw_style = DisplayStyle::Stick;
     return;
 }
