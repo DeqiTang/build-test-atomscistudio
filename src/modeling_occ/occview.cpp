@@ -1,5 +1,6 @@
 #include "occview.h"
 
+#include <QMenu>
 #include <QApplication>
 
 #if defined(__linux__)

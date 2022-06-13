@@ -2,7 +2,6 @@
 #define MODELING_OCC_OCCVIEW_H
 
 #include <QWidget>
-#include <QMenu>
 #include <QFileDialog>
 #include <QMouseEvent>
 
