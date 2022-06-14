@@ -5,11 +5,11 @@
 #include <QFileDialog>
 #include <QMouseEvent>
 
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_ViewController.hxx>
-#include <V3d_View.hxx>
 #include <Aspect_DisplayConnection.hxx>
 #include <OpenGl_GraphicDriver.hxx>
+#include <AIS_InteractiveContext.hxx>
+#include <V3d_View.hxx>
+#include <AIS_ViewController.hxx>
 
 class OccView : public QWidget, protected AIS_ViewController {
     Q_OBJECT
