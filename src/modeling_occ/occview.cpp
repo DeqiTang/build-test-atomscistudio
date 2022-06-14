@@ -113,7 +113,7 @@ void OccView::mousePressEvent(QMouseEvent* event) {
         vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
-    m_click_pos = position;
+    m_mouse_click_pos = position;
 
     if (UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
         this->update();
