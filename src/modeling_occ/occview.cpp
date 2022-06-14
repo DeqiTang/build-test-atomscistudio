@@ -34,13 +34,12 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
-        0., 0.5, 0.,
+        0., 0., 0.,
         Quantity_TOC_sRGB
     ));
     m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
-    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
     m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
-    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, this->devicePixelRatio() * 0.1, V3d_ZBUFFER);
+    m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.12, V3d_ZBUFFER);
     m_v3d_view->MustBeResized();
 
     m_ais_context = new AIS_InteractiveContext{m_v3d_viewer};
@@ -165,7 +164,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::RightButton) {
         auto context_menu = new QMenu{this};
         auto action = new QAction("Fit View", context_menu);
-        action->setToolTip("Fit view to all objects");
+        action->setToolTip("Fit vie to all objects");
         QObject::connect(action, &QAction::triggered, this, [&](){
             FitAllAuto(m_ais_context, m_v3d_view);
         });

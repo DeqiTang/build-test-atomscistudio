@@ -113,7 +113,7 @@ file(GLOB PROJECT_SOURCES
     ./src/main/*.h
     ./src/main/*.cpp
 
-#    ./src/modeling/*.h
+    ./src/modeling/atomic_color.h
 #    ./src/modeling/*.cpp
 
     ./src/calc/*.h

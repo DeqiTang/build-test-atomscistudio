@@ -234,7 +234,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     tab1_hsplitter->addWidget(modeling_tools);
     tab1_hsplitter->addWidget(modeling_widget);
     QSize screen_size = this->screen()->size();
-    modeling_widget->setMinimumSize(1000, 800);
+    modeling_widget->setMinimumSize(1200, 800);
     modeling_widget->setMaximumSize(screen_size);
 
     auto tab2 = new CalcControl(this->m_central_widget);
