@@ -1,3 +1,23 @@
+/************************************************************************
+ *
+ * Atom Science Studio
+ * Copyright (C) 2022  Deqi Tang
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ ***********************************************************************/
+
 #ifndef MODELING_OCC_OCCVIEW_H
 #define MODELING_OCC_OCCVIEW_H
 
@@ -54,6 +74,8 @@ protected:
 private:
     DisplayStyle m_draw_style;
 
+    Aspect_VKeyFlags m_vkey_flags;
+    Aspect_VKeyMouse m_vkey_mouse;
     Graphic3d_Vec2i m_mouse_click_pos;
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(Graphic3d_GraphicDriver) m_graphic_driver;
