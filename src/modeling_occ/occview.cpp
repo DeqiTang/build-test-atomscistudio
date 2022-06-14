@@ -1,4 +1,4 @@
-#include "occview.h"
+#include "modeling_occ/occview.h"
 
 #include <QMenu>
 #include <QApplication>
@@ -242,6 +242,7 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
     if (true == m_v3d_view.IsNull()) {
         return;
     }
+
     Graphic3d_Vec2i position;
     position.SetValues(event->pos().x(), event->pos().y());
 
