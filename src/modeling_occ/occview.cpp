@@ -27,7 +27,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
 #endif
     m_v3d_view->SetWindow(m_occwindow);
 
-    if (!m_occwindow->IsMapped()) {
+    if (false == m_occwindow->IsMapped()) {
         m_occwindow->Map();
     }
 
@@ -70,13 +70,13 @@ void OccView::paintEvent(QPaintEvent* event) {
 
 void OccView::resizeEvent(QResizeEvent* event) {
     event->accept();
-    if(!m_v3d_view.IsNull()) {
+    if(m_v3d_view.IsNull() == false) {
         m_v3d_view->MustBeResized();
     }
 }
 
 void OccView::mousePressEvent(QMouseEvent* event) {
-    if (m_v3d_view.IsNull()) {
+    if (true == m_v3d_view.IsNull()) {
         return;
     }
 
@@ -120,7 +120,7 @@ void OccView::mousePressEvent(QMouseEvent* event) {
 }
 
 void OccView::mouseReleaseEvent(QMouseEvent* event) {
-    if (m_v3d_view.IsNull()) {
+    if (true == m_v3d_view.IsNull()) {
         return;
     }
 
@@ -236,7 +236,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void OccView::mouseMoveEvent(QMouseEvent* event) {
-    if (m_v3d_view.IsNull()) {
+    if (true == m_v3d_view.IsNull()) {
         return;
     }
     Graphic3d_Vec2i position;
@@ -277,7 +277,7 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void OccView::wheelEvent(QWheelEvent* event) {
-    if (m_v3d_view.IsNull()) {
+    if (true == m_v3d_view.IsNull()) {
         return;
     }
 
