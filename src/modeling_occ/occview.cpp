@@ -70,12 +70,13 @@ void OccView::paintEvent(QPaintEvent* event) {
 
 void OccView::resizeEvent(QResizeEvent* event) {
     event->accept();
-    if(m_v3d_view.IsNull() == false) {
+    if(false == m_v3d_view.IsNull()) {
         m_v3d_view->MustBeResized();
     }
 }
 
 void OccView::mousePressEvent(QMouseEvent* event) {
+    event->accept();
     if (true == m_v3d_view.IsNull()) {
         return;
     }
@@ -120,6 +121,7 @@ void OccView::mousePressEvent(QMouseEvent* event) {
 }
 
 void OccView::mouseReleaseEvent(QMouseEvent* event) {
+    event->accept();
     if (true == m_v3d_view.IsNull()) {
         return;
     }
@@ -236,6 +238,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void OccView::mouseMoveEvent(QMouseEvent* event) {
+    event->accept();
     if (true == m_v3d_view.IsNull()) {
         return;
     }
@@ -277,6 +280,7 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void OccView::wheelEvent(QWheelEvent* event) {
+    event->accept();
     if (true == m_v3d_view.IsNull()) {
         return;
     }
