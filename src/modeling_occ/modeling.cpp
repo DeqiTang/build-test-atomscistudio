@@ -18,7 +18,7 @@
  *
  ***********************************************************************/
 
-#include "modeling.h"
+#include "modeling_occ/modeling.h"
 
 #include <QAction>
 
