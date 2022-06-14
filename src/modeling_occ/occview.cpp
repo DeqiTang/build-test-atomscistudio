@@ -34,7 +34,7 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
-        0., 0., 0.5,
+        0., 0.5, 0.,
         Quantity_TOC_sRGB
     ));
     m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
