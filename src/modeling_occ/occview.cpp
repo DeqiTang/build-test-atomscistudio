@@ -305,8 +305,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
     position.SetValues(event->position().x(), event->position().y());
     int delta_pixels = event->pixelDelta().y();
     int delta_degrees = event->angleDelta().y() / 8.0;
-    Standard_Real delta{0.0};
-    delta = delta_pixels != 0 ? delta_pixels : (delta_degrees != 0 ? (delta_degrees / 15) : 0);
+    Standard_Real delta = delta_pixels != 0 ? delta_pixels : (delta_degrees != 0 ? (delta_degrees / 15) : 0);
     if (UpdateZoom(Aspect_ScrollDelta(position, delta))) {
         this->update();
     }
