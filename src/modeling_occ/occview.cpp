@@ -19,16 +19,16 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     m_v3d_view = m_v3d_viewer->CreateView();
 
 #if defined(__linux__)
-    m_occwindow = new Xw_Window{m_display_connection, (Window)winId()};
+    m_aspect_window = new Xw_Window{m_display_connection, (Window)winId()};
 #elif defined(__APPLE__)
-    m_occwindow = new Cocoa_Window{(NSView *)winId()};
+    m_aspect_window = new Cocoa_Window{(NSView *)winId()};
 #elif defined(_WIN32)
-    m_occwindow = new WNT_Window{(Aspect_Handle)winId()};
+    m_aspect_window = new WNT_Window{(Aspect_Handle)winId()};
 #endif
-    m_v3d_view->SetWindow(m_occwindow);
+    m_v3d_view->SetWindow(m_aspect_window);
 
-    if (false == m_occwindow->IsMapped()) {
-        m_occwindow->Map();
+    if (false == m_aspect_window->IsMapped()) {
+        m_aspect_window->Map();
     }
 
     m_v3d_viewer->SetDefaultLights();

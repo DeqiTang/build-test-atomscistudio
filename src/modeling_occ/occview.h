@@ -60,7 +60,7 @@ private:
     Handle(V3d_Viewer) m_v3d_viewer;
     Handle(V3d_View) m_v3d_view;
     Handle(AIS_InteractiveContext) m_ais_context;
-    Handle(Aspect_Window) m_occwindow;
+    Handle(Aspect_Window) m_aspect_window;
 };
 
 #endif // MODELING_OCC_OCCVIEW_H
