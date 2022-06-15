@@ -2291,8 +2291,8 @@ THE SOFTWARE.
 License of third party softwares: OpenCASCADE
 ================================================================
 Atomscistudio makes use of OpenCASCADE.
-OpenCASCADE is licensed under the LGPL v2.1 license, which is 
-compatible with the GPL v3 license Atomscistudio uses. 
+OpenCASCADE is licensed under the LGPL v2.1 license with exceptions,
+which is compatible with the GPL v3 license Atomscistudio uses. 
 The LGPL v2.1 license and execptions OpenCASCADE adds are 
 attached below:
 
@@ -2798,7 +2798,6 @@ necessary.  Here is a sample; alter the names:
   Ty Coon, President of Vice
 
 That's all there is to it!
-
 --------------------------------------------------------------------------
 
 Open CASCADE exception (version 1.0) to GNU LGPL version 2.1.
@@ -2811,3 +2810,4 @@ provided with the Open CASCADE Technology libraries (including code of CDL
 generic classes) under terms of your choice, provided that you give
 prominent notice in supporting documentation to this code that it makes use
 of or is based on facilities provided by the Open CASCADE Technology software.
+

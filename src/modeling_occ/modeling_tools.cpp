@@ -36,11 +36,9 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     QSizePolicy size_policy_preferred(QSizePolicy::Preferred, QSizePolicy::Preferred);
     this->setSizePolicy(size_policy_expanding);
     this->setMinimumSize(QSize(500, 800));
-    this->setWindowTitle(QCoreApplication::translate("Atoms3DTools", "Form", nullptr));
 
     auto vertical_layout = new QVBoxLayout(this);
     this->setLayout(vertical_layout);
-    vertical_layout->setObjectName(QString::fromUtf8("vertical_layout"));
 
     auto v_splitter = new QSplitter(this);
     vertical_layout->addWidget(v_splitter);
@@ -54,7 +52,6 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
 
     auto tab_widget = new QTabWidget(this);
     v_splitter->addWidget(tab_widget);
-    tab_widget->setObjectName(QString::fromUtf8("tab_widget"));
     tab_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     tab_widget->setSizePolicy(size_policy_expanding);
     tab_widget->setCurrentIndex(0);
@@ -62,7 +59,6 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     auto tab_1 = new QWidget(this);
     tab_widget->addTab(tab_1, tr("Atom"));
     tab_widget->setTabText(tab_widget->indexOf(tab_1), QCoreApplication::translate("Tools", "Atom", nullptr));
-    tab_1->setObjectName(QString::fromUtf8("Atom"));
     tab_1->setSizePolicy(size_policy_expanding);
 
     auto grid_layout = new QGridLayout(tab_1);
@@ -71,7 +67,6 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
 
     auto checkbox_show_atoms = new QCheckBox(tab_1);
     grid_layout->addWidget(checkbox_show_atoms, 0, 0, 1, 1);
-    checkbox_show_atoms->setObjectName(QString::fromUtf8("show_atoms"));
     checkbox_show_atoms->setSizePolicy(size_policy_preferred);
     checkbox_show_atoms->setChecked(true);
     checkbox_show_atoms->setText(QCoreApplication::translate("Atoms3DTools", "Show Atoms", nullptr));
@@ -79,13 +74,11 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
 
     auto horizontal_slider = new QSlider(tab_1);
     grid_layout->addWidget(horizontal_slider, 1, 0, 1, 1);
-    horizontal_slider->setObjectName(QString::fromUtf8("horizontal_slider"));
     horizontal_slider->setOrientation(Qt::Horizontal);
 
     auto tab_2 = new QWidget(this);
     tab_widget->addTab(tab_2, QObject::tr("Crystal"));
     tab_widget->setTabText(tab_widget->indexOf(tab_2), QCoreApplication::translate("Tools", "Crystal", nullptr));
-    tab_2->setObjectName(QString::fromUtf8("Crystal"));
 
     auto grid_layout_2 = new QGridLayout(tab_2);
     tab_2->setLayout(grid_layout_2);
@@ -103,9 +96,8 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     auto checkbox_ball_and_stick = new QCheckBox(tab_2);
     v_layout_tab_2_group_box->addWidget(checkbox_ball_and_stick);
     button_group->addButton(checkbox_ball_and_stick);
-    checkbox_ball_and_stick->setObjectName((tr("ball and stick")));
     checkbox_ball_and_stick->setSizePolicy(size_policy_preferred);
-    checkbox_ball_and_stick->setText(QCoreApplication::translate("Atoms3DTools", "Ball and Stick", nullptr));
+    checkbox_ball_and_stick->setText(QCoreApplication::translate("ModelingTools", "Ball and Stick", nullptr));
     checkbox_ball_and_stick->setChecked(true);
     auto checkbox_van_der_waals = new QCheckBox(tab_2);
     v_layout_tab_2_group_box->addWidget(checkbox_van_der_waals);
@@ -117,9 +109,9 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     auto checkbox_wireframe = new QCheckBox(tab_2);
     v_layout_tab_2_group_box->addWidget(checkbox_wireframe);
     button_group->addButton(checkbox_wireframe);
-    checkbox_wireframe->setObjectName(tr("Wireframe"));
+    checkbox_wireframe->setObjectName(tr("Stick"));
     checkbox_wireframe->setSizePolicy(size_policy_preferred);
-    checkbox_wireframe->setText(QCoreApplication::translate("Atoms3DTools", "Wireframe", nullptr));
+    checkbox_wireframe->setText(QCoreApplication::translate("ModelingTools", "Stick", nullptr));
     checkbox_wireframe->setChecked(false);
 
     auto text_browser = new QTextBrowser(this);

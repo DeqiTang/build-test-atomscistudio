@@ -226,9 +226,9 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
 
         auto style_menu = context_menu->addMenu("Style");
 
-        auto ball_and_stick_style = new QAction("Ball & Stick");
+        auto ball_and_stick_style = new QAction("Ball and Stick");
         style_menu->addAction(ball_and_stick_style);
-        ball_and_stick_style->setToolTip("Ball & Stick");
+        ball_and_stick_style->setToolTip("Ball and Stick");
         QObject::connect(ball_and_stick_style, &QAction::triggered, this, &OccView::set_ball_and_stick_style);
         ball_and_stick_style->setCheckable(true);
 

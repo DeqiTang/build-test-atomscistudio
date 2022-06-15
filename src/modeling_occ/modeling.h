@@ -30,7 +30,7 @@
 #include <atomsciflow/base/atomic_radius.h>
 
 #include "modeling/atomic_color.h"
-#include "occview.h"
+#include "modeling_occ/occview.h"
 
 class ModelingControl : public QWidget {
     Q_OBJECT
