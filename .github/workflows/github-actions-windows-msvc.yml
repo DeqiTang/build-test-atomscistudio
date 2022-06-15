@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v3  
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.14-version-1
+          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.15-version-1
       - name: Set up Visual Studio 2019 community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
