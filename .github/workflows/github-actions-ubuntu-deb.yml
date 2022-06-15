@@ -44,8 +44,8 @@ jobs:
         run: sudo apt-get install -y libglew-dev libglfw3-dev
       - name: Install atomsciflow
         run: |
-          git clone https://github.com/deqitang/build-test-atomsciflow.git
-          cmake build-test-atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=ON
+          git clone https://github.com/deqitang/atomsciflow.git
+          cmake atomsciflow -B build_atomsciflow -DBUILD_CMD=OFF -DBUILD_TEST=ON
           cmake --build build_atomsciflow
           sudo cmake --install build_atomsciflow
         shell: bash
