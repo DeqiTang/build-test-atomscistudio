@@ -93,7 +93,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.executable }}_${{ steps.build-for-ubuntu.outputs.deb_version }}_amd64.deb
           #file: ${{ steps.build-deb.outputs.file_name }} 
-          asset_name: ${{ env.executable }}-${{ matrix.os }}-${{ matrix.qt_version }}.deb
+          asset_name: ${{ env.executable }}-${{ matrix.os }}.deb
           #asset_name: ${{ steps.build-deb.outputs.file_name }}
           tag: ${{ github.ref }}
           overwrite: true          

@@ -187,7 +187,7 @@ jobs:
         id: packaging
         shell: powershell
         env:
-          archive_name: atomscistudio-${{ matrix.qt_version }}-${{ matrix.qt_arch }}
+          archive_name: atomscistudio-${{ matrix.qt_arch }}
         run: |
           New-Item -ItemType Directory ${env:archive_name}
           Copy-Item build_atomscistudio\Release\${env:executable}'.exe' ${env:archive_name}\${env:executable}'.exe'

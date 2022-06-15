@@ -67,7 +67,7 @@ jobs:
           macdeployqt build/${executable}.app -verbose=2 -dmg
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.executable }}-${{ matrix.os }}-${{matrix.qt_version}}.app
+          name: ${{ env.executable }}-${{ matrix.os }}.app
           path: build/${{ env.executable }}.app
       - name: Upload Release
         if: startsWith(github.event.ref, 'refs/tags/')
@@ -75,7 +75,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/${{ env.executable }}.dmg
-          asset_name: ${{ env.executable }}-${{ matrix.os }}-${{ matrix.qt_version }}.dmg
+          asset_name: ${{ env.executable }}-${{ matrix.os }}.dmg
           tag: ${{ github.ref }}
           overwrite: true          
 
