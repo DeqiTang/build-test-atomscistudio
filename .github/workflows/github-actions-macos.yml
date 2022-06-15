@@ -18,7 +18,8 @@ jobs:
     steps:
       - name: Install dependencies using brew
         run: |
-          brew install llvm 
+          brew install llvm
+          brew install boost
           brew install openssl@3
           brew install yaml-cpp 
           #brew install qt
@@ -38,9 +39,7 @@ jobs:
           tar -xvf libssh2-1.10.0.tar.gz
           cmake libssh2-1.10.0 -B build_libssh2
           cmake --build build_libssh2
-          cmake --install build_libssh2       
-      - name: Install boost
-        run: brew install boost
+          cmake --install build_libssh2
       - name: Install armadillo
         run: brew install armadillo
       - name: Install atomsciflow
