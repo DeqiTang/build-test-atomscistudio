@@ -31,7 +31,7 @@
 #include <WNT_Window.hxx>
 #endif
 
-OccView::OccView(QWidget* parent) : QWidget(parent) {
+OccView::OccView(QWidget* parent) : QWidget{parent} {
 
     m_display_connection = new Aspect_DisplayConnection{};
     m_graphic_driver = new OpenGl_GraphicDriver{m_display_connection};
@@ -52,13 +52,14 @@ OccView::OccView(QWidget* parent) : QWidget(parent) {
     }
 
     m_v3d_viewer->SetDefaultLights();
-    m_v3d_viewer->SetLightOn();
+    m_v3d_viewer->DefaultShadingModel();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
         0., 0., 0.,
         Quantity_TOC_sRGB
     ));
     m_v3d_view->Camera()->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
     m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
+    m_v3d_view->SetLightOn();
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.24, V3d_ZBUFFER);
     m_v3d_view->SetProj(V3d_XposYposZpos);
     m_v3d_view->MustBeResized();
@@ -179,7 +180,7 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
         this->update();
     }
 
-    if (event->button() == Qt::RightButton) {
+    if (Qt::RightButton == event->button()) {
         auto context_menu = new QMenu{this};
         auto action = new QAction("Fit View", context_menu);
         action->setToolTip("Fit vie to all objects");
