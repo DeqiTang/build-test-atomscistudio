@@ -24,9 +24,10 @@ jobs:
           sudo apt install -y googletest libgtest-dev
           sudo apt install -y dh-make 
           sudo apt install -y dpkg-dev
-          sudo apt install openssl libssl-dev
+          sudo apt install -y openssl libssl-dev
           sudo apt install -y libssh2-1 libssh2-1-dev
           sudo apt install -y libyaml-cpp-dev
+          sudo apt install -y libglew-dev libglfw3-dev
           sudo apt install -y libocct-foundation-dev
           sudo apt install -y libocct-visualization-dev
           sudo apt install -y libocct-draw-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev libocct-ocaf-dev libocct-data-exchange-dev
@@ -40,8 +41,6 @@ jobs:
           target: 'desktop'
           aqtversion: '==2.1.0'
           modules: 'qt3d'
-      - name: Install GL Library
-        run: sudo apt-get install -y libglew-dev libglfw3-dev
       - name: Install atomsciflow
         run: |
           git clone https://github.com/deqitang/build-test-atomsciflow.git
