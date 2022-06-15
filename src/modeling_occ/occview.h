@@ -74,8 +74,6 @@ protected:
 private:
     DisplayStyle m_draw_style;
 
-    Aspect_VKeyFlags m_vkey_flags;
-    Aspect_VKeyMouse m_vkey_mouse;
     Graphic3d_Vec2i m_mouse_click_pos;
     Handle(Aspect_DisplayConnection) m_display_connection;
     Handle(Graphic3d_GraphicDriver) m_graphic_driver;

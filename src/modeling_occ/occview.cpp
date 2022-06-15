@@ -53,6 +53,7 @@ OccView::OccView(QWidget* parent) : QWidget{parent} {
 
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->DefaultShadingModel();
+//    m_v3d_viewer->SetLightOn();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
         0., 0., 0.,
         Quantity_TOC_sRGB
@@ -70,8 +71,6 @@ OccView::OccView(QWidget* parent) : QWidget{parent} {
     m_ais_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
 
     m_draw_style = DisplayStyle::BallAndStick;
-    m_vkey_flags = Aspect_VKeyFlags_NONE;
-    m_vkey_mouse = Aspect_VKeyMouse_NONE;
 
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
@@ -107,35 +106,37 @@ void OccView::mousePressEvent(QMouseEvent* event) {
     position.SetValues(event->pos().x(), event->pos().y());
 
     auto event_modifiers = event->modifiers();
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     switch (event_modifiers) {
         case Qt::ShiftModifier:
-            m_vkey_flags = Aspect_VKeyFlags_SHIFT;
+            vkey_flags = Aspect_VKeyFlags_SHIFT;
             break;
         case Qt::ControlModifier:
-            m_vkey_flags = Aspect_VKeyFlags_CTRL;
+            vkey_flags = Aspect_VKeyFlags_CTRL;
             break;
         case Qt::AltModifier:
-            m_vkey_flags = Aspect_VKeyFlags_ALT;
+            vkey_flags = Aspect_VKeyFlags_ALT;
             break;
         case Qt::MetaModifier:
-            m_vkey_flags = Aspect_VKeyFlags_META;
+            vkey_flags = Aspect_VKeyFlags_META;
             break;
         default:
             break;
     }
 
     auto mouse_button = event->buttons();
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if (Qt::LeftButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
     } else if (Qt::MiddleButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
     } else if (Qt::RightButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_RightButton;
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
     m_mouse_click_pos = position;
 
-    if (UpdateMouseButtons(position, m_vkey_mouse, m_vkey_flags, false)) {
+    if (UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
         this->update();
     }
 }
@@ -150,33 +151,35 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     position.SetValues(event->pos().x(), event->pos().y());
 
     auto event_modifiers = event->modifiers();
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     switch (event_modifiers) {
         case Qt::ShiftModifier:
-            m_vkey_flags = Aspect_VKeyFlags_SHIFT;
+            vkey_flags = Aspect_VKeyFlags_SHIFT;
             break;
         case Qt::ControlModifier:
-            m_vkey_flags = Aspect_VKeyFlags_CTRL;
+            vkey_flags = Aspect_VKeyFlags_CTRL;
             break;
         case Qt::AltModifier:
-            m_vkey_flags = Aspect_VKeyFlags_ALT;
+            vkey_flags = Aspect_VKeyFlags_ALT;
             break;
         case Qt::MetaModifier:
-            m_vkey_flags = Aspect_VKeyFlags_META;
+            vkey_flags = Aspect_VKeyFlags_META;
             break;
         default:
             break;
     }
 
     auto mouse_button = event->buttons();
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if (Qt::LeftButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
     } else if (Qt::MiddleButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
     } else if (Qt::RightButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_RightButton;
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
-    if (UpdateMouseButtons(position, m_vkey_mouse, m_vkey_flags, false)) {
+    if (UpdateMouseButtons(position, vkey_mouse, vkey_flags, false)) {
         this->update();
     }
 
@@ -265,33 +268,35 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
     position.SetValues(event->pos().x(), event->pos().y());
 
     auto event_modifiers = event->modifiers();
+    Aspect_VKeyFlags vkey_flags = Aspect_VKeyFlags_NONE;
     switch (event_modifiers) {
         case Qt::ShiftModifier:
-            m_vkey_flags = Aspect_VKeyFlags_SHIFT;
+            vkey_flags = Aspect_VKeyFlags_SHIFT;
             break;
         case Qt::ControlModifier:
-            m_vkey_flags = Aspect_VKeyFlags_CTRL;
+            vkey_flags = Aspect_VKeyFlags_CTRL;
             break;
         case Qt::AltModifier:
-            m_vkey_flags = Aspect_VKeyFlags_ALT;
+            vkey_flags = Aspect_VKeyFlags_ALT;
             break;
         case Qt::MetaModifier:
-            m_vkey_flags = Aspect_VKeyFlags_META;
+            vkey_flags = Aspect_VKeyFlags_META;
             break;
         default:
             break;
     }
 
     auto mouse_button = event->buttons();
+    Aspect_VKeyMouse vkey_mouse = Aspect_VKeyMouse_NONE;
     if (Qt::LeftButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
+        vkey_mouse = Aspect_VKeyMouse_LeftButton;
     } else if (Qt::MiddleButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
+        vkey_mouse = Aspect_VKeyMouse_MiddleButton;
     } else if (Qt::RightButton == mouse_button) {
-        m_vkey_mouse = Aspect_VKeyMouse_RightButton;
+        vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
-    if (UpdateMousePosition(position, m_vkey_mouse, m_vkey_flags, false)) {
+    if (UpdateMousePosition(position, vkey_mouse, vkey_flags, false)) {
         this->update();
     }
 }
