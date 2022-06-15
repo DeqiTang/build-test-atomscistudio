@@ -125,11 +125,11 @@ void OccView::mousePressEvent(QMouseEvent* event) {
     }
 
     auto mouse_button = event->buttons();
-    if (mouse_button == Qt::LeftButton) {
+    if (Qt::LeftButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
-    } else if (mouse_button == Qt::MiddleButton) {
+    } else if (Qt::MiddleButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
-    } else if (mouse_button == Qt::RightButton) {
+    } else if (Qt::RightButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
@@ -168,11 +168,11 @@ void OccView::mouseReleaseEvent(QMouseEvent* event) {
     }
 
     auto mouse_button = event->buttons();
-    if (mouse_button == Qt::LeftButton) {
+    if (Qt::LeftButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
-    } else if (mouse_button == Qt::MiddleButton) {
+    } else if (Qt::MiddleButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
-    } else if (mouse_button == Qt::RightButton) {
+    } else if (Qt::RightButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
@@ -283,11 +283,11 @@ void OccView::mouseMoveEvent(QMouseEvent* event) {
     }
 
     auto mouse_button = event->buttons();
-    if (mouse_button == Qt::LeftButton) {
+    if (Qt::LeftButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_LeftButton;
-    } else if (mouse_button == Qt::MiddleButton) {
+    } else if (Qt::MiddleButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_MiddleButton;
-    } else if (mouse_button == Qt::RightButton) {
+    } else if (Qt::RightButton == mouse_button) {
         m_vkey_mouse = Aspect_VKeyMouse_RightButton;
     }
 
