@@ -31,7 +31,7 @@ jobs:
           version: ${{ matrix.qt_version }}
           host: 'mac'
           target: 'desktop'
-          aqtversion: '==2.0.5'
+          aqtversion: '==2.1.0'
           modules: 'qt3d'
       - name: Install libssh2
         run: |
@@ -78,4 +78,3 @@ jobs:
           asset_name: ${{ env.executable }}-${{ matrix.os }}.dmg
           tag: ${{ github.ref }}
           overwrite: true          
-
