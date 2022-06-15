@@ -55,6 +55,7 @@ OccView::OccView(QWidget* parent) : QWidget{parent} {
     m_v3d_viewer->SetDefaultLights();
     m_v3d_viewer->DefaultShadingModel();
     m_v3d_viewer->DefaultComputedMode();
+    m_v3d_viewer->DefaultRenderingParams();
     m_v3d_view->SetBackgroundColor(Quantity_Color(
         0., 0., 0.,
         Quantity_TOC_sRGB
@@ -63,17 +64,21 @@ OccView::OccView(QWidget* parent) : QWidget{parent} {
     m_v3d_view->ChangeRenderingParams().RenderResolutionScale = 1.0f;
     m_v3d_view->TriedronDisplay(Aspect_TOTP_LEFT_LOWER, Quantity_NOC_GOLD, 0.24, V3d_ZBUFFER);
     m_v3d_view->SetProj(V3d_XposYposZpos);
+    m_v3d_view->SetViewOrientationDefault();
     m_v3d_view->MustBeResized();
 
     m_ais_context = new AIS_InteractiveContext{m_v3d_viewer};
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
     m_ais_context->SelectionStyle()->SetColor(Quantity_NOC_RED);
     m_ais_context->SelectionStyle()->SetDisplayMode(AIS_Shaded);
+    m_ais_context->SelectionStyle()->PlaneAspect();
+    m_ais_context->SelectionStyle()->SetTransparency(0.5);
 
     m_draw_style = DisplayStyle::BallAndStick;
 
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_NoSystemBackground);
+    setAttribute(Qt::WA_StyledBackground);
     setBackgroundRole(QPalette::NoRole);
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
@@ -318,6 +323,7 @@ void OccView::wheelEvent(QWheelEvent* event) {
 }
 
 void OccView::set_ball_and_stick_style() {
+    //TODO: improve Ball & Stick style displaying of structure
     m_ais_context->SetDisplayMode(AIS_Shaded, Standard_True);
     m_v3d_view->SetComputedMode(false);
     m_v3d_view->Redraw();
