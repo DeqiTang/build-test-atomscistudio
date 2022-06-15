@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.14-version-1
+          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.15-version-1
       - name: Caching built packages
         id: cache-built-packages
         uses: actions/cache@v3
@@ -55,7 +55,7 @@ jobs:
             C:\Softwares\libssh2
             C:\Softwares\armadillo
             C:\Softwares\atomsciflow
-          key: ${{ runner.os }}-cache-built-packages-on-2022.06.14-version-1
+          key: ${{ runner.os }}-cache-built-packages-on-2022.06.15-version-1
       - name: Install Open CASCADE
         id: install-opencascade
         run: |
