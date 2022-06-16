@@ -69,7 +69,7 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     grid_layout->addWidget(checkbox_show_atoms, 0, 0, 1, 1);
     checkbox_show_atoms->setSizePolicy(size_policy_preferred);
     checkbox_show_atoms->setChecked(true);
-    checkbox_show_atoms->setText(QCoreApplication::translate("Atoms3DTools", "Show Atoms", nullptr));
+    checkbox_show_atoms->setText(QCoreApplication::translate("ModelingTools", "Show Atoms", nullptr));
     QObject::connect(checkbox_show_atoms, &QCheckBox::stateChanged, this, &ModelingTools::on_checkbox_state_changed);
 
     auto horizontal_slider = new QSlider(tab_1);
@@ -104,15 +104,15 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     button_group->addButton(checkbox_van_der_waals);
     checkbox_van_der_waals->setObjectName(tr("Van der Waals"));
     checkbox_van_der_waals->setSizePolicy(size_policy_preferred);
-    checkbox_van_der_waals->setText(QCoreApplication::translate("Atoms3DTools", "Van der Waals", nullptr));
+    checkbox_van_der_waals->setText(QCoreApplication::translate("ModelingTools", "Van der Waals", nullptr));
     checkbox_van_der_waals->setChecked(false);
-    auto checkbox_wireframe = new QCheckBox(tab_2);
-    v_layout_tab_2_group_box->addWidget(checkbox_wireframe);
-    button_group->addButton(checkbox_wireframe);
-    checkbox_wireframe->setObjectName(tr("Stick"));
-    checkbox_wireframe->setSizePolicy(size_policy_preferred);
-    checkbox_wireframe->setText(QCoreApplication::translate("ModelingTools", "Stick", nullptr));
-    checkbox_wireframe->setChecked(false);
+    auto checkbox_stick = new QCheckBox(tab_2);
+    v_layout_tab_2_group_box->addWidget(checkbox_stick);
+    button_group->addButton(checkbox_stick);
+    checkbox_stick->setObjectName(tr("Stick"));
+    checkbox_stick->setSizePolicy(size_policy_preferred);
+    checkbox_stick->setText(QCoreApplication::translate("ModelingTools", "Stick", nullptr));
+    checkbox_stick->setChecked(false);
 
     auto text_browser = new QTextBrowser(this);
     v_splitter->addWidget(text_browser);
@@ -123,6 +123,10 @@ ModelingTools::ModelingTools(QWidget* parent, ModelingControl* modeling_widget)
     ));
 }
 
-void ModelingTools::on_checkbox_state_changed(int arg1) {
-    std::cout << "Doing nothing\n";
+void ModelingTools::on_checkbox_state_changed(int checked) {
+    if (Qt::Checked == checked) {
+        this->m_modeling_widget->draw_atoms();
+    } else {
+        this->m_modeling_widget->hide_atoms();
+    }
 }

@@ -70,3 +70,7 @@ void ModelingControl::draw_atoms() {
         m_occview->fit_all_auto();
     }
 }
+
+void ModelingControl::hide_atoms() {
+    m_occview->get_context()->EraseAll(m_occview);
+}

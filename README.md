@@ -38,7 +38,7 @@ of licenses and acknowledgements for them.
 * LAPACK is licensed under the [modified BSD license](http://www.netlib.org/lapack/LICENSE.txt).
 * Atomsciflow is licensed under [MIT License](https://github.com/DeqiTang/atomsciflow/blob/master/LICENSE).
 * yaml-cpp is licensed under the [MIT License](https://github.com/jbeder/yaml-cpp/blob/master/LICENSE).
-* OpenCASCADE is licensed under [LGPL v2.1](https://github.com/Open-Cascade-SAS/OCCT/blob/master/LICENSE_LGPL_21.txt) with [exceptions](https://github.com/Open-Cascade-SAS/OCCT/blob/master/OCCT_LGPL_EXCEPTION.txt). As LGPL license is GPL-compatible, we use OpenCASCADE in atomscistudio project.
+* OpenCASCADE is licensed under [LGPL v2.1](https://dev.opencascade.org/resources/licensing) with [exceptions](https://dev.opencascade.org/resources/licensing). As LGPL license is GPL-compatible, we use OpenCASCADE in atomscistudio project.
 
 The text version of licenses for all the used third party softwares
 are included in the `third_party/license` directory of this project.

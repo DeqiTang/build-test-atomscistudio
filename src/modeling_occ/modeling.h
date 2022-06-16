@@ -39,6 +39,7 @@ public:
     ~ModelingControl() = default;
 
     void draw_atoms();
+    void hide_atoms();
 
     std::shared_ptr<atomsciflow::Crystal> m_crystal;
 
